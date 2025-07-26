@@ -1,11 +1,15 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Menu, Phone } from "lucide-react";
+import { MessageCircle, Menu, Phone, User } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 export function Header() {
+  const { user } = useAuth();
+
   return (
     <header className="fixed top-0 w-full z-50 bg-gradient-glass backdrop-blur-lg border-b border-border/50">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-ocean rounded-xl flex items-center justify-center shadow-soft">
             <span className="text-lg font-bold text-primary-foreground">C</span>
           </div>
@@ -13,7 +17,7 @@ export function Header() {
             <h1 className="text-xl font-bold text-foreground">Caribe Concierge</h1>
             <p className="text-xs text-muted-foreground">San Pedro, Belize</p>
           </div>
-        </div>
+        </Link>
         
         <nav className="hidden md:flex items-center gap-6">
           <a href="#services" className="text-foreground hover:text-accent transition-colors">Services</a>
@@ -30,6 +34,20 @@ export function Header() {
             <MessageCircle className="h-4 w-4" />
             AI Assistant
           </Button>
+          {user ? (
+            <Link to="/dashboard">
+              <Button variant="outline" size="sm">
+                <User className="h-4 w-4" />
+                Dashboard
+              </Button>
+            </Link>
+          ) : (
+            <Link to="/auth">
+              <Button size="sm">
+                Sign In
+              </Button>
+            </Link>
+          )}
           <Button variant="ghost" size="sm" className="md:hidden">
             <Menu className="h-4 w-4" />
           </Button>
