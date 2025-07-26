@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { Calendar, MessageSquare, Plus, Phone } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Header } from '@/components/Header';
 
@@ -146,15 +147,66 @@ const Dashboard = () => {
             <h1 className="text-3xl font-bold text-foreground">Welcome back!</h1>
             <p className="text-muted-foreground">Manage your concierge services and requests</p>
           </div>
-          <Button onClick={handleSignOut} variant="outline">
-            Sign Out
-          </Button>
+          <div className="flex gap-3">
+            <Link to="/book">
+              <Button variant="ocean">
+                <Plus className="h-4 w-4" />
+                New Booking
+              </Button>
+            </Link>
+            <Link to="/messages">
+              <Button variant="outline">
+                <MessageSquare className="h-4 w-4" />
+                Messages
+              </Button>
+            </Link>
+            <Link to="/support">
+              <Button variant="outline">
+                <Phone className="h-4 w-4" />
+                Support
+              </Button>
+            </Link>
+            <Button onClick={handleSignOut} variant="ghost">
+              Sign Out
+            </Button>
+          </div>
+        </div>
+
+        {/* Quick Actions */}
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
+          <Link to="/book">
+            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <Plus className="h-8 w-8 mx-auto mb-3 text-primary" />
+                <h3 className="font-semibold mb-2">Book a Service</h3>
+                <p className="text-sm text-muted-foreground">Request restaurants, excursions, and more</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/messages">
+            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <MessageSquare className="h-8 w-8 mx-auto mb-3 text-primary" />
+                <h3 className="font-semibold mb-2">Messages</h3>
+                <p className="text-sm text-muted-foreground">Chat with our concierge team</p>
+              </CardContent>
+            </Card>
+          </Link>
+          <Link to="/support">
+            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+              <CardContent className="p-6 text-center">
+                <Phone className="h-8 w-8 mx-auto mb-3 text-primary" />
+                <h3 className="font-semibold mb-2">Contact Support</h3>
+                <p className="text-sm text-muted-foreground">Get help and assistance</p>
+              </CardContent>
+            </Card>
+          </Link>
         </div>
 
         <Tabs defaultValue="bookings" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
-            <TabsTrigger value="bookings">My Bookings</TabsTrigger>
-            <TabsTrigger value="requests">My Requests</TabsTrigger>
+            <TabsTrigger value="bookings">My Bookings ({bookings.length})</TabsTrigger>
+            <TabsTrigger value="requests">My Requests ({requests.length})</TabsTrigger>
           </TabsList>
           
           <TabsContent value="bookings" className="space-y-4 mt-6">

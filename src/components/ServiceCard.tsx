@@ -1,16 +1,20 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { LucideIcon } from "lucide-react";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface ServiceCardProps {
   icon: LucideIcon;
+  serviceId?: string;
   title: string;
   description: string;
   features: string[];
   onBookNow: () => void;
 }
 
-export function ServiceCard({ icon: Icon, title, description, features, onBookNow }: ServiceCardProps) {
+export function ServiceCard({ icon: Icon, title, description, features, onBookNow, serviceId }: ServiceCardProps) {
+  const { user } = useAuth();
   return (
     <Card className="group hover:shadow-ocean transition-all duration-500 transform hover:scale-105 bg-card/80 backdrop-blur-sm border-border/50">
       <CardContent className="p-6">
@@ -32,13 +36,25 @@ export function ServiceCard({ icon: Icon, title, description, features, onBookNo
           ))}
         </ul>
         
-        <Button 
-          variant="ocean" 
-          className="w-full font-semibold"
-          onClick={onBookNow}
-        >
-          Book Now
-        </Button>
+        {user ? (
+          <Link to={serviceId ? `/book?service=${serviceId}` : '/book'}>
+            <Button 
+              variant="ocean" 
+              className="w-full font-semibold"
+            >
+              Book Now
+            </Button>
+          </Link>
+        ) : (
+          <Link to="/auth">
+            <Button 
+              variant="ocean" 
+              className="w-full font-semibold"
+            >
+              Sign In to Book
+            </Button>
+          </Link>
+        )}
       </CardContent>
     </Card>
   );
