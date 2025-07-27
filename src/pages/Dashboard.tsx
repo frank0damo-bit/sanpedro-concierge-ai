@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { Navigate, Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -34,6 +34,7 @@ interface CustomerRequest {
 const Dashboard = () => {
   const { user, loading } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [requests, setRequests] = useState<CustomerRequest[]>([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -183,15 +184,16 @@ const Dashboard = () => {
               </CardContent>
             </Card>
           </Link>
-          <Link to="/messages">
-            <Card className="hover:shadow-md transition-shadow cursor-pointer">
-              <CardContent className="p-6 text-center">
-                <MessageSquare className="h-8 w-8 mx-auto mb-3 text-primary" />
-                <h3 className="font-semibold mb-2">Messages</h3>
-                <p className="text-sm text-muted-foreground">Chat with our concierge team</p>
-              </CardContent>
-            </Card>
-          </Link>
+          <Card 
+            className="hover:shadow-md transition-shadow cursor-pointer"
+            onClick={() => navigate('/messages')}
+          >
+            <CardContent className="p-6 text-center">
+              <MessageSquare className="h-8 w-8 mx-auto mb-3 text-primary" />
+              <h3 className="font-semibold mb-2">Chat with AI Concierge</h3>
+              <p className="text-sm text-muted-foreground">Get instant help and recommendations</p>
+            </CardContent>
+          </Card>
           <Link to="/support">
             <Card className="hover:shadow-md transition-shadow cursor-pointer">
               <CardContent className="p-6 text-center">

@@ -40,7 +40,12 @@ export function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button variant="ocean" size="lg" className="text-lg px-8 py-6 font-semibold">
+            <Button 
+              variant="ocean" 
+              size="lg" 
+              className="text-lg px-8 py-6 font-semibold"
+              onClick={() => window.location.href = '/messages'}
+            >
               <MessageCircle className="h-5 w-5" />
               Chat with AI Concierge
             </Button>
