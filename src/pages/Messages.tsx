@@ -44,77 +44,19 @@ const Messages = () => {
   const [sendingMessage, setSendingMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (user) {
-      fetchConversations();
-      // Set up AI chat as default conversation
-      setSelectedConversation({
-        id: 'ai-chat',
-        title: 'AI Concierge',
-        type: 'booking',
-        status: 'active',
-        unread_count: 0
-      });
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (selectedConversation) {
-      fetchMessages();
-    }
-  }, [selectedConversation]);
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  // Set up real-time subscription for messages
-  useEffect(() => {
-    if (!user) return;
-
-    const channel = supabase
-      .channel('messages-changes')
-      .on(
-        'postgres_changes',
-        {
-          event: 'INSERT',
-          schema: 'public',
-          table: 'messages',
-          filter: `user_id=eq.${user.id}`
-        },
-        (payload) => {
-          const newMessage = payload.new as Message;
-          setMessages(prev => [...prev, newMessage]);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [user]);
-
-  if (loading) {
-    return <div className="min-h-screen bg-gradient-ocean flex items-center justify-center">
-      <div className="text-white text-xl">Loading...</div>
-    </div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const fetchConversations = async () => {
+    if (!user) return;
+    
     try {
       // Fetch bookings
       const { data: bookingsData, error: bookingsError } = await supabase
         .from('bookings')
         .select('id, title, status, created_at')
-        .eq('user_id', user!.id)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (bookingsError) throw bookingsError;
@@ -123,7 +65,7 @@ const Messages = () => {
       const { data: requestsData, error: requestsError } = await supabase
         .from('customer_requests')
         .select('id, subject, status, created_at')
-        .eq('user_id', user!.id)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (requestsError) throw requestsError;
@@ -274,6 +216,66 @@ const Messages = () => {
       default: return 'bg-gray-100 text-gray-800';
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      fetchConversations();
+      // Set up AI chat as default conversation
+      setSelectedConversation({
+        id: 'ai-chat',
+        title: 'AI Concierge',
+        type: 'booking',
+        status: 'active',
+        unread_count: 0
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (selectedConversation) {
+      fetchMessages();
+    }
+  }, [selectedConversation]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // Set up real-time subscription for messages
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel('messages-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'messages',
+          filter: `user_id=eq.${user.id}`
+        },
+        (payload) => {
+          const newMessage = payload.new as Message;
+          setMessages(prev => [...prev, newMessage]);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
+  if (loading) {
+    return <div className="min-h-screen bg-gradient-ocean flex items-center justify-center">
+      <div className="text-white text-xl">Loading...</div>
+    </div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
 
   if (loadingConversations) {
     return (
@@ -456,38 +458,25 @@ const Messages = () => {
                                 className={`rounded-lg p-3 ${
                                   message.sender_type === 'customer'
                                     ? 'bg-primary text-primary-foreground'
-                                    : message.sender_type === 'ai'
-                                    ? 'bg-secondary/50 border'
-                                    : 'bg-muted'
+                                    : 'bg-muted text-foreground'
                                 }`}
                               >
                                 <p className="text-sm whitespace-pre-wrap">{message.content}</p>
                                 <p className="text-xs opacity-70 mt-1">
-                                  {new Date(message.created_at).toLocaleTimeString()}
+                                  {new Date(message.created_at).toLocaleTimeString([], {
+                                    hour: '2-digit',
+                                    minute: '2-digit'
+                                  })}
                                 </p>
                               </div>
                               {message.sender_type === 'customer' && (
                                 <div className="flex-shrink-0">
-                                  <User className="h-6 w-6 text-primary" />
+                                  <User className="h-6 w-6 text-muted-foreground" />
                                 </div>
                               )}
                             </div>
                           </div>
                         ))}
-                        {sendingMessage && (
-                          <div className="flex justify-start">
-                            <div className="flex items-start gap-2 max-w-[70%]">
-                              <Bot className="h-6 w-6 text-primary" />
-                              <div className="bg-secondary/50 border rounded-lg p-3">
-                                <div className="flex items-center gap-1">
-                                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
-                                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
-                                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        )}
                         <div ref={messagesEndRef} />
                       </div>
                     </ScrollArea>
@@ -497,15 +486,20 @@ const Messages = () => {
                         <Input
                           value={newMessage}
                           onChange={(e) => setNewMessage(e.target.value)}
-                          placeholder={
-                            selectedConversation.id === 'ai-chat' 
-                              ? "Ask me about San Pedro, restaurants, activities..." 
-                              : "Type your message..."
-                          }
-                          onKeyPress={(e) => e.key === 'Enter' && !sendingMessage && sendMessage()}
+                          placeholder="Type your message..."
+                          onKeyPress={(e) => {
+                            if (e.key === 'Enter' && !e.shiftKey) {
+                              e.preventDefault();
+                              sendMessage();
+                            }
+                          }}
                           disabled={sendingMessage}
                         />
-                        <Button onClick={sendMessage} disabled={sendingMessage || !newMessage.trim()}>
+                        <Button 
+                          onClick={sendMessage} 
+                          disabled={!newMessage.trim() || sendingMessage}
+                          size="icon"
+                        >
                           <Send className="h-4 w-4" />
                         </Button>
                       </div>
@@ -513,12 +507,12 @@ const Messages = () => {
                   </CardContent>
                 </>
               ) : (
-                <CardContent className="flex items-center justify-center h-full">
-                  <div className="text-center text-muted-foreground">
+                <div className="flex items-center justify-center h-full text-muted-foreground">
+                  <div className="text-center">
                     <MessageCircle className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>Select a conversation to start messaging</p>
                   </div>
-                </CardContent>
+                </div>
               )}
             </Card>
           </div>
