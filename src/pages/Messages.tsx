@@ -44,16 +44,6 @@ const Messages = () => {
   const [sendingMessage, setSendingMessage] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  if (loading) {
-    return <div className="min-h-screen bg-gradient-ocean flex items-center justify-center">
-      <div className="text-white text-xl">Loading...</div>
-    </div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
   useEffect(() => {
     if (user) {
       fetchConversations();
@@ -103,6 +93,16 @@ const Messages = () => {
       supabase.removeChannel(channel);
     };
   }, [user]);
+
+  if (loading) {
+    return <div className="min-h-screen bg-gradient-ocean flex items-center justify-center">
+      <div className="text-white text-xl">Loading...</div>
+    </div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
