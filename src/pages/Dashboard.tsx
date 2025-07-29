@@ -41,6 +41,12 @@ const Dashboard = () => {
   const [requests, setRequests] = useState<CustomerRequest[]>([]);
   const [loadingData, setLoadingData] = useState(true);
 
+  useEffect(() => {
+    if (user) {
+      fetchUserData();
+    }
+  }, [user]);
+
   if (loading) {
     return <div className="min-h-screen bg-gradient-ocean flex items-center justify-center">
       <div className="text-white text-xl">Loading...</div>
@@ -50,10 +56,6 @@ const Dashboard = () => {
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
-
-  useEffect(() => {
-    fetchUserData();
-  }, [user]);
 
   const fetchUserData = async () => {
     try {
