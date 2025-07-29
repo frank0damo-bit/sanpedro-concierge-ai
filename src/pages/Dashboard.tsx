@@ -6,8 +6,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Calendar, MessageSquare, Plus, Phone } from 'lucide-react';
+import { Calendar, MessageSquare, Plus, Phone, Settings } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUserRole } from '@/hooks/useUserRole';
 import { Header } from '@/components/Header';
 
 interface Booking {
@@ -33,6 +34,7 @@ interface CustomerRequest {
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
+  const { isStaff } = useUserRole();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -167,6 +169,14 @@ const Dashboard = () => {
                 Support
               </Button>
             </Link>
+            {isStaff && (
+              <Link to="/admin">
+                <Button variant="outline">
+                  <Settings className="h-4 w-4" />
+                  Admin
+                </Button>
+              </Link>
+            )}
             <Button onClick={handleSignOut} variant="ghost">
               Sign Out
             </Button>

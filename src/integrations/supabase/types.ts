@@ -148,6 +148,21 @@ export type Database = {
           },
         ]
       }
+      "No Barriers": {
+        Row: {
+          created_at: string
+          id: number
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -156,6 +171,7 @@ export type Database = {
           last_name: string | null
           phone: string | null
           preferred_contact: string | null
+          role: string | null
           updated_at: string
           user_id: string
         }
@@ -166,6 +182,7 @@ export type Database = {
           last_name?: string | null
           phone?: string | null
           preferred_contact?: string | null
+          role?: string | null
           updated_at?: string
           user_id: string
         }
@@ -176,6 +193,7 @@ export type Database = {
           last_name?: string | null
           phone?: string | null
           preferred_contact?: string | null
+          role?: string | null
           updated_at?: string
           user_id?: string
         }
