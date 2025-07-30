@@ -33,6 +33,14 @@ const BookService = () => {
   const [formLoading, setFormLoading] = useState(false);
   const [loadingServices, setLoadingServices] = useState(true);
 
+  useEffect(() => {
+    fetchServices();
+    const serviceParam = searchParams.get('service');
+    if (serviceParam) {
+      setSelectedService(serviceParam);
+    }
+  }, [searchParams]);
+
   if (loading) {
     return <div className="min-h-screen bg-gradient-ocean flex items-center justify-center">
       <div className="text-white text-xl">Loading...</div>
@@ -42,14 +50,6 @@ const BookService = () => {
   if (!user) {
     return <Navigate to="/auth" replace />;
   }
-
-  useEffect(() => {
-    fetchServices();
-    const serviceParam = searchParams.get('service');
-    if (serviceParam) {
-      setSelectedService(serviceParam);
-    }
-  }, [searchParams]);
 
   const fetchServices = async () => {
     try {
