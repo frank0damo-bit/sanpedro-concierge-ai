@@ -59,37 +59,44 @@ const AdminDashboard = () => {
 
   const fetchConversations = async () => {
     try {
-      // Fetch bookings with user profile data
+      // Fetch bookings
       const { data: bookings, error: bookingsError } = await supabase
         .from('bookings')
-        .select(`
-          id, title, status, user_id, created_at,
-          profiles!inner(first_name, last_name)
-        `)
+        .select('id, title, status, user_id, created_at')
         .order('created_at', { ascending: false });
 
-      // Fetch customer requests with user profile data
+      // Fetch customer requests
       const { data: requests, error: requestsError } = await supabase
         .from('customer_requests')
-        .select(`
-          id, subject, status, user_id, created_at,
-          profiles!inner(first_name, last_name)
-        `)
+        .select('id, subject, status, user_id, created_at')
         .order('created_at', { ascending: false });
+
+      // Fetch all profiles to map user data
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('user_id, first_name, last_name');
 
       if (bookingsError) throw bookingsError;
       if (requestsError) throw requestsError;
+      if (profilesError) throw profilesError;
+
+      // Create a map of user profiles for quick lookup
+      const profileMap = new Map();
+      profiles?.forEach((profile: any) => {
+        profileMap.set(profile.user_id, profile);
+      });
 
       const conversationList: Conversation[] = [];
 
       // Add bookings
       bookings?.forEach((booking: any) => {
+        const profile = profileMap.get(booking.user_id);
         conversationList.push({
           id: booking.id,
           title: booking.title,
           type: 'booking',
           user_id: booking.user_id,
-          user_name: `${booking.profiles.first_name} ${booking.profiles.last_name}`,
+          user_name: profile ? `${profile.first_name} ${profile.last_name}` : 'Unknown User',
           status: booking.status,
           unread_count: 0
         });
@@ -97,12 +104,13 @@ const AdminDashboard = () => {
 
       // Add requests
       requests?.forEach((request: any) => {
+        const profile = profileMap.get(request.user_id);
         conversationList.push({
           id: request.id,
           title: request.subject,
           type: 'request',
           user_id: request.user_id,
-          user_name: `${request.profiles.first_name} ${request.profiles.last_name}`,
+          user_name: profile ? `${profile.first_name} ${profile.last_name}` : 'Unknown User',
           status: request.status,
           unread_count: 0
         });
