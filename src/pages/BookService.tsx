@@ -34,31 +34,6 @@ const BookService = () => {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [loadingServices, setLoadingServices] = useState(true);
 
-  useEffect(() => {
-    fetchServices();
-  }, []);
-
-  useEffect(() => {
-    const serviceParam = searchParams.get('service');
-    if (serviceParam && serviceCategories.length > 0) {
-      const service = serviceCategories.find(s => s.id === serviceParam);
-      if (service) {
-        setSelectedService(service);
-        setShowBookingForm(true);
-      }
-    }
-  }, [searchParams, serviceCategories]);
-
-  if (loading) {
-    return <div className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-xl">Loading...</div>
-    </div>;
-  }
-
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
   const fetchServices = async () => {
     try {
       const { data, error } = await supabase
@@ -88,6 +63,31 @@ const BookService = () => {
       setLoadingServices(false);
     }
   };
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  useEffect(() => {
+    const serviceParam = searchParams.get('service');
+    if (serviceParam && serviceCategories.length > 0) {
+      const service = serviceCategories.find(s => s.id === serviceParam);
+      if (service) {
+        setSelectedService(service);
+        setShowBookingForm(true);
+      }
+    }
+  }, [searchParams, serviceCategories]);
+
+  if (loading) {
+    return <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="text-xl">Loading...</div>
+    </div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
 
   const handleBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
