@@ -240,23 +240,23 @@ const Index = () => {
                     <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
                   </div>
                   <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <Link to="/book">
-                    <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      Learn More
-                    </Button>
-                  </Link>
+                   <Link to="/book-service">
+                     <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                       Learn More
+                     </Button>
+                   </Link>
                 </CardContent>
               </Card>
             ))}
           </div>
 
-          <div className="text-center">
-            <Link to="/book">
-              <Button size="lg" variant="ocean" className="text-lg px-8 py-6 font-semibold">
-                View All Services
-              </Button>
-            </Link>
-          </div>
+           <div className="text-center">
+             <Link to="/book-service">
+               <Button size="lg" variant="ocean" className="text-lg px-8 py-6 font-semibold">
+                 View All Services
+               </Button>
+             </Link>
+           </div>
         </div>
       </section>
 
