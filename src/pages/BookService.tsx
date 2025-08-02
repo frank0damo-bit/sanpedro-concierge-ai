@@ -51,7 +51,13 @@ const BookService = () => {
         'Spa & Wellness': '/src/assets/spa-wellness.jpg',
         'Water Sports Equipment': '/src/assets/water-sports.jpg',
         'Private Chef Services': '/src/assets/private-chef.jpg',
-        'Photography Services': '/src/assets/photography.jpg'
+        'Photography Services': '/src/assets/photography.jpg',
+        'Fishing Charters': '/src/assets/fishing-charter.jpg',
+        'Cultural Experiences': '/src/assets/cultural-experience.jpg',
+        'Medical & Emergency': '/src/assets/medical-emergency.jpg',
+        'Grocery & Essentials': '/src/assets/grocery-essentials.jpg',
+        'Event Planning': '/src/assets/event-planning.jpg',
+        'Laundry & Housekeeping': '/src/assets/laundry-housekeeping.jpg'
       };
       
       const enrichedServices = (data || []).map(service => ({
@@ -275,13 +281,24 @@ const BookService = () => {
 
   // Service marketplace view
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5">
-      <Header />
-      <div className="container mx-auto px-4 py-24">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-4">Premium Concierge Services</h1>
-          <p className="text-xl text-muted-foreground">Choose from our curated selection of luxury services</p>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 relative overflow-hidden">
+      {/* Ocean Wave Background */}
+      <div className="absolute inset-0 opacity-10">
+        <svg className="absolute bottom-0 w-full h-64" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="currentColor" className="text-blue-300"></path>
+        </svg>
+        <svg className="absolute bottom-0 w-full h-48" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="currentColor" className="text-blue-400"></path>
+        </svg>
+      </div>
+      
+      <div className="relative z-10">
+        <Header />
+        <div className="container mx-auto px-4 py-24">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-foreground mb-4">Premium Concierge Services</h1>
+            <p className="text-xl text-muted-foreground">Choose from our curated selection of luxury services</p>
+          </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {serviceCategories.map((service) => (
@@ -341,6 +358,7 @@ const BookService = () => {
             <p className="text-muted-foreground">No services available at the moment.</p>
           </div>
         )}
+        </div>
       </div>
     </div>
   );
