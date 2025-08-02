@@ -14,6 +14,20 @@ import { Header } from '@/components/Header';
 import { PaymentButton } from '@/components/PaymentButton';
 import { Badge } from '@/components/ui/badge';
 
+// Import service images
+import airportTransferImg from '@/assets/airport-transfer.jpg';
+import personalShoppingImg from '@/assets/personal-shopping.jpg';
+import spaWellnessImg from '@/assets/spa-wellness.jpg';
+import waterSportsImg from '@/assets/water-sports.jpg';
+import privateChefImg from '@/assets/private-chef.jpg';
+import photographyImg from '@/assets/photography.jpg';
+import fishingCharterImg from '@/assets/fishing-charter.jpg';
+import culturalExperienceImg from '@/assets/cultural-experience.jpg';
+import medicalEmergencyImg from '@/assets/medical-emergency.jpg';
+import groceryEssentialsImg from '@/assets/grocery-essentials.jpg';
+import eventPlanningImg from '@/assets/event-planning.jpg';
+import laundryHousekeepingImg from '@/assets/laundry-housekeeping.jpg';
+
 interface ServiceCategory {
   id: string;
   name: string;
@@ -46,18 +60,18 @@ const BookService = () => {
       
       // Add enriched data with actual images and pricing
       const serviceImages = {
-        'Airport Transfers': '/src/assets/airport-transfer.jpg',
-        'Personal Shopping': '/src/assets/personal-shopping.jpg', 
-        'Spa & Wellness': '/src/assets/spa-wellness.jpg',
-        'Water Sports Equipment': '/src/assets/water-sports.jpg',
-        'Private Chef Services': '/src/assets/private-chef.jpg',
-        'Photography Services': '/src/assets/photography.jpg',
-        'Fishing Charters': '/src/assets/fishing-charter.jpg',
-        'Cultural Experiences': '/src/assets/cultural-experience.jpg',
-        'Medical & Emergency': '/src/assets/medical-emergency.jpg',
-        'Grocery & Essentials': '/src/assets/grocery-essentials.jpg',
-        'Event Planning': '/src/assets/event-planning.jpg',
-        'Laundry & Housekeeping': '/src/assets/laundry-housekeeping.jpg'
+        'Airport Transfers': airportTransferImg,
+        'Personal Shopping': personalShoppingImg, 
+        'Spa & Wellness': spaWellnessImg,
+        'Water Sports Equipment': waterSportsImg,
+        'Private Chef Services': privateChefImg,
+        'Photography Services': photographyImg,
+        'Fishing Charters': fishingCharterImg,
+        'Cultural Experiences': culturalExperienceImg,
+        'Medical & Emergency': medicalEmergencyImg,
+        'Grocery & Essentials': groceryEssentialsImg,
+        'Event Planning': eventPlanningImg,
+        'Laundry & Housekeeping': laundryHousekeepingImg
       };
       
       const enrichedServices = (data || []).map(service => ({
