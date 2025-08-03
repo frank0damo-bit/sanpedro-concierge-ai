@@ -5,11 +5,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarIcon, ShoppingCart, Star, ArrowLeft } from 'lucide-react';
+import { CalendarIcon, ShoppingCart, Star, ArrowLeft, Plus } from 'lucide-react';
 import { format } from 'date-fns';
-import { useToast } from '@/components/ui/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useCart } from '@/contexts/CartContext';
 import { Header } from '@/components/Header';
 import { PaymentButton } from '@/components/PaymentButton';
 import { Badge } from '@/components/ui/badge';
@@ -40,6 +41,7 @@ interface ServiceCategory {
 
 const BookService = () => {
   const { user, loading } = useAuth();
+  const { addToCart } = useCart();
   const { toast } = useToast();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -152,6 +154,21 @@ const BookService = () => {
     }
   };
 
+  const handleAddToCart = (service: ServiceCategory) => {
+    addToCart({
+      id: service.id,
+      name: service.name,
+      description: service.description,
+      price: service.price || 100,
+      image_url: service.image_url,
+    });
+    
+    toast({
+      title: "Added to Cart!",
+      description: `${service.name} has been added to your cart.`,
+    });
+  };
+
   if (loadingServices) {
     return (
       <div className="min-h-screen bg-background">
@@ -219,11 +236,21 @@ const BookService = () => {
                 </div>
 
                 <div className="space-y-4">
-                  <PaymentButton 
-                    amount={selectedService.price || 100}
-                    description={`${selectedService.name} - Concierge Service`}
-                    className="w-full"
-                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => handleAddToCart(selectedService)}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add to Cart
+                    </Button>
+                    <PaymentButton 
+                      amount={selectedService.price || 100}
+                      description={`${selectedService.name} - Concierge Service`}
+                      className="w-full"
+                    />
+                  </div>
                   <Button 
                     variant="outline" 
                     className="w-full"
@@ -347,15 +374,25 @@ const BookService = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Button 
-                    className="w-full"
-                    onClick={() => {
-                      setSelectedService(service);
-                      setShowBookingForm(true);
-                    }}
-                  >
-                    View Details & Book
-                  </Button>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button 
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        setSelectedService(service);
+                        setShowBookingForm(true);
+                      }}
+                    >
+                      View Details
+                    </Button>
+                    <Button 
+                      className="w-full"
+                      onClick={() => handleAddToCart(service)}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add to Cart
+                    </Button>
+                  </div>
                   <PaymentButton 
                     amount={service.price || 100}
                     description={`${service.name} - Concierge Service`}

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, Menu, Phone, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
+import { Cart } from "@/components/Cart";
 
 export function Header() {
   const { user } = useAuth();
@@ -34,6 +35,7 @@ export function Header() {
             <MessageCircle className="h-4 w-4" />
             AI Assistant
           </Button>
+          <Cart />
           {user ? (
             <Link to="/dashboard">
               <Button variant="outline" size="sm">
