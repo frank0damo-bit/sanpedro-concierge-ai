@@ -487,17 +487,7 @@ const BookService = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
             <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
-            
-            {/* Start Planning CTA */}
-            <Button 
-              size="lg" 
-              className="mb-8"
-              onClick={() => {
-                document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              Start Planning My Trip
-            </Button>
+      
             
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
