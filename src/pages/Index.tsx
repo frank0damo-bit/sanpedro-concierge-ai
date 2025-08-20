@@ -355,11 +355,7 @@ const Index = () => {
             </p>
             
     
-                <h3 className="font-semibold text-foreground mb-2">Email</h3>
-                <p className="text-muted-foreground text-sm">hello@caribeconcierge.com</p>
-              </div>
-            </div>
-            
+  
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/book">
                 <Button variant="ocean" size="lg" className="text-lg px-8 py-6 font-semibold">
