@@ -465,6 +465,17 @@ const BookService = () => {
             <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
             <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
             
+            {/* Start Planning CTA */}
+            <Button 
+              size="lg" 
+              className="mb-8"
+              onClick={() => {
+                document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Start Planning My Trip
+            </Button>
+            
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
               <Button
@@ -488,6 +499,7 @@ const BookService = () => {
           </div>
 
           {/* Services by Category */}
+          <section id="services-section">
           {filteredGroups.map((categoryGroup) => (
             <div key={categoryGroup} className="mb-12">
               <h2 className="text-2xl font-bold mb-6 text-center">{categoryGroup}</h2>
@@ -546,11 +558,6 @@ const BookService = () => {
                             Add to Cart
                           </Button>
                         </div>
-                        <PaymentButton 
-                          amount={service.price || 100}
-                          description={`${service.name} - Belize Travel Service`}
-                          className="w-full"
-                        />
                       </div>
                     </CardContent>
                   </Card>
@@ -558,6 +565,7 @@ const BookService = () => {
               </div>
             </div>
           ))}
+          </section>
 
           {serviceCategories.length === 0 && (
             <div className="text-center py-12">
