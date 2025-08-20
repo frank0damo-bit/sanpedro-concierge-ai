@@ -354,27 +354,7 @@ const Index = () => {
               Connect with your personal concierge team and let us create unforgettable moments in San Pedro.
             </p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
-                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
-                  <MessageCircle className="h-6 w-6 text-primary-foreground" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">Personal Concierge Chat</h3>
-                <p className="text-muted-foreground text-sm">Instant connection with your dedicated team member</p>
-              </div>
-              
-              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
-                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
-                  <Phone className="h-6 w-6 text-primary-foreground" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">24/7 Support</h3>
-                <p className="text-muted-foreground text-sm">+501 226-CARE</p>
-              </div>
-              
-              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
-                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
-                  <Mail className="h-6 w-6 text-primary-foreground" />
-                </div>
+    
                 <h3 className="font-semibold text-foreground mb-2">Email</h3>
                 <p className="text-muted-foreground text-sm">hello@caribeconcierge.com</p>
               </div>
