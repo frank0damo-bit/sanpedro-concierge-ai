@@ -458,16 +458,6 @@ const BookService = () => {
       </div>
       
       <div className="relative z-10">
-           {/* Start Planning CTA */}
-            <Button 
-              size="lg" 
-              className="mb-8"
-              onClick={() => {
-                document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' });
-              }}
-            >
-              Start Planning My Trip
-            </Button>
         <Header />
         <div className="container mx-auto px-4 py-24">
           <div className="text-center mb-12">
