@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -446,7 +447,6 @@ const BookService = () => {
 
   // Service marketplace view
   return (
-    <div className="container mx-auto px-4 py-24 md:pb-40">
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 relative overflow-hidden">
       {/* Ocean Wave Background */}
       <div className="absolute inset-0 opacity-10">
@@ -456,21 +456,46 @@ const BookService = () => {
         <svg className="absolute bottom-0 w-full h-48" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="currentColor" className="text-blue-400"></path>
         </svg>
-        <div className="hidden md:block fixed bottom-4 left-0 right-0 z-40"> 
-          <div className="container mx-auto px-4"> 
-            <div className="bg-background/80 supports-[backdrop-filter]:bg-background/60 backdrop-blur border rounded-xl shadow-lg p-3 flex items-center justify-between"> 
-              <span className="text-sm text-muted-foreground"> Ready to plan your Belize trip? Browse and book services below. </span> 
-              <div className="flex gap-2"> <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" onClick={() => { const el = document.getElementById('services-section'); el?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} > Explore Services </button> 
-                <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" onClick={() => { const el = document.getElementById('services-section'); el?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} > Start Planning My Trip </button> 
-              </div> 
-            </div> 
-          </div> 
-        </div>
+      </div>
 
+      {/* Desktop CTA */}
+      <div className="hidden md:block fixed bottom-4 left-0 right-0 z-40">
+        <div className="container mx-auto px-4">
+          <div className="bg-background/80 supports-[backdrop-filter]:bg-background/60 backdrop-blur border rounded-xl shadow-lg p-3 flex items-center justify-between">
+            <span className="text-sm text-muted-foreground">
+              Ready to plan your Belize trip? Browse and book services below.
+            </span>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  const el = document.getElementById('services-section');
+                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
+                Explore Services
+              </Button>
+              <Button
+                onClick={() => {
+                  const el = document.getElementById('services-section');
+                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+              >
+                Start Planning My Trip
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
       
       <div className="relative z-10">
-           {/* Start Planning CTA */}
+        <Header />
+        <div className="container mx-auto px-4 py-24 md:pb-40">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
+            <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
+            
+            {/* Start Planning CTA */}
             <Button 
               size="lg" 
               className="mb-8"
@@ -480,13 +505,6 @@ const BookService = () => {
             >
               Start Planning My Trip
             </Button>
-        <Header />
-        <div className="container mx-auto px-4 py-24">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
-            <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
-            
-         
             
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -512,71 +530,71 @@ const BookService = () => {
 
           {/* Services by Category */}
           <section id="services-section">
-          {filteredGroups.map((categoryGroup) => (
-            <div key={categoryGroup} className="mb-12">
-              <h2 className="text-2xl font-bold mb-6 text-center">{categoryGroup}</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {servicesByCategory[categoryGroup].map((service) => (
-                  <Card key={service.id} className="group overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border-0 bg-card/80 backdrop-blur-sm">
-                    <div className="aspect-video bg-muted overflow-hidden relative">
-                      <img 
-                        src={service.image_url} 
-                        alt={service.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-xl font-bold">{service.name}</h3>
-                        <div className="text-right">
-                          <div className="text-xs text-muted-foreground">from</div>
-                          <div className="text-lg font-semibold text-primary">
-                            ${service.price}
+            {filteredGroups.map((categoryGroup) => (
+              <div key={categoryGroup} className="mb-12">
+                <h2 className="text-2xl font-bold mb-6 text-center">{categoryGroup}</h2>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {servicesByCategory[categoryGroup].map((service) => (
+                    <Card key={service.id} className="group overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border-0 bg-card/80 backdrop-blur-sm">
+                      <div className="aspect-video bg-muted overflow-hidden relative">
+                        <img 
+                          src={service.image_url} 
+                          alt={service.name}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      </div>
+                      <CardContent className="p-6">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className="text-xl font-bold">{service.name}</h3>
+                          <div className="text-right">
+                            <div className="text-xs text-muted-foreground">from</div>
+                            <div className="text-lg font-semibold text-primary">
+                              ${service.price}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-4 line-clamp-2">
-                        {service.description}
-                      </p>
+                        
+                        <p className="text-muted-foreground mb-4 line-clamp-2">
+                          {service.description}
+                        </p>
 
-                      <div className="flex items-center mb-4">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="ml-2 text-sm text-muted-foreground">(5.0)</span>
-                      </div>
-
-                      <div className="space-y-2">
-                        <div className="grid grid-cols-2 gap-2">
-                          <Button 
-                            variant="outline"
-                            className="w-full"
-                            onClick={() => {
-                              setSelectedService(service);
-                              setShowBookingForm(false);
-                            }}
-                          >
-                            View Details
-                          </Button>
-                          <Button 
-                            className="w-full"
-                            onClick={() => handleAddToCart(service)}
-                          >
-                            <Plus className="w-4 h-4 mr-2" />
-                            Add to Cart
-                          </Button>
+                        <div className="flex items-center mb-4">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <span className="ml-2 text-sm text-muted-foreground">(5.0)</span>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+
+                        <div className="space-y-2">
+                          <div className="grid grid-cols-2 gap-2">
+                            <Button 
+                              variant="outline"
+                              className="w-full"
+                              onClick={() => {
+                                setSelectedService(service);
+                                setShowBookingForm(false);
+                              }}
+                            >
+                              View Details
+                            </Button>
+                            <Button 
+                              className="w-full"
+                              onClick={() => handleAddToCart(service)}
+                            >
+                              <Plus className="w-4 h-4 mr-2" />
+                              Add to Cart
+                            </Button>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
           </section>
 
           {serviceCategories.length === 0 && (
