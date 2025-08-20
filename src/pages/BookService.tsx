@@ -458,13 +458,7 @@ const BookService = () => {
       </div>
       
       <div className="relative z-10">
-        <Header />
-        <div className="container mx-auto px-4 py-24">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
-            <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
-            
-            {/* Start Planning CTA */}
+           {/* Start Planning CTA */}
             <Button 
               size="lg" 
               className="mb-8"
@@ -474,6 +468,13 @@ const BookService = () => {
             >
               Start Planning My Trip
             </Button>
+        <Header />
+        <div className="container mx-auto px-4 py-24">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
+            <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
+            
+         
             
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
