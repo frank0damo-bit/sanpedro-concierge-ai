@@ -309,6 +309,16 @@ const Index = () => {
 
       {/* Guest Testimonials */}
       <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-6">
+              Unforgettable moments at your fingertips
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              See how travelers turned great stays into extraordinary memories
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {testimonials.map((testimonial, index) => (
               <Card key={index} className="p-6 hover:shadow-ocean transition-shadow duration-300">
@@ -331,15 +341,6 @@ const Index = () => {
             ))}
           </div>
         </div>
-      <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">
-              Unforgettable moments at your fingertips
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              See how travelers turned great stays into extraordinary memories
-            </p>
-          </div>
       </section>
 
       {/* Ready to Start Section */}
