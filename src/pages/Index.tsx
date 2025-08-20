@@ -344,7 +344,7 @@ const Index = () => {
       </section>
 
       {/* Ready to Start Section */}
-      <section id="contact" className="py-12 bg-accent-light/10">
+      <section id="contact" className="pt-12 pb-20 bg-accent-light/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-bold text-foreground mb-6">
