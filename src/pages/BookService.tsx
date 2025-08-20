@@ -475,14 +475,7 @@ const BookService = () => {
               >
                 Explore Services
               </Button>
-              <Button
-                onClick={() => {
-                  const el = document.getElementById('services-section');
-                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }}
-              >
-                Start Planning My Trip
-              </Button>
+        
             </div>
           </div>
         </div>
