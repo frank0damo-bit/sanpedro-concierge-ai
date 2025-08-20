@@ -505,8 +505,11 @@ const BookService = () => {
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="text-xl font-bold">{service.name}</h3>
-                        <div className="text-lg font-semibold text-primary">
-                          ${service.price}
+                        <div className="text-right">
+                          <div className="text-xs text-muted-foreground">from</div>
+                          <div className="text-lg font-semibold text-primary">
+                            ${service.price}
+                          </div>
                         </div>
                       </div>
                       
