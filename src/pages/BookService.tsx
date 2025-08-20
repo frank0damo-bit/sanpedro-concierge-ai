@@ -511,26 +511,6 @@ const BookService = () => {
         </svg>
       </div>
 
-      {/* Desktop CTA */}
-      <div className="hidden md:block fixed bottom-4 left-0 right-0 z-40">
-        <div className="container mx-auto px-4">
-          <div className="bg-background/80 supports-[backdrop-filter]:bg-background/60 backdrop-blur border rounded-xl shadow-lg p-3 flex items-center justify-between">
-            <span className="text-sm text-muted-foreground">
-              Ready to plan your Belize trip? Browse and book services below.
-            </span>
-            <div className="flex gap-2">
-              <Button
-                variant="ocean"
-                onClick={() => setShowTripBuilder(true)}
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                Build Custom Trip with AI
-              </Button>
-              <Cart />
-            </div>
-          </div>
-        </div>
-      </div>
       
       <div className="relative z-10">
         <Header />
