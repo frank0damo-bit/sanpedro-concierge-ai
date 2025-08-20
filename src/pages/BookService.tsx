@@ -116,9 +116,8 @@ const BookService = () => {
     </div>;
   }
 
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
+  // Allow viewing services without authentication
+  const requiresAuth = showBookingForm || selectedService;
 
   const handleBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -155,6 +154,11 @@ const BookService = () => {
   };
 
   const handleAddToCart = (service: ServiceCategory) => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
+    
     addToCart({
       id: service.id,
       name: service.name,
@@ -180,8 +184,11 @@ const BookService = () => {
     );
   }
 
-  // Service detail view
+  // Service detail view - require auth for booking forms
   if (selectedService && showBookingForm) {
+    if (!user) {
+      return <Navigate to="/auth" replace />;
+    }
     return (
       <div className="min-h-screen bg-background">
         <Header />
@@ -320,6 +327,135 @@ const BookService = () => {
     );
   }
 
+  // Service detail view without booking form (no auth required)
+  if (selectedService && !showBookingForm) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-24">
+          <div className="max-w-4xl mx-auto">
+            <Button 
+              variant="ghost" 
+              onClick={() => setSelectedService(null)}
+              className="mb-6"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Services
+            </Button>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Service Details */}
+              <div>
+                <div className="aspect-video bg-muted rounded-lg mb-6 overflow-hidden">
+                  <img 
+                    src={selectedService.image_url} 
+                    alt={selectedService.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <h1 className="text-3xl font-bold mb-4">{selectedService.name}</h1>
+                <p className="text-muted-foreground mb-6">{selectedService.description}</p>
+                
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="text-3xl font-bold text-primary">
+                    ${selectedService.price}
+                  </div>
+                  <div className="flex items-center">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="ml-2 text-sm text-muted-foreground">(5.0)</span>
+                  </div>
+                </div>
+
+                <div className="space-y-2 mb-6">
+                  <h3 className="font-semibold">Features:</h3>
+                  {selectedService.features?.map((feature, index) => (
+                    <Badge key={index} variant="secondary">
+                      {feature}
+                    </Badge>
+                  ))}
+                </div>
+
+                <div className="space-y-4">
+                  <div className="grid grid-cols-2 gap-2">
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => handleAddToCart(selectedService)}
+                    >
+                      <Plus className="w-4 h-4 mr-2" />
+                      Add to Cart
+                    </Button>
+                    <PaymentButton 
+                      amount={selectedService.price || 100}
+                      description={`${selectedService.name} - Concierge Service`}
+                      className="w-full"
+                    />
+                  </div>
+                  {user && (
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => setShowBookingForm(true)}
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      Custom Booking Request
+                    </Button>
+                  )}
+                  {!user && (
+                    <Button 
+                      variant="outline" 
+                      className="w-full"
+                      onClick={() => navigate('/auth')}
+                    >
+                      <ShoppingCart className="w-4 h-4 mr-2" />
+                      Sign in for Custom Booking
+                    </Button>
+                  )}
+                </div>
+              </div>
+
+              {/* Information Panel */}
+              <div>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Service Information</CardTitle>
+                    <CardDescription>
+                      Everything you need to know about this service
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div>
+                      <h4 className="font-semibold mb-2">What's Included:</h4>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li>• Professional service delivery</li>
+                        <li>• Same-day booking available</li>
+                        <li>• 24/7 customer support</li>
+                        <li>• Local expert guidance</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold mb-2">How it Works:</h4>
+                      <ol className="text-sm text-muted-foreground space-y-1">
+                        <li>1. Book the service</li>
+                        <li>2. We'll confirm availability</li>
+                        <li>3. Enjoy your experience</li>
+                        <li>4. Rate and review</li>
+                      </ol>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   // Service marketplace view
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 relative overflow-hidden">
@@ -380,7 +516,7 @@ const BookService = () => {
                       className="w-full"
                       onClick={() => {
                         setSelectedService(service);
-                        setShowBookingForm(true);
+                        setShowBookingForm(false); // Just view details, not booking form
                       }}
                     >
                       View Details
