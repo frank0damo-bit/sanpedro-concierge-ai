@@ -299,17 +299,12 @@ const Index = () => {
             ))}
           </div>
 
-          <div className="text-center">
-            <Button variant="glass" size="lg" className="text-lg px-8 py-6 font-semibold">
-              <MessageCircle className="h-5 w-5 mr-2" />
-              Chat with Your Concierge Now
-            </Button>
-          </div>
+          
         </div>
       </section>
 
       {/* Ready to Start Section */}
-      <section id="contact" className="pt-20 pb-20 bg-accent-light/10">
+      <section id="contact" className="pt-6 pb-20 bg-accent-light/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-bold text-foreground mb-6">
