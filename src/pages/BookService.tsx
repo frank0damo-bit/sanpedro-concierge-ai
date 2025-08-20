@@ -520,20 +520,11 @@ const BookService = () => {
             </span>
             <div className="flex gap-2">
               <Button
-                variant="outline"
+                variant="ocean"
                 onClick={() => setShowTripBuilder(true)}
               >
                 <Sparkles className="w-4 h-4 mr-2" />
                 Build Custom Trip with AI
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  const el = document.getElementById('services-section');
-                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }}
-              >
-                Explore Services
               </Button>
               <Cart />
             </div>
@@ -547,15 +538,6 @@ const BookService = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
             <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
-            
-            <Button 
-              onClick={() => setShowTripBuilder(true)}
-              className="bg-primary hover:bg-primary/90 text-white mb-8"
-              size="lg"
-            >
-              <Sparkles className="w-4 h-4 mr-2" />
-              Build Custom Trip with AI
-            </Button>
             
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
