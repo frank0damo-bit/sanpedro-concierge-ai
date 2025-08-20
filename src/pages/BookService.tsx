@@ -446,6 +446,7 @@ const BookService = () => {
 
   // Service marketplace view
   return (
+    <div className="container mx-auto px-4 py-24 md:pb-40">
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 relative overflow-hidden">
       {/* Ocean Wave Background */}
       <div className="absolute inset-0 opacity-10">
@@ -455,9 +456,30 @@ const BookService = () => {
         <svg className="absolute bottom-0 w-full h-48" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="currentColor" className="text-blue-400"></path>
         </svg>
+        <div className="hidden md:block fixed bottom-4 left-0 right-0 z-40"> 
+          <div className="container mx-auto px-4"> 
+            <div className="bg-background/80 supports-[backdrop-filter]:bg-background/60 backdrop-blur border rounded-xl shadow-lg p-3 flex items-center justify-between"> 
+              <span className="text-sm text-muted-foreground"> Ready to plan your Belize trip? Browse and book services below. </span> 
+              <div className="flex gap-2"> <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" onClick={() => { const el = document.getElementById('services-section'); el?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} > Explore Services </button> 
+                <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" onClick={() => { const el = document.getElementById('services-section'); el?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }} > Start Planning My Trip </button> 
+              </div> 
+            </div> 
+          </div> 
+        </div>
+
       </div>
       
       <div className="relative z-10">
+           {/* Start Planning CTA */}
+            <Button 
+              size="lg" 
+              className="mb-8"
+              onClick={() => {
+                document.getElementById('services-section')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+            >
+              Start Planning My Trip
+            </Button>
         <Header />
         <div className="container mx-auto px-4 py-24">
           <div className="text-center mb-12">
