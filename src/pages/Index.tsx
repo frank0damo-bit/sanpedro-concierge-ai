@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -307,9 +308,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Guest Testimonials */}
-   
-
       {/* Ready to Start Section */}
       <section id="contact" className="pt-6 pb-20 bg-accent-light/10">
         <div className="container mx-auto px-4">
@@ -317,31 +315,30 @@ const Index = () => {
             <h2 className="text-4xl font-bold text-foreground mb-6">
               Ready to Experience Paradise?
             </h2>
-         <p className="text-xl text-muted-foreground">
+            <p className="text-xl text-muted-foreground mb-12">
               See how travelers turned great stays into extraordinary memories
             </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-6 hover:shadow-ocean transition-shadow duration-300">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-4 italic">"{testimonial.text}"</p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-foreground">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+              {testimonials.map((testimonial, index) => (
+                <Card key={index} className="p-6 hover:shadow-ocean transition-shadow duration-300">
+                  <CardContent className="p-0">
+                    <div className="flex items-center mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                      ))}
                     </div>
-                    <Badge variant="outline">{testimonial.service}</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
+                    <p className="text-muted-foreground mb-4 italic">"{testimonial.text}"</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-semibold text-foreground">{testimonial.name}</p>
+                        <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                      </div>
+                      <Badge variant="outline">{testimonial.service}</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/book">
