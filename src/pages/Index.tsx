@@ -42,7 +42,7 @@ const Index = () => {
       const { data, error } = await supabase
         .from('service_categories')
         .select('*')
-        .eq('is_active', true)
+        .eq('active', true)
         .limit(6);
 
       if (error) throw error;
