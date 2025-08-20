@@ -350,9 +350,7 @@ const Index = () => {
             <h2 className="text-4xl font-bold text-foreground mb-6">
               Ready to Experience Paradise?
             </h2>
-            <p className="text-xl text-muted-foreground mb-12">
-              Connect with your personal concierge team and let us create unforgettable moments in San Pedro.
-            </p>
+      
             
     
   
