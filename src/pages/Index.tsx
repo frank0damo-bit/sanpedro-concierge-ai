@@ -105,7 +105,7 @@ const Index = () => {
       <Header />
       
       {/* Hero Section - LocalBird Style */}
-      <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center overflow-hidden scroll-mt-16 md:scroll-mt-20"
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto animate-fade-in">
@@ -350,7 +350,9 @@ const Index = () => {
             <h2 className="text-4xl font-bold text-foreground mb-6">
               Ready to Experience Paradise?
             </h2>
-      
+            <p className="text-xl text-muted-foreground mb-12">
+              Connect with your personal concierge team and let us create unforgettable moments in San Pedro.
+            </p>
             
     
   

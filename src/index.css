@@ -132,3 +132,7 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+html { 
+   scroll-behavior: smooth; 
+ }
