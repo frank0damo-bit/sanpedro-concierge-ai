@@ -29,7 +29,7 @@ export function Header() {
         <div className="flex items-center gap-3">
           <Button variant="glass" size="sm" className="hidden sm:flex">
             <Phone className="h-4 w-4" />
-            Call Us
+            Contact Us
           </Button>
           <Button variant="ocean" size="sm">
             <MessageCircle className="h-4 w-4" />
