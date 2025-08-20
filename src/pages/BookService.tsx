@@ -16,6 +16,7 @@ import { PaymentButton } from '@/components/PaymentButton';
 import { Badge } from '@/components/ui/badge';
 import { TripBuilder } from '@/components/TripBuilder';
 import { TripPackageView } from '@/components/TripPackageView';
+import { Cart } from '@/components/Cart';
 
 interface ServiceCategory {
   id: string;
@@ -520,6 +521,13 @@ const BookService = () => {
             <div className="flex gap-2">
               <Button
                 variant="outline"
+                onClick={() => setShowTripBuilder(true)}
+              >
+                <Sparkles className="w-4 h-4 mr-2" />
+                Build Custom Trip with AI
+              </Button>
+              <Button
+                variant="outline"
                 onClick={() => {
                   const el = document.getElementById('services-section');
                   el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -527,7 +535,7 @@ const BookService = () => {
               >
                 Explore Services
               </Button>
-        
+              <Cart />
             </div>
           </div>
         </div>
