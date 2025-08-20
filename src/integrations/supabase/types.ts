@@ -61,6 +61,102 @@ export type Database = {
           },
         ]
       }
+      curated_package_items: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          notes: string | null
+          package_id: string
+          quantity: number
+          service_category_id: string | null
+          title: string
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          notes?: string | null
+          package_id: string
+          quantity?: number
+          service_category_id?: string | null
+          title: string
+          total_price?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          notes?: string | null
+          package_id?: string
+          quantity?: number
+          service_category_id?: string | null
+          title?: string
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "curated_package_items_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "curated_packages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "curated_package_items_service_category_id_fkey"
+            columns: ["service_category_id"]
+            isOneToOne: false
+            referencedRelation: "service_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      curated_packages: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          party_size: number
+          prompt: string
+          status: string
+          title: string
+          total_price: number
+          travel_dates: Json | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          party_size?: number
+          prompt: string
+          status?: string
+          title: string
+          total_price?: number
+          travel_dates?: Json | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          party_size?: number
+          prompt?: string
+          status?: string
+          title?: string
+          total_price?: number
+          travel_dates?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       customer_requests: {
         Row: {
           created_at: string | null
