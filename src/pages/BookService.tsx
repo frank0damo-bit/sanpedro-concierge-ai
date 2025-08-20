@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ShoppingCart, Star, ArrowLeft, Plus, Filter } from 'lucide-react';
+import { ShoppingCart, Star, ArrowLeft, Plus, Filter, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -14,6 +14,8 @@ import { useCart } from '@/contexts/CartContext';
 import { Header } from '@/components/Header';
 import { PaymentButton } from '@/components/PaymentButton';
 import { Badge } from '@/components/ui/badge';
+import { TripBuilder } from '@/components/TripBuilder';
+import { TripPackageView } from '@/components/TripPackageView';
 
 interface ServiceCategory {
   id: string;
@@ -38,6 +40,8 @@ const BookService = () => {
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [loadingServices, setLoadingServices] = useState(true);
   const [selectedCategoryGroup, setSelectedCategoryGroup] = useState<string | null>(null);
+  const [showTripBuilder, setShowTripBuilder] = useState(false);
+  const [generatedPackage, setGeneratedPackage] = useState<any>(null);
 
   const fetchServices = async () => {
     try {
@@ -136,12 +140,60 @@ const BookService = () => {
     });
   };
 
+  const handlePackageGenerated = (packageData: any) => {
+    setGeneratedPackage(packageData);
+    setShowTripBuilder(false);
+  };
+
+  const handleBackToTripBuilder = () => {
+    setGeneratedPackage(null);
+    setShowTripBuilder(true);
+  };
+
   if (loadingServices) {
     return (
       <div className="min-h-screen bg-background">
         <Header />
         <div className="container mx-auto px-4 py-24 flex items-center justify-center">
           <div className="text-xl">Loading services...</div>
+        </div>
+      </div>
+    );
+  }
+
+  // Trip package view
+  if (generatedPackage) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-24">
+          <TripPackageView
+            package={generatedPackage.package}
+            items={generatedPackage.items}
+            onBack={handleBackToTripBuilder}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Trip builder view
+  if (showTripBuilder) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-24">
+          <div className="max-w-4xl mx-auto">
+            <Button 
+              variant="ghost" 
+              onClick={() => setShowTripBuilder(false)}
+              className="mb-6"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Services
+            </Button>
+            <TripBuilder onPackageGenerated={handlePackageGenerated} />
+          </div>
         </div>
       </div>
     );
@@ -487,7 +539,15 @@ const BookService = () => {
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-foreground mb-4">Belize Travel Services</h1>
             <p className="text-xl text-muted-foreground mb-8">Everything you need for your perfect Belize adventure</p>
-      
+            
+            <Button 
+              onClick={() => setShowTripBuilder(true)}
+              className="bg-primary hover:bg-primary/90 text-white mb-8"
+              size="lg"
+            >
+              <Sparkles className="w-4 h-4 mr-2" />
+              Build Custom Trip with AI
+            </Button>
             
             {/* Category Filter */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
