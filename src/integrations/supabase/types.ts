@@ -172,6 +172,7 @@ export type Database = {
       service_categories: {
         Row: {
           active: boolean | null
+          category_group: string | null
           created_at: string | null
           description: string | null
           features: string[] | null
@@ -180,10 +181,12 @@ export type Database = {
           image_url: string | null
           name: string
           price: number | null
+          sort_order: number | null
           updated_at: string | null
         }
         Insert: {
           active?: boolean | null
+          category_group?: string | null
           created_at?: string | null
           description?: string | null
           features?: string[] | null
@@ -192,10 +195,12 @@ export type Database = {
           image_url?: string | null
           name: string
           price?: number | null
+          sort_order?: number | null
           updated_at?: string | null
         }
         Update: {
           active?: boolean | null
+          category_group?: string | null
           created_at?: string | null
           description?: string | null
           features?: string[] | null
@@ -204,6 +209,7 @@ export type Database = {
           image_url?: string | null
           name?: string
           price?: number | null
+          sort_order?: number | null
           updated_at?: string | null
         }
         Relationships: []
