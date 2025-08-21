@@ -103,5 +103,4 @@ import { Navigate, useSearchParams } from 'react-router-dom';
       </Card>
     </div>
   );
-};
 export default Auth;
