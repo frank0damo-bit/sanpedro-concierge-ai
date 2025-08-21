@@ -272,6 +272,7 @@ const Index = () => {
               Each team member brings years of hospitality expertise and deep local knowledge.
             </p>
           </div>
+           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {conciergeTeam.map((member, index) => (
