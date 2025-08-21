@@ -297,6 +297,8 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
       </section>
 
       {/* Ready to Start Section */}
