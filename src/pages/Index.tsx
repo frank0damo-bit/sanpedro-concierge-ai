@@ -296,15 +296,7 @@ const Index = () => {
                 </CardContent>
               </Card>
             ))}
-          </div>
-
-          <div className="text-center">
-            <Button variant="glass" size="lg" className="text-lg px-8 py-6 font-semibold">
-              <MessageCircle className="h-5 w-5 mr-2" />
-              Chat with Your Concierge Now
-            </Button>
-          </div>
-        </div>
+      
       </section>
 
       {/* Guest Testimonials */}
