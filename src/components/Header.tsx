@@ -3,12 +3,9 @@ import { MessageCircle, Menu, Phone, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Cart } from "@/components/Cart";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useState } from "react";
 
 export function Header() {
   const { user } = useAuth();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header className="fixed top-0 w-full z-50 bg-gradient-glass backdrop-blur-lg border-b border-border/50">
@@ -24,19 +21,19 @@ export function Header() {
         </Link>
         
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/#home" className="text-foreground hover:text-accent transition-colors">Home</Link>     
-          <Link to="/book-service" className="text-foreground hover:text-accent transition-colors">Services</Link>          
+          <Link to="/book-service" className="text-foreground hover:text-accent transition-colors">Services</Link>
           <a href="#about" className="text-foreground hover:text-accent transition-colors">About</a>
+          <a href="#contact" className="text-foreground hover:text-accent transition-colors">Contact</a>
         </nav>
         
         <div className="flex items-center gap-3">
           <Button variant="glass" size="sm" className="hidden sm:flex">
             <Phone className="h-4 w-4" />
-            Contact Us
+            Call Us
           </Button>
           <Button variant="ocean" size="sm">
             <MessageCircle className="h-4 w-4" />
-            Build My Trip
+            AI Assistant
           </Button>
           <Cart />
           {user ? (
@@ -53,46 +50,9 @@ export function Header() {
               </Button>
             </Link>
           )}
-          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="sm" className="md:hidden">
-                <Menu className="h-4 w-4" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px] flex flex-col">
-              <nav className="flex flex-col gap-4 mt-8">
-                <Link 
-                  to="/#home" 
-                  className="text-foreground hover:text-accent transition-colors text-lg font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Home
-                </Link>
-                <Link 
-                  to="/book-service" 
-                  className="text-foreground hover:text-accent transition-colors text-lg font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Services
-                </Link>
-                <a 
-                  href="#about" 
-                  className="text-foreground hover:text-accent transition-colors text-lg font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  About
-                </a>
-              </nav>
-              
-              <div className="mt-auto mb-6">
-                <Link to="/book-service" onClick={() => setIsMenuOpen(false)}>
-                  <Button className="w-full" size="lg">
-                    Start Planning My Trip
-                  </Button>
-                </Link>
-              </div>
-            </SheetContent>
-          </Sheet>
+          <Button variant="ghost" size="sm" className="md:hidden">
+            <Menu className="h-4 w-4" />
+          </Button>
         </div>
       </div>
     </header>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
@@ -43,7 +42,7 @@ const Index = () => {
       const { data, error } = await supabase
         .from('service_categories')
         .select('*')
-        .eq('active', true)
+        .eq('is_active', true)
         .limit(6);
 
       if (error) throw error;
@@ -106,7 +105,7 @@ const Index = () => {
       <Header />
       
       {/* Hero Section - LocalBird Style */}
-      <section id="home" className="relative min-h-screen bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center overflow-hidden scroll-mt-16 md:scroll-mt-20">
+      <section className="relative min-h-screen bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 container mx-auto px-4 text-center">
           <div className="max-w-4xl mx-auto animate-fade-in">
@@ -120,18 +119,12 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/book">
                 <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
-                  I'm Traveling
+                  I'm Traveling to Belize
                 </Button>
               </Link>
-      <Link to="/auth?intent=partner&redirect=/admin" aria-label="Local partner login">
-  <Button
-    size="lg"
-    variant="ghost"
-    className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10"
-  >
-    I'm Moving
-  </Button>
-</Link>
+              <Button size="lg" variant="ghost" className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10">
+                I'm a Local Partner
+              </Button>
             </div>
           </div>
         </div>
@@ -304,39 +297,87 @@ const Index = () => {
               </Card>
             ))}
           </div>
+
+          <div className="text-center">
+            <Button variant="glass" size="lg" className="text-lg px-8 py-6 font-semibold">
+              <MessageCircle className="h-5 w-5 mr-2" />
+              Chat with Your Concierge Now
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Guest Testimonials */}
+      <section className="py-20 bg-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-6">
+              Unforgettable moments at your fingertips
+            </h2>
+            <p className="text-xl text-muted-foreground">
+              See how travelers turned great stays into extraordinary memories
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            {testimonials.map((testimonial, index) => (
+              <Card key={index} className="p-6 hover:shadow-ocean transition-shadow duration-300">
+                <CardContent className="p-0">
+                  <div className="flex items-center mb-4">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                    ))}
+                  </div>
+                  <p className="text-muted-foreground mb-4 italic">"{testimonial.text}"</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-foreground">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+                    </div>
+                    <Badge variant="outline">{testimonial.service}</Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Ready to Start Section */}
-      <section id="contact" className="pt-6 pb-20 bg-accent-light/10">
+      <section id="contact" className="py-20 bg-accent-light/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-4xl font-bold text-foreground mb-6">
               Ready to Experience Paradise?
             </h2>
             <p className="text-xl text-muted-foreground mb-12">
-              See how travelers turned great stays into extraordinary memories
+              Connect with your personal concierge team and let us create unforgettable moments in San Pedro.
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-              {testimonials.map((testimonial, index) => (
-                <Card key={index} className="p-6 hover:shadow-ocean transition-shadow duration-300">
-                  <CardContent className="p-0">
-                    <div className="flex items-center mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                      ))}
-                    </div>
-                    <p className="text-muted-foreground mb-4 italic">"{testimonial.text}"</p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-semibold text-foreground">{testimonial.name}</p>
-                        <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                      </div>
-                      <Badge variant="outline">{testimonial.service}</Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
+                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
+                  <MessageCircle className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">Personal Concierge Chat</h3>
+                <p className="text-muted-foreground text-sm">Instant connection with your dedicated team member</p>
+              </div>
+              
+              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
+                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
+                  <Phone className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">24/7 Support</h3>
+                <p className="text-muted-foreground text-sm">+501 226-CARE</p>
+              </div>
+              
+              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
+                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
+                  <Mail className="h-6 w-6 text-primary-foreground" />
+                </div>
+                <h3 className="font-semibold text-foreground mb-2">Email</h3>
+                <p className="text-muted-foreground text-sm">hello@caribeconcierge.com</p>
+              </div>
             </div>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

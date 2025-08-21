@@ -15,7 +15,6 @@ import AdminDashboard from "./pages/AdminDashboard";
 import { PaymentSuccess } from "./pages/PaymentSuccess";
 import { PaymentCancelled } from "./pages/PaymentCancelled";
 import NotFound from "./pages/NotFound";
-import { GlobalCTA } from "./components/GlobalCTA";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +40,6 @@ const App = () => (
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
-          <GlobalCTA />
         </BrowserRouter>
         </CartProvider>
       </AuthProvider>
