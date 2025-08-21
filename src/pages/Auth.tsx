@@ -1,3 +1,5 @@
+import React, { useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -7,6 +9,26 @@ import { useToast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { Navigate, useSearchParams } from 'react-router-dom';
+
+function cleanupAuthState() {
+  try {
+    // Remove standard Supabase auth keys from localStorage
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
+        localStorage.removeItem(key);
+      }
+    });
+    // Remove from sessionStorage too
+    Object.keys(sessionStorage || {}).forEach((key) => {
+      if (key.startsWith('supabase.auth.') || key.includes('sb-')) {
+        sessionStorage.removeItem(key);
+      }
+    });
+  } catch {
+    // no-op
+  }
+}
+
 
   return (
     <div className="min-h-screen bg-gradient-ocean flex items-center justify-center p-4">
@@ -102,4 +124,6 @@ import { Navigate, useSearchParams } from 'react-router-dom';
       </Card>
     </div>
   );
+};
+
 export default Auth;
