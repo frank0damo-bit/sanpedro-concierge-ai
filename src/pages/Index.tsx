@@ -123,7 +123,7 @@ const Index = () => {
                 </Button>
               </Link>
               <Button size="lg" variant="ghost" className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10">
-                I'm a Local Partner
+                I'm a Moving to Belize
               </Button>
             </div>
           </div>
