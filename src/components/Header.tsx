@@ -36,7 +36,7 @@ export function Header() {
           </Button>
           <Button variant="ocean" size="sm">
             <MessageCircle className="h-4 w-4" />
-            AI Assistant
+            Build My Trip
           </Button>
           <Cart />
           {user ? (
