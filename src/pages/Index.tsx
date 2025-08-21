@@ -273,7 +273,6 @@ const Index = () => {
             </p>
           </div>
            </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
             {conciergeTeam.map((member, index) => (
               <Card key={index} className="bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300">
