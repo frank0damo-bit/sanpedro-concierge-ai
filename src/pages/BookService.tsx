@@ -54,7 +54,7 @@ const BookService = () => {
       const { data, error } = await supabase
         .from('service_categories')
         .select('*')
-        .eq('is_active', true)
+        .eq('active', true)
         .order('name');
 
       if (error) throw error;
