@@ -101,7 +101,6 @@ const ServicesLanding = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary via-primary to-accent text-center text-primary-foreground">
-        <div className="absolute inset-0 bg-black/20"></div>
          <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Featured Services
@@ -110,6 +109,7 @@ const ServicesLanding = () => {
               Our most popular services, curated by our team of local experts.
             </p>
           </div>
+        <div className="absolute inset-0 bg-black/20"></div>
           <div className="flex justify-center gap-4 mb-12">
             <Button size="lg" variant={userType === "travelling" ? "secondary" : "ghost"} onClick={() => setUserType("travelling")} className="text-lg px-8 py-6 font-semibold">
               I'm Travelling
