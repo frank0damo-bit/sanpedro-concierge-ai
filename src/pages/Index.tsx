@@ -18,6 +18,9 @@ import {
   Heart,
   Camera,
   Plane,
+  Waves,
+  ChefHat,
+  CalendarHeart,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -52,8 +55,11 @@ const Index = () => {
           "Spa & Wellness",
           "Private Excursions",
           "Luxury Transportation",
+          "Water Sports Equipment",
+          "Private Chef Services",
+          "Event Planning"
         ])
-        .limit(3);
+        .limit(5);
 
       if (error) throw error;
 
@@ -64,6 +70,12 @@ const Index = () => {
         "Spa & Wellness": Heart,
         "Private Excursions": Compass,
         "Luxury Transportation": Car,
+        "Water Sports Equipment": Waves,
+        "Private Chef Services": ChefHat,
+        "Event Planning": CalendarHeart,
+        "Restaurants": UtensilsCrossed,
+        "Golf Cart Rentals": Car,
+        "Excursions": Compass,
       };
 
       const imageMap: { [key: string]: string } = {
@@ -73,6 +85,12 @@ const Index = () => {
         "Spa & Wellness": "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
         "Private Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
         "Luxury Transportation": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
+        "Water Sports Equipment": "https://images.unsplash.com/photo-1511222955395-58448a1a3e9c",
+        "Private Chef Services": "https://images.unsplash.com/photo-1621996346565-e326b20f545a",
+        "Event Planning": "https://images.unsplash.com/photo-1519167758481-939e6573b4b6",
+        "Restaurants": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
+        "Golf Cart Rentals": "https://images.unsplash.com/photo-1589139893118-842263886561",
+        "Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
       };
 
       const services = (data || []).map(service => ({
@@ -80,7 +98,7 @@ const Index = () => {
         icon: iconMap[service.name] || Award,
         title: service.name,
         description: service.description,
-        image: imageMap[service.name],
+        image: imageMap[service.name] || "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
       }));
 
       setFeaturedServices(services);
@@ -176,7 +194,7 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-ocean rounded-xl mb-4 shadow-soft">
+              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
                 <Users className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold text-foreground">Curated Experiences</h3>
@@ -185,7 +203,7 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-ocean rounded-xl mb-4 shadow-soft">
+              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
                 <ShieldCheck className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold text-foreground">Vetted Partners</h3>
@@ -194,7 +212,7 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-ocean rounded-xl mb-4 shadow-soft">
+              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
                 <MessageCircle className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold text-foreground">Personal Concierge</h3>
@@ -203,7 +221,7 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-ocean rounded-xl mb-4 shadow-soft">
+              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
                 <Award className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="font-semibold text-foreground">Exclusive Access</h3>
@@ -241,7 +259,7 @@ const Index = () => {
                 </div>
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-gradient-ocean rounded-lg">
+                    <div className="p-2 bg-primary rounded-lg">
                       <service.icon className="h-5 w-5 text-primary-foreground" />
                     </div>
                     <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
@@ -292,7 +310,7 @@ const Index = () => {
                 <CardContent className="p-6 text-center">
                   <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-primary-foreground/30">
                     <AvatarImage src={member.avatar} alt={member.name} />
-                    <AvatarFallback className="text-lg font-bold bg-gradient-ocean text-primary-foreground">
+                    <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
                       {member.name
                         .split(" ")
                         .map((n) => n[0])
