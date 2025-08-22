@@ -8,19 +8,15 @@ import { ShoppingCart, Plus, Minus, Trash2, CreditCard } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { PaymentButton } from '@/components/PaymentButton';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 export const Cart = () => {
   const { items, updateQuantity, removeFromCart, getTotalPrice, getItemCount, clearCart } = useCart();
+  const { user } = useAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-
-  const handleCheckout = () => {
-    // This will be handled by the PaymentButton component
-    toast({
-      title: "Redirecting to Checkout",
-      description: "You'll be redirected to complete your payment securely.",
-    });
-  };
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {

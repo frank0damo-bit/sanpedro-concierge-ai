@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { CalendarIcon, ShoppingCart, Star, ArrowLeft, Plus } from 'lucide-react';
-import { format } from 'date-fns';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
@@ -60,8 +59,7 @@ const BookService = () => {
 
       if (error) throw error;
       
-      // Add enriched data with actual images and pricing
-      const serviceImages = {
+      const serviceImages: { [key: string]: string } = {
         'Airport Transfers': airportTransferImg,
         'Personal Shopping': personalShoppingImg, 
         'Spa & Wellness': spaWellnessImg,
@@ -78,8 +76,8 @@ const BookService = () => {
       
       const enrichedServices = (data || []).map(service => ({
         ...service,
-        price: Math.floor(Math.random() * 500) + 50, // Random price between $50-$550
-        image_url: serviceImages[service.name] || `https://images.unsplash.com/photo-${1500000000000 + Math.floor(Math.random() * 100000000)}`,
+        price: Math.floor(Math.random() * 500) + 50, // Placeholder price
+        image_url: serviceImages[service.name] || `https://placehold.co/600x400?text=${service.name.replace(/\s/g, "+")}`,
         features: ['Professional Service', 'Same Day Booking', '24/7 Support', 'Local Expert Guidance']
       }));
       
@@ -116,13 +114,18 @@ const BookService = () => {
     </div>;
   }
 
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
   const handleBookingSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedService) return;
+
+    if (!user) {
+      toast({
+        title: "Login Required",
+        description: "Please sign in to submit a booking request.",
+      });
+      navigate('/auth');
+      return;
+    }
 
     const formData = new FormData(e.currentTarget);
     
@@ -192,6 +195,7 @@ const BookService = () => {
               onClick={() => {
                 setSelectedService(null);
                 setShowBookingForm(false);
+                navigate('/book-service');
               }}
               className="mb-6"
             >
@@ -255,7 +259,6 @@ const BookService = () => {
                     variant="outline" 
                     className="w-full"
                     onClick={() => {
-                      // Scroll to booking form or show it
                       document.getElementById('booking-form')?.scrollIntoView({ behavior: 'smooth' });
                     }}
                   >
@@ -323,7 +326,6 @@ const BookService = () => {
   // Service marketplace view
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 relative overflow-hidden">
-      {/* Ocean Wave Background */}
       <div className="absolute inset-0 opacity-10">
         <svg className="absolute bottom-0 w-full h-64" viewBox="0 0 1200 120" preserveAspectRatio="none">
           <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="currentColor" className="text-blue-300"></path>

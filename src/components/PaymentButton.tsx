@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 interface PaymentButtonProps {
   amount: number;
@@ -19,6 +20,7 @@ export const PaymentButton = ({ amount, description, className }: PaymentButtonP
   const [showGuestForm, setShowGuestForm] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const handlePayment = async (email?: string) => {
     setLoading(true);
@@ -59,38 +61,21 @@ export const PaymentButton = ({ amount, description, className }: PaymentButtonP
     handlePayment(guestEmail);
   };
 
-  if (!user && !showGuestForm) {
-    return (
-      <Card className="w-full max-w-md mx-auto">
-        <CardHeader>
-          <CardTitle>Complete Your Payment</CardTitle>
-          <CardDescription>
-            ${amount.toFixed(2)} - {description}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <Button 
-            onClick={() => setShowGuestForm(true)}
-            className="w-full"
-            variant="outline"
-          >
-            Continue as Guest
-          </Button>
-          <div className="text-center text-sm text-muted-foreground">
-            or sign in for faster checkout
-          </div>
-        </CardContent>
-      </Card>
-    );
+  const handleCheckoutClick = () => {
+    if (!user) {
+      setShowGuestForm(true);
+    } else {
+      handlePayment();
+    }
   }
 
   if (!user && showGuestForm) {
     return (
-      <Card className="w-full max-w-md mx-auto">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Guest Checkout</CardTitle>
           <CardDescription>
-            ${amount.toFixed(2)} - {description}
+            Enter your email to continue with the payment of ${amount.toFixed(2)}.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -121,15 +106,17 @@ export const PaymentButton = ({ amount, description, className }: PaymentButtonP
               {loading ? "Processing..." : "Pay Now"}
             </Button>
           </div>
+          <div className="text-center text-sm text-muted-foreground pt-4">
+            or <a href="/auth" className="underline">sign in</a> for a faster checkout
+          </div>
         </CardContent>
       </Card>
     );
   }
 
-  // Authenticated user
   return (
     <Button
-      onClick={() => handlePayment()}
+      onClick={handleCheckoutClick}
       disabled={loading}
       className={className}
     >
