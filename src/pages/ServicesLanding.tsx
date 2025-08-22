@@ -33,7 +33,7 @@ const ServicesLanding = () => {
       let query = supabase
         .from("service_categories")
         .select("id, name, description, category_group")
-        .eq("is_active", true);
+        .eq("active", true);
 
       if (userType === 'moving') {
         query = query.eq('category_group', 'Relocation');
