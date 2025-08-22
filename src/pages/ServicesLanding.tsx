@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
+import { UtensilsCrossed, Car, Compass, Home, Briefcase } from "lucide-react";
 
 // Import images for featured services
 import fineDiningImg from "@/assets/san-pedro-hero.jpg";
@@ -14,30 +15,35 @@ import relocationAssistanceImg from "@/assets/personal-shopping.jpg";
 const featuredServices = [
   {
     image: fineDiningImg,
+    icon: UtensilsCrossed,
     title: "Fine Dining Reservations",
     description: "Exclusive access to San Pedro's most sought-after restaurants.",
     link: "/book-service",
   },
   {
     image: privateExcursionsImg,
+    icon: Compass,
     title: "Private Excursions",
     description: "Customized adventures to hidden gems only locals know.",
     link: "/book-service",
   },
   {
     image: luxuryTransportImg,
+    icon: Car,
     title: "Luxury Transportation",
     description: "Premium golf carts and private transfers around the island.",
     link: "/book-service",
   },
   {
     image: longTermRentalsImg,
+    icon: Home,
     title: "Long-Term Rentals",
     description: "Find the perfect long-term home in San Pedro.",
     link: "/moving-services",
   },
   {
     image: relocationAssistanceImg,
+    icon: Briefcase,
     title: "Relocation Assistance",
     description: "Comprehensive support for your move to paradise.",
     link: "/moving-services",
@@ -84,21 +90,35 @@ const ServicesLanding = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {featuredServices.map((service, index) => (
-              <Link to={service.link} key={index}>
-                <Card className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]">
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
+              <Card
+                key={index}
+                className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]"
+              >
+                <div className="aspect-video overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-gradient-ocean rounded-lg">
+                      <service.icon className="h-5 w-5 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
                   </div>
-                  <CardContent className="p-6">
-                    <h3 className="text-xl font-bold text-foreground mb-2">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
-                  </CardContent>
-                </Card>
-              </Link>
+                  <p className="text-muted-foreground mb-4">{service.description}</p>
+                  <Link to={service.link}>
+                    <Button
+                      variant="outline"
+                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    >
+                      Learn More
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             ))}
           </div>
         </div>
