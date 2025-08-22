@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Star, Plus } from 'lucide-react';
@@ -21,7 +20,6 @@ interface ServiceCategory {
 const BookService = () => {
   const { addToCart } = useCart();
   const { toast } = useToast();
-  const navigate = useNavigate();
   const [serviceCategories, setServiceCategories] = useState<ServiceCategory[]>([]);
   const [loadingServices, setLoadingServices] = useState(true);
 
