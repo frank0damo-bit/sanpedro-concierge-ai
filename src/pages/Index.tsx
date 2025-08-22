@@ -146,22 +146,23 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-primary-foreground/90 mb-12 max-w-2xl mx-auto">
               Your personal concierge team creates unforgettable moments in San Pedro, Belize
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/services">
-                <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
-                  I'm Traveling
-                </Button>
-              </Link>
-              <Link to="/moving-services">
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10"
-                >
-                  I'm Moving
-                </Button>
-              </Link>
-            </div>
+             <div>
+      {/* Example hero section with call-to-actions */}
+      <h1 className="text-4xl font-bold">Welcome to San Pedro Concierge</h1>
+      <div className="flex gap-4 mt-6">
+        <Link to="/services?filter=travel">
+          <Button>I’m Travelling</Button>
+        </Link>
+        <Link to="/services?filter=moving">
+          <Button>Moving</Button>
+        </Link>
+        <Link to="/services?filter=all">
+          <Button>All Services</Button>
+        </Link>
+      </div>
+    </div>
+  );
+}
           </div>
         </div>
         {/* Floating elements for visual interest */}
