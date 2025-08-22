@@ -1,16 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, Heart, type LucideIcon } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, type LucideIcon } from "lucide-react";
 
-// Import images for featured services
+// Import images for services
 import fineDiningImg from "@/assets/san-pedro-hero.jpg";
 import privateExcursionsImg from "@/assets/cultural-experience.jpg";
 import luxuryTransportImg from "@/assets/airport-transfer.jpg";
-import longTermRentalsImg from "@/assets/laundry-housekeeping.jpg";
 import relocationAssistanceImg from "@/assets/personal-shopping.jpg";
 import photographyImg from "@/assets/photography.jpg";
 import spaWellnessImg from "@/assets/spa-wellness.jpg";
@@ -21,149 +18,123 @@ interface FeaturedService {
   icon: LucideIcon;
   title: string;
   description: string;
-  link: string;
+  category: "travel" | "moving" | "general";
 }
 
-const ServicesLanding = () => {
-  const [userType, setUserType] = useState<"travelling" | "moving">("travelling");
-  const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function ServicesLanding() {
+  const [filter, setFilter] = useState<"all" | "travel" | "moving">("all");
+  const [cart, setCart] = useState<FeaturedService[]>([]);
 
-  useEffect(() => {
-    const fetchFeaturedServices = async () => {
-      setLoading(true);
-      let query = supabase
-        .from("service_categories")
-        .select("id, name, description, category_group")
-        .eq("is_active", true);
+  const handleAddToCart = (service: FeaturedService) => {
+    setCart((prev) => [...prev, service]);
+  };
 
-      if (userType === 'moving') {
-        query = query.eq('category_group', 'Relocation');
-      } else {
-        query = query.neq('category_group', 'Relocation');
-      }
+  const services: FeaturedService[] = [
+    {
+      id: "1",
+      image: fineDiningImg,
+      icon: UtensilsCrossed,
+      title: "Fine Dining",
+      description: "Exclusive reservations at San Pedro’s top restaurants.",
+      category: "travel",
+    },
+    {
+      id: "2",
+      image: privateExcursionsImg,
+      icon: Compass,
+      title: "Private Excursions",
+      description: "Guided tours and cultural experiences tailored for you.",
+      category: "travel",
+    },
+    {
+      id: "3",
+      image: luxuryTransportImg,
+      icon: Car,
+      title: "Luxury Transport",
+      description: "Airport transfers and luxury car rentals.",
+      category: "travel",
+    },
+    {
+      id: "4",
+      image: relocationAssistanceImg,
+      icon: Home,
+      title: "Relocation Assistance",
+      description: "Help moving to San Pedro stress-free.",
+      category: "moving",
+    },
+    {
+      id: "5",
+      image: photographyImg,
+      icon: Camera,
+      title: "Photography",
+      description: "Professional photography sessions.",
+      category: "general",
+    },
+    {
+      id: "6",
+      image: spaWellnessImg,
+      icon: Award,
+      title: "Spa & Wellness",
+      description: "Relaxation and wellness experiences.",
+      category: "general",
+    },
+  ];
 
-      const { data, error } = await query.limit(6);
-
-      if (error) {
-        console.error("Error fetching featured services:", error);
-        setLoading(false);
-        return;
-      }
-
-      const iconMap: { [key: string]: LucideIcon } = {
-        "Restaurants": UtensilsCrossed,
-        "Excursions": Compass,
-        "Golf Cart Rentals": Car,
-        "Long-Term Rentals": Home,
-        "Residency Assistance": Briefcase,
-        "Photography Services": Camera,
-        "Spa & Wellness": Heart,
-        "Airport Transfers": Plane,
-        "Utility Setup": Briefcase,
-        "School Enrollment": Briefcase,
-        "Bank Account Setup": Briefcase,
-        "Vehicle Purchase & Registration": Car,
-      };
-
-      const imageMap: { [key: string]: string } = {
-        "Restaurants": fineDiningImg,
-        "Excursions": privateExcursionsImg,
-        "Golf Cart Rentals": luxuryTransportImg,
-        "Long-Term Rentals": longTermRentalsImg,
-        "Residency Assistance": relocationAssistanceImg,
-        "Photography Services": photographyImg,
-        "Spa & Wellness": spaWellnessImg,
-        "Airport Transfers": luxuryTransportImg,
-        "Utility Setup": relocationAssistanceImg,
-        "School Enrollment": relocationAssistanceImg,
-        "Bank Account Setup": relocationAssistanceImg,
-        "Vehicle Purchase & Registration": luxuryTransportImg,
-      };
-      
-      const services = data.map(service => ({
-        id: service.id,
-        image: imageMap[service.name] || '',
-        icon: iconMap[service.name] || Award,
-        title: service.name,
-        description: service.description || '',
-        link: `/service/${service.id}`,
-      }));
-
-      setFeaturedServices(services);
-      setLoading(false);
-    };
-
-    fetchFeaturedServices();
-  }, [userType]);
+  const filteredServices =
+    filter === "all"
+      ? services
+      : services.filter((service) => service.category === filter);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       <Header />
-      <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary via-primary to-accent text-center text-primary-foreground">
-        <div className="absolute inset-0 bg-black/20"></div>
-         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/services">
-                <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
-                  I'm Traveling
-                </Button>
-              </Link>
-              <Link to="/moving-services">
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10"
-                >
-                  I'm Moving
-                </Button>
-              </Link>
-            </div>
-      </section>
 
-      <section className="py-20 bg-accent-light/5">
-        <div className="container mx-auto px-4">
-        
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {loading ? (
-              <p>Loading services...</p>
-            ) : (
-              featuredServices.map((service) => (
-                <Card
-                  key={service.id}
-                  className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]"
-                >
-                  <div className="aspect-video overflow-hidden">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                  </div>
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="p-2 bg-gradient-ocean rounded-lg">
-                        <service.icon className="h-5 w-5 text-primary-foreground" />
-                      </div>
-                      <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
-                    </div>
-                    <p className="text-muted-foreground mb-4">{service.description}</p>
-                    <Link to={userType === 'moving' ? '/moving-services' : '/book-service'}>
-                      <Button
-                        variant="outline"
-                        className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                      >
-                        View All Services
-                      </Button>
-                    </Link>
-                  </CardContent>
-                </Card>
-              ))
-            )}
-          </div>
+      {/* Filter Buttons */}
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6 text-center">Our Services</h1>
+        <div className="flex justify-center gap-4 mb-10">
+          <Button onClick={() => setFilter("all")} variant={filter === "all" ? "default" : "outline"}>
+            All Services
+          </Button>
+          <Button onClick={() => setFilter("travel")} variant={filter === "travel" ? "default" : "outline"}>
+            I’m Travelling
+          </Button>
+          <Button onClick={() => setFilter("moving")} variant={filter === "moving" ? "default" : "outline"}>
+            Moving
+          </Button>
         </div>
-      </section>
+
+        {/* Services Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredServices.map((service) => (
+            <Card key={service.id} className="rounded-2xl shadow-md overflow-hidden">
+              <img
+                src={service.image}
+                alt={service.title}
+                className="h-40 w-full object-cover"
+              />
+              <CardContent className="p-4">
+                <service.icon className="h-6 w-6 mb-2 text-gray-600" />
+                <h3 className="text-lg font-semibold">{service.title}</h3>
+                <p className="text-gray-500">{service.description}</p>
+                <Button
+                  className="mt-4 w-full"
+                  onClick={() => handleAddToCart(service)}
+                >
+                  Add to Cart
+                </Button>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      {/* Floating Cart Counter */}
+      {cart.length > 0 && (
+        <div className="fixed bottom-6 right-6 bg-white shadow-lg rounded-full px-4 py-2 flex items-center gap-2">
+          🛒 Cart: {cart.length}
+        </div>
+      )}
     </div>
   );
-};
-
-export default ServicesLanding;
+}
