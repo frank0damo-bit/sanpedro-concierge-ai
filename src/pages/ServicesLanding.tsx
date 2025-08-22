@@ -102,11 +102,6 @@ const ServicesLanding = () => {
       <Header />
       <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary via-primary to-accent text-center text-primary-foreground">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative z-10 container mx-auto px-4">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6">Our Services</h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            Whether you're visiting for a week or moving for a lifetime, we have services tailored to your needs.
-          </p>
           <div className="flex justify-center gap-4 mb-12">
             <Button size="lg" variant={userType === "travelling" ? "secondary" : "ghost"} onClick={() => setUserType("travelling")} className="text-lg px-8 py-6 font-semibold">
               I'm Travelling
@@ -114,7 +109,6 @@ const ServicesLanding = () => {
             <Button size="lg" variant={userType === "moving" ? "secondary" : "ghost"} onClick={() => setUserType("moving")} className="text-lg px-8 py-6 font-semibold">
               I'm Moving
             </Button>
-          </div>
         </div>
       </section>
 
