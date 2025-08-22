@@ -2,36 +2,42 @@ import { useState } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { UtensilsCrossed, Car, Compass, Home, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
+
+// Import images for featured services
+import fineDiningImg from "@/assets/san-pedro-hero.jpg";
+import privateExcursionsImg from "@/assets/cultural-experience.jpg";
+import luxuryTransportImg from "@/assets/airport-transfer.jpg";
+import longTermRentalsImg from "@/assets/laundry-housekeeping.jpg";
+import relocationAssistanceImg from "@/assets/personal-shopping.jpg";
 
 const featuredServices = [
   {
-    icon: UtensilsCrossed,
+    image: fineDiningImg,
     title: "Fine Dining Reservations",
     description: "Exclusive access to San Pedro's most sought-after restaurants.",
     link: "/book-service",
   },
   {
-    icon: Compass,
+    image: privateExcursionsImg,
     title: "Private Excursions",
     description: "Customized adventures to hidden gems only locals know.",
     link: "/book-service",
   },
   {
-    icon: Car,
+    image: luxuryTransportImg,
     title: "Luxury Transportation",
     description: "Premium golf carts and private transfers around the island.",
     link: "/book-service",
   },
   {
-    icon: Home,
+    image: longTermRentalsImg,
     title: "Long-Term Rentals",
     description: "Find the perfect long-term home in San Pedro.",
     link: "/moving-services",
   },
   {
-    icon: Briefcase,
+    image: relocationAssistanceImg,
     title: "Relocation Assistance",
     description: "Comprehensive support for your move to paradise.",
     link: "/moving-services",
@@ -80,21 +86,8 @@ const ServicesLanding = () => {
             {featuredServices.map((service, index) => (
               <Link to={service.link} key={index}>
                 <Card className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]">
-                  <CardContent className="p-6 text-center">
-                    <div className="p-4 bg-gradient-ocean rounded-xl mb-4 shadow-soft inline-block">
-                      <service.icon className="h-8 w-8 text-primary-foreground" />
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground mb-2">{service.title}</h3>
-                    <p className="text-muted-foreground">{service.description}</p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
-
-export default ServicesLanding;
+                  <div className="aspect-video overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-1
