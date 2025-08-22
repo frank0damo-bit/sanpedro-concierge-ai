@@ -297,6 +297,7 @@ const Index = () => {
               </Card>
             ))}
        </div>
+               </div>
       </section>
 
       {/* Guest Testimonials */}
