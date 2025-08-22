@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { UtensilsCrossed, Car, Compass, Home, Briefcase } from "lucide-react";
+import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 // Import images for featured services
 import fineDiningImg from "@/assets/san-pedro-hero.jpg";
@@ -12,46 +13,67 @@ import luxuryTransportImg from "@/assets/airport-transfer.jpg";
 import longTermRentalsImg from "@/assets/laundry-housekeeping.jpg";
 import relocationAssistanceImg from "@/assets/personal-shopping.jpg";
 
-const featuredServices = [
-  {
-    image: fineDiningImg,
-    icon: UtensilsCrossed,
-    title: "Fine Dining Reservations",
-    description: "Exclusive access to San Pedro's most sought-after restaurants.",
-    link: "/book-service",
-  },
-  {
-    image: privateExcursionsImg,
-    icon: Compass,
-    title: "Private Excursions",
-    description: "Customized adventures to hidden gems only locals know.",
-    link: "/book-service",
-  },
-  {
-    image: luxuryTransportImg,
-    icon: Car,
-    title: "Luxury Transportation",
-    description: "Premium golf carts and private transfers around the island.",
-    link: "/book-service",
-  },
-  {
-    image: longTermRentalsImg,
-    icon: Home,
-    title: "Long-Term Rentals",
-    description: "Find the perfect long-term home in San Pedro.",
-    link: "/moving-services",
-  },
-  {
-    image: relocationAssistanceImg,
-    icon: Briefcase,
-    title: "Relocation Assistance",
-    description: "Comprehensive support for your move to paradise.",
-    link: "/moving-services",
-  },
-];
+interface FeaturedService {
+  id: string;
+  image: string;
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  link: string;
+}
 
 const ServicesLanding = () => {
   const [userType, setUserType] = useState<"travelling" | "moving">("travelling");
+  const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
+
+  useEffect(() => {
+    const fetchFeaturedServices = async () => {
+      const { data, error } = await supabase
+        .from("service_categories")
+        .select("id, name, description")
+        .in("name", [
+          "Fine Dining Reservations",
+          "Private Excursions",
+          "Luxury Transportation",
+          "Long-Term Rentals",
+          "Relocation Assistance",
+        ]);
+
+      if (error) {
+        console.error("Error fetching featured services:", error);
+        return;
+      }
+
+      const iconMap: { [key: string]: React.ElementType } = {
+        "Fine Dining Reservations": UtensilsCrossed,
+        "Private Excursions": Compass,
+        "Luxury Transportation": Car,
+        "Long-Term Rentals": Home,
+        "Relocation Assistance": Briefcase,
+      };
+
+      const imageMap: { [key: string]: string } = {
+        "Fine Dining Reservations": fineDiningImg,
+        "Private Excursions": privateExcursionsImg,
+        "Luxury Transportation": luxuryTransportImg,
+        "Long-Term Rentals": longTermRentalsImg,
+        "Relocation Assistance": relocationAssistanceImg,
+      };
+      
+      const services = data.map(service => ({
+        id: service.id,
+        image: imageMap[service.name] || '',
+        icon: iconMap[service.name] || Award,
+        title: service.name,
+        description: service.description || '',
+        link: service.category_group === 'Relocation' ? '/moving-services' : `/service/${service.id}`,
+      }));
+
+      setFeaturedServices(services);
+    };
+
+    fetchFeaturedServices();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background">
@@ -109,7 +131,7 @@ const ServicesLanding = () => {
                     <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
                   </div>
                   <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <Link to={service.link}>
+                  <Link to={`/service/${service.id}`}>
                     <Button
                       variant="outline"
                       className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
