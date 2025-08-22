@@ -110,7 +110,7 @@ export default function ServicesLanding() {
       <Header />
 
       {/* Filter Buttons */}
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-24">
         <h1 className="text-3xl font-bold mb-6 text-center">Our Services</h1>
         <div className="flex justify-center gap-4 mb-10">
           <Button onClick={() => setFilter("all")} variant={filter === "all" ? "default" : "outline"}>
