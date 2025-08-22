@@ -15,6 +15,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import { PaymentSuccess } from "./pages/PaymentSuccess";
 import { PaymentCancelled } from "./pages/PaymentCancelled";
 import NotFound from "./pages/NotFound";
+import ServicesLanding from "./pages/ServicesLanding";
+import MovingServices from "./pages/MovingServices";
 
 const queryClient = new QueryClient();
 
@@ -30,8 +32,9 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/book" element={<BookService />} />
+            <Route path="/services" element={<ServicesLanding />} />
             <Route path="/book-service" element={<BookService />} />
+            <Route path="/moving-services" element={<MovingServices />} />
             <Route path="/support" element={<ContactSupport />} />
             <Route path="/messages" element={<Messages />} />
             <Route path="/admin" element={<AdminDashboard />} />
