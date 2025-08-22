@@ -128,7 +128,8 @@ const Index = () => {
             </div>
           </div>
         </div>
-        
+           </div>
+      
         {/* Floating elements for visual interest */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-accent/20 rounded-full blur-xl animate-pulse"></div>
         <div className="absolute bottom-32 right-16 w-32 h-32 bg-primary-glow/30 rounded-full blur-2xl animate-pulse"></div>
