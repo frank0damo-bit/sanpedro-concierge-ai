@@ -1,14 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle, MapPin, Star } from "lucide-react";
-import heroImage from "@/assets/san-pedro-hero.jpg";
+
+const heroImageUrl = "https://images.unsplash.com/photo-1520030210840-130674c18113?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcmlicmVhbiUyMGJlYWNofGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1920&q=80";
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${heroImageUrl})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/60 to-transparent" />
       </div>
