@@ -156,7 +156,7 @@ const Index = () => {
         </Link>
         <Link to="/services?filter=moving">
           <Button size="lg" variant="outline-primary">
-            Moving
+            I'm Moving
           </Button>
         </Link>
       </div>
