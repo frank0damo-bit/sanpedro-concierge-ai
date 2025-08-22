@@ -3,7 +3,7 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, Heart } from "lucide-react";
+import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, Heart, type LucideIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 // Import images for featured services
@@ -18,7 +18,7 @@ import spaWellnessImg from "@/assets/spa-wellness.jpg";
 interface FeaturedService {
   id: string;
   image: string;
-  icon: React.ElementType;
+  icon: LucideIcon;
   title: string;
   description: string;
   link: string;
@@ -48,7 +48,7 @@ const ServicesLanding = () => {
         return;
       }
 
-      const iconMap: { [key: string]: React.ElementType } = {
+      const iconMap: { [key: string]: LucideIcon } = {
         "Restaurants": UtensilsCrossed,
         "Excursions": Compass,
         "Golf Cart Rentals": Car,
