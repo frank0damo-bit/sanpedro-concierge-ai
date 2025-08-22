@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, type LucideIcon } from "lucide-react";
 import { useLocation } from "react-router-dom";
+import { useCart } from "@/contexts/CartContext";
 
 
 // Import images for services
@@ -25,6 +26,7 @@ interface FeaturedService {
 
 export default function ServicesLanding() {
   const location = useLocation();
+  const { items, addToCart } = useCart();
 
   // Check for ?filter=travel or passed state
   const queryParams = new URLSearchParams(location.search);
@@ -94,6 +96,15 @@ export default function ServicesLanding() {
       ? services
       : services.filter((service) => service.category === filter);
 
+  const handleAddToCart = (service: FeaturedService) => {
+    addToCart({
+      id: service.id,
+      name: service.title,
+      description: service.description,
+      price: 100, // Default price
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
@@ -139,9 +150,9 @@ export default function ServicesLanding() {
       </div>
 
       {/* Floating Cart Counter */}
-      {cart.length > 0 && (
+      {items.length > 0 && (
         <div className="fixed bottom-6 right-6 bg-white shadow-lg rounded-full px-4 py-2 flex items-center gap-2">
-          🛒 Cart: {cart.length}
+          🛒 Cart: {items.length}
         </div>
       )}
     </div>
