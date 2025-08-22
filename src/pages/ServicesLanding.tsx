@@ -3,7 +3,7 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award } from "lucide-react";
+import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 // Import images for featured services
@@ -12,6 +12,8 @@ import privateExcursionsImg from "@/assets/cultural-experience.jpg";
 import luxuryTransportImg from "@/assets/airport-transfer.jpg";
 import longTermRentalsImg from "@/assets/laundry-housekeeping.jpg";
 import relocationAssistanceImg from "@/assets/personal-shopping.jpg";
+import photographyImg from "@/assets/photography.jpg";
+import spaWellnessImg from "@/assets/spa-wellness.jpg";
 
 interface FeaturedService {
   id: string;
@@ -32,11 +34,12 @@ const ServicesLanding = () => {
         .from("service_categories")
         .select("id, name, description, category_group")
         .in("name", [
-          "Restaurants",
-          "Excursions",
-          "Golf Cart Rentals",
-          "Long-Term Rentals",
-          "Residency Assistance",
+          "Fine Dining Reservations",
+          "Professional Photography",
+          "VIP Airport Transfers",
+          "Spa & Wellness",
+          "Private Excursions",
+          "Luxury Transportation",
         ]);
 
       if (error) {
@@ -45,19 +48,21 @@ const ServicesLanding = () => {
       }
 
       const iconMap: { [key: string]: React.ElementType } = {
-        "Restaurants": UtensilsCrossed,
-        "Excursions": Compass,
-        "Golf Cart Rentals": Car,
-        "Long-Term Rentals": Home,
-        "Residency Assistance": Briefcase,
+        "Fine Dining Reservations": UtensilsCrossed,
+        "Professional Photography": Camera,
+        "VIP Airport Transfers": Plane,
+        "Spa & Wellness": Heart,
+        "Private Excursions": Compass,
+        "Luxury Transportation": Car,
       };
 
       const imageMap: { [key: string]: string } = {
-        "Restaurants": fineDiningImg,
-        "Excursions": privateExcursionsImg,
-        "Golf Cart Rentals": luxuryTransportImg,
-        "Long-Term Rentals": longTermRentalsImg,
-        "Residency Assistance": relocationAssistanceImg,
+        "Fine Dining Reservations": fineDiningImg,
+        "Professional Photography": photographyImg,
+        "VIP Airport Transfers": luxuryTransportImg,
+        "Spa & Wellness": spaWellnessImg,
+        "Private Excursions": privateExcursionsImg,
+        "Luxury Transportation": luxuryTransportImg,
       };
       
       const services = data.map(service => ({
@@ -66,7 +71,7 @@ const ServicesLanding = () => {
         icon: iconMap[service.name] || Award,
         title: service.name,
         description: service.description || '',
-        link: service.category_group === 'Relocation' ? `/moving-services` : `/service/${service.id}`,
+        link: `/service/${service.id}`,
       }));
 
       setFeaturedServices(services);
