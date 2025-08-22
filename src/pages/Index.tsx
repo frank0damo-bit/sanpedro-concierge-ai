@@ -151,40 +151,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <Header />
-
-    {/* Hero Section - LocalBird Style */}
-<section className="relative min-h-screen bg-gradient-to-br from-primary via-primary to-accent flex items-center justify-center overflow-hidden">
-  <div className="absolute inset-0 bg-black/20"></div>
-  <div className="relative z-10 container mx-auto px-4 text-center">
-    <div className="max-w-4xl mx-auto animate-fade-in">
-      <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground mb-8 leading-tight">
-        We curate the best local experiences around your{" "}
-        <span className="text-accent-light">Caribbean escape</span>
-      </h1>
-      <p className="text-xl md:text-2xl text-primary-foreground/90 mb-12 max-w-2xl mx-auto">
-        Your personal concierge team creates unforgettable moments in San Pedro, Belize
-      </p>
-
-      {/* Call-to-action buttons */}
-      <div className="flex gap-4 justify-center">
-        <Link to="/services?filter=travel">
-          <Button size="lg" variant="ocean">
-            I’m Travelling
-          </Button>
-        </Link>
-        <Link to="/services?filter=moving">
-          <Button size="lg" variant="outline-primary">
-            Moving
-          </Button>
-        </Link>
-      </div>
-    </div>
-  </div>
-
-  {/* Floating elements for visual interest */}
-  <div className="absolute top-20 left-10 w-20 h-20 bg-accent/20 rounded-full blur-xl animate-pulse"></div>
-  <div className="absolute bottom-32 right-16 w-32 h-32 bg-primary-glow/30 rounded-full blur-2xl animate-pulse"></div>
-</section>
+      <Hero />
 
       {/* Trust Section */}
       <section className="py-16 bg-background">
