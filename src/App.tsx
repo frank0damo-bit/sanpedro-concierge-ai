@@ -7,6 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import About from "./pages/About"; // Import the new About component
 import Dashboard from "./pages/Dashboard";
 import BookService from "./pages/BookService";
 import ContactSupport from "./pages/ContactSupport";
@@ -17,7 +18,7 @@ import { PaymentCancelled } from "./pages/PaymentCancelled";
 import NotFound from "./pages/NotFound";
 import ServicesLanding from "./pages/ServicesLanding";
 import MovingServices from "./pages/MovingServices";
-import ServiceDetailPage from "./pages/ServiceDetailPage"; // Import the new component
+import ServiceDetailPage from "./pages/ServiceDetailPage";
 
 const queryClient = new QueryClient();
 
@@ -32,10 +33,11 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/about" element={<About />} /> {/* Add the about route */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/services" element={<ServicesLanding />} />
             <Route path="/book-service" element={<BookService />} />
-            <Route path="/service/:serviceId" element={<ServiceDetailPage />} /> {/* Add this route */}
+            <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
             <Route path="/moving-services" element={<MovingServices />} />
             <Route path="/support" element={<ContactSupport />} />
             <Route path="/messages" element={<Messages />} />
