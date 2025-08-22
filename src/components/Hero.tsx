@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle, MapPin, Star } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const heroImageUrl = "https://images.unsplash.com/photo-1520030210840-130674c18113?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcmlicmVhbiUyMGJlYWNofGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1920&q=80";
 
@@ -41,18 +42,21 @@ export function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <Button 
-              variant="ocean" 
-              size="lg" 
-              className="text-lg px-8 py-6 font-semibold"
-              onClick={() => window.location.href = '/messages'}
-            >
-              <MessageCircle className="h-5 w-5" />
-              Chat with AI Concierge
-            </Button>
-            <Button variant="glass" size="lg" className="text-lg px-8 py-6 font-semibold">
-              Explore Services
-            </Button>
+            <Link to="/messages">
+              <Button 
+                variant="ocean" 
+                size="lg" 
+                className="text-lg px-8 py-6 font-semibold"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Chat with AI Concierge
+              </Button>
+            </Link>
+            <Link to="/services">
+              <Button variant="glass" size="lg" className="text-lg px-8 py-6 font-semibold">
+                Explore Services
+              </Button>
+            </Link>
           </div>
 
           {/* Stats */}
