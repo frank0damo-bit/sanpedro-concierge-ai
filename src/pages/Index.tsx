@@ -42,7 +42,7 @@ const Index = () => {
       const { data, error } = await supabase
         .from("service_categories")
         .select("*")
-        .eq("is_active", true)
+        .eq("active", true)
         .limit(6);
 
       if (error) throw error;
@@ -117,18 +117,20 @@ const Index = () => {
               Your personal concierge team creates unforgettable moments in San Pedro, Belize
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/book">
+              <Link to="/book-service">
                 <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
                   I'm Traveling to Belize
                 </Button>
               </Link>
-              <Button
-                size="lg"
-                variant="ghost"
-                className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10"
-              >
-                I'm Moving to Belize
-              </Button>
+              <Link to="/moving-services">
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10"
+                >
+                  I'm Moving to Belize
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -375,7 +377,7 @@ const Index = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/book">
+              <Link to="/book-service">
                 <Button variant="ocean" size="lg" className="text-lg px-8 py-6 font-semibold">
                   <MessageCircle className="h-5 w-5 mr-2" />
                   Start Planning My Trip
