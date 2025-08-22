@@ -30,7 +30,7 @@ const ServicesLanding = () => {
     const fetchFeaturedServices = async () => {
       const { data, error } = await supabase
         .from("service_categories")
-        .select("id, name, description")
+        .select("id, name, description, category_group")
         .in("name", [
           "Fine Dining Reservations",
           "Private Excursions",
