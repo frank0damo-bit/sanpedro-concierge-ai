@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, type LucideIcon } from "lucide-react";
+import { useLocation } from "react-router-dom";
+
 
 // Import images for services
 import fineDiningImg from "@/assets/san-pedro-hero.jpg";
@@ -22,12 +24,19 @@ interface FeaturedService {
 }
 
 export default function ServicesLanding() {
-  const [filter, setFilter] = useState<"all" | "travel" | "moving">("all");
-  const [cart, setCart] = useState<FeaturedService[]>([]);
+  const location = useLocation();
 
-  const handleAddToCart = (service: FeaturedService) => {
-    setCart((prev) => [...prev, service]);
-  };
+  // Check for ?filter=travel or passed state
+  const queryParams = new URLSearchParams(location.search);
+  const filterFromQuery = queryParams.get("filter") as "all" | "travel" | "moving" | null;
+
+  const [filter, setFilter] = useState<"all" | "travel" | "moving">("all");
+
+  useEffect(() => {
+    if (filterFromQuery) {
+      setFilter(filterFromQuery);
+    }
+  }, [filterFromQuery]);
 
   const services: FeaturedService[] = [
     {
