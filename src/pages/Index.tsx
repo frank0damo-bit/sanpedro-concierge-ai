@@ -59,7 +59,7 @@ const Index = () => {
           "Private Chef Services",
           "Event Planning"
         ])
-        .limit(5);
+        .limit(6);
 
       if (error) throw error;
 
