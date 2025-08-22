@@ -7,7 +7,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import { CartProvider } from "@/contexts/CartContext";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
-import About from "./pages/About"; // Import the new About component
+import Contact from "./pages/Contact"; // Import the new Contact component
 import Dashboard from "./pages/Dashboard";
 import BookService from "./pages/BookService";
 import ContactSupport from "./pages/ContactSupport";
@@ -33,7 +33,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
-            <Route path="/about" element={<About />} /> {/* Add the about route */}
+            <Route path="/contact" element={<Contact />} /> {/* Add the contact route */}
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/services" element={<ServicesLanding />} />
             <Route path="/book-service" element={<BookService />} />
