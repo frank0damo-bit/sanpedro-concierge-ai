@@ -114,14 +114,7 @@ const ServicesLanding = () => {
 
       <section className="py-20 bg-accent-light/5">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Featured Services
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Our most popular services, curated by our team of local experts.
-            </p>
-          </div>
+        
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {loading ? (
               <p>Loading services...</p>
