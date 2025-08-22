@@ -17,6 +17,7 @@ import { PaymentCancelled } from "./pages/PaymentCancelled";
 import NotFound from "./pages/NotFound";
 import ServicesLanding from "./pages/ServicesLanding";
 import MovingServices from "./pages/MovingServices";
+import ServiceDetailPage from "./pages/ServiceDetailPage"; // Import the new component
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/services" element={<ServicesLanding />} />
             <Route path="/book-service" element={<BookService />} />
+            <Route path="/service/:serviceId" element={<ServiceDetailPage />} /> {/* Add this route */}
             <Route path="/moving-services" element={<MovingServices />} />
             <Route path="/support" element={<ContactSupport />} />
             <Route path="/messages" element={<Messages />} />
