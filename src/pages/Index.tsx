@@ -93,10 +93,6 @@ const Index = () => {
     },
   ];
 
-  // Note: This function uses TypeScript syntax (serviceName: string).
-  // If this is a JavaScript file (.jsx), you should remove the type annotation:
-  // const handleBookNow = (serviceName) => { ... };
-  // This function is also not currently being used in the component.
   const handleBookNow = (serviceName: string) => {
     toast({
       title: "Service Request Received",
@@ -332,45 +328,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Guest Testimonials */}
-      <section className="py-20 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-foreground mb-6">
-              Unforgettable moments at your fingertips
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              See how travelers turned great stays into extraordinary memories
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card
-                key={index}
-                className="p-6 hover:shadow-ocean transition-shadow duration-300"
-              >
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                    ))}
-                  </div>
-                  <p className="text-muted-foreground mb-4 italic">"{testimonial.text}"</p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="font-semibold text-foreground">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                    </div>
-                    <Badge variant="outline">{testimonial.service}</Badge>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Ready to Start Section */}
       <section id="contact" className="py-20 bg-accent-light/10">
         <div className="container mx-auto px-4">
@@ -379,36 +336,42 @@ const Index = () => {
               Ready to Experience Paradise?
             </h2>
             <p className="text-xl text-muted-foreground mb-12">
-              Connect with your personal concierge team and let us create unforgettable moments
-              in San Pedro.
+              See how travelers turned great stays into extraordinary memories
             </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
-                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
-                  <MessageCircle className="h-6 w-6 text-primary-foreground" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">Personal Concierge Chat</h3>
-                <p className="text-muted-foreground text-sm">
-                  Instant connection with your dedicated team member
-                </p>
-              </div>
-
-              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
-                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
-                  <Phone className="h-6 w-6 text-primary-foreground" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">24/7 Support</h3>
-                <p className="text-muted-foreground text-sm">+501 226-CARE</p>
-              </div>
-
-              <div className="flex flex-col items-center p-6 bg-card rounded-xl shadow-soft hover:shadow-ocean transition-shadow duration-300">
-                <div className="p-4 bg-gradient-ocean rounded-xl mb-4">
-                  <Mail className="h-6 w-6 text-primary-foreground" />
-                </div>
-                <h3 className="font-semibold text-foreground mb-2">Email</h3>
-                <p className="text-muted-foreground text-sm">hello@caribeconcierge.com</p>
-              </div>
+            {/* Testimonials moved here */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+              {testimonials.map((testimonial, index) => (
+                <Card
+                  key={index}
+                  className="p-6 hover:shadow-ocean transition-shadow duration-300 text-left"
+                >
+                  <CardContent className="p-0">
+                    <div className="flex items-center mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className="h-5 w-5 fill-yellow-400 text-yellow-400"
+                        />
+                      ))}
+                    </div>
+                    <p className="text-muted-foreground mb-4 italic">
+                      "{testimonial.text}"
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="font-semibold text-foreground">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          {testimonial.location}
+                        </p>
+                      </div>
+                      <Badge variant="outline">{testimonial.service}</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -418,7 +381,11 @@ const Index = () => {
                   Start Planning My Trip
                 </Button>
               </Link>
-              <Button variant="outline" size="lg" className="text-lg px-8 py-6 font-semibold">
+              <Button
+                variant="outline"
+                size="lg"
+                className="text-lg px-8 py-6 font-semibold"
+              >
                 <Phone className="h-5 w-5 mr-2" />
                 Call Our Team
               </Button>
