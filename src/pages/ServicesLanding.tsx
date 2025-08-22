@@ -61,6 +61,9 @@ const ServicesLanding = () => {
         "Spa & Wellness": Heart,
         "Airport Transfers": Plane,
         "Utility Setup": Briefcase,
+        "School Enrollment": Briefcase,
+        "Bank Account Setup": Briefcase,
+        "Vehicle Purchase & Registration": Car,
       };
 
       const imageMap: { [key: string]: string } = {
@@ -73,6 +76,9 @@ const ServicesLanding = () => {
         "Spa & Wellness": spaWellnessImg,
         "Airport Transfers": luxuryTransportImg,
         "Utility Setup": relocationAssistanceImg,
+        "School Enrollment": relocationAssistanceImg,
+        "Bank Account Setup": relocationAssistanceImg,
+        "Vehicle Purchase & Registration": luxuryTransportImg,
       };
       
       const services = data.map(service => ({
@@ -81,7 +87,7 @@ const ServicesLanding = () => {
         icon: iconMap[service.name] || Award,
         title: service.name,
         description: service.description || '',
-        link: service.category_group === 'Relocation' ? `/service/${service.id}` : `/service/${service.id}`,
+        link: `/service/${service.id}`,
       }));
 
       setFeaturedServices(services);
@@ -151,7 +157,7 @@ const ServicesLanding = () => {
                         variant="outline"
                         className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
                       >
-                        Learn More
+                        View All Services
                       </Button>
                     </Link>
                   </CardContent>
