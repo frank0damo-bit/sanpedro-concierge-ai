@@ -32,11 +32,11 @@ const ServicesLanding = () => {
         .from("service_categories")
         .select("id, name, description, category_group")
         .in("name", [
-          "Fine Dining Reservations",
-          "Private Excursions",
-          "Luxury Transportation",
+          "Restaurants",
+          "Excursions",
+          "Golf Cart Rentals",
           "Long-Term Rentals",
-          "Relocation Assistance",
+          "Residency Assistance",
         ]);
 
       if (error) {
@@ -45,19 +45,19 @@ const ServicesLanding = () => {
       }
 
       const iconMap: { [key: string]: React.ElementType } = {
-        "Fine Dining Reservations": UtensilsCrossed,
-        "Private Excursions": Compass,
-        "Luxury Transportation": Car,
+        "Restaurants": UtensilsCrossed,
+        "Excursions": Compass,
+        "Golf Cart Rentals": Car,
         "Long-Term Rentals": Home,
-        "Relocation Assistance": Briefcase,
+        "Residency Assistance": Briefcase,
       };
 
       const imageMap: { [key: string]: string } = {
-        "Fine Dining Reservations": fineDiningImg,
-        "Private Excursions": privateExcursionsImg,
-        "Luxury Transportation": luxuryTransportImg,
+        "Restaurants": fineDiningImg,
+        "Excursions": privateExcursionsImg,
+        "Golf Cart Rentals": luxuryTransportImg,
         "Long-Term Rentals": longTermRentalsImg,
-        "Relocation Assistance": relocationAssistanceImg,
+        "Residency Assistance": relocationAssistanceImg,
       };
       
       const services = data.map(service => ({
@@ -66,7 +66,7 @@ const ServicesLanding = () => {
         icon: iconMap[service.name] || Award,
         title: service.name,
         description: service.description || '',
-        link: service.category_group === 'Relocation' ? '/moving-services' : `/service/${service.id}`,
+        link: service.category_group === 'Relocation' ? `/moving-services` : `/service/${service.id}`,
       }));
 
       setFeaturedServices(services);
@@ -111,9 +111,9 @@ const ServicesLanding = () => {
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {featuredServices.map((service, index) => (
+            {featuredServices.map((service) => (
               <Card
-                key={index}
+                key={service.id}
                 className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]"
               >
                 <div className="aspect-video overflow-hidden">
@@ -131,7 +131,7 @@ const ServicesLanding = () => {
                     <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
                   </div>
                   <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <Link to={`/service/${service.id}`}>
+                  <Link to={service.link}>
                     <Button
                       variant="outline"
                       className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
