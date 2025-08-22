@@ -83,8 +83,12 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
-      success_url: `${req.headers.get("origin")}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.get("origin")}/payment-cancelled`,
+     const url = new URL(req.url);
+const base = origin || `${url.protocol}//${url.host}`;
+
+success_url: `${base}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+cancel_url: `${base}/payment-cancelled`,
+
     });
 
     // Store payment record in database
