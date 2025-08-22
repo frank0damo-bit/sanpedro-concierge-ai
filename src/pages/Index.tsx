@@ -18,9 +18,6 @@ import {
   Heart,
   Camera,
   Plane,
-  Waves,
-  ChefHat,
-  CalendarHeart,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -48,7 +45,15 @@ const Index = () => {
       const { data, error } = await supabase
         .from("service_categories")
         .select("id, name, description")
-        .limit(9);
+        .in("name", [
+          "Fine Dining Reservations",
+          "Professional Photography",
+          "VIP Airport Transfers",
+          "Spa & Wellness",
+          "Private Excursions",
+          "Luxury Transportation",
+        ])
+        .limit(3);
 
       if (error) throw error;
 
@@ -59,12 +64,6 @@ const Index = () => {
         "Spa & Wellness": Heart,
         "Private Excursions": Compass,
         "Luxury Transportation": Car,
-        "Water Sports Equipment": Waves,
-        "Private Chef Services": ChefHat,
-        "Event Planning": CalendarHeart,
-        "Restaurants": UtensilsCrossed,
-        "Golf Cart Rentals": Car,
-        "Excursions": Compass,
       };
 
       const imageMap: { [key: string]: string } = {
@@ -74,12 +73,6 @@ const Index = () => {
         "Spa & Wellness": "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
         "Private Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
         "Luxury Transportation": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
-        "Water Sports Equipment": "https://images.unsplash.com/photo-1511222955395-58448a1a3e9c",
-        "Private Chef Services": "https://images.unsplash.com/photo-1621996346565-e326b20f545a",
-        "Event Planning": "https://images.unsplash.com/photo-1519167758481-939e6573b4b6",
-        "Restaurants": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
-        "Golf Cart Rentals": "https://images.unsplash.com/photo-1589139893118-842263886561",
-        "Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
       };
 
       const services = (data || []).map(service => ({
@@ -87,7 +80,7 @@ const Index = () => {
         icon: iconMap[service.name] || Award,
         title: service.name,
         description: service.description,
-        image: imageMap[service.name] || "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+        image: imageMap[service.name],
       }));
 
       setFeaturedServices(services);
