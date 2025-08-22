@@ -159,11 +159,6 @@ const Index = () => {
             Moving
           </Button>
         </Link>
-        <Link to="/services?filter=all">
-          <Button size="lg" variant="outline">
-            All Services
-          </Button>
-        </Link>
       </div>
     </div>
   </div>
