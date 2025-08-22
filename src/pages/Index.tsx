@@ -149,7 +149,7 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/services">
                 <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
-                  I'm Traveling to Belize
+                  I'm Traveling
                 </Button>
               </Link>
               <Link to="/moving-services">
@@ -158,7 +158,7 @@ const Index = () => {
                   variant="ghost"
                   className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10"
                 >
-                  I'm Moving to Belize
+                  I'm Moving
                 </Button>
               </Link>
             </div>
