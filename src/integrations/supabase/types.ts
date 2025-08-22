@@ -7,63 +7,48 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
-    PostgrestVersion: "12.2.12 (cd3cf9e)"
+    PostgrestVersion: "13.0.4"
   }
   public: {
     Tables: {
-      admin_users: {
-        Row: {
-          is_admin: boolean
-          user_id: string
-        }
-        Insert: {
-          is_admin?: boolean
-          user_id: string
-        }
-        Update: {
-          is_admin?: boolean
-          user_id?: string
-        }
-        Relationships: []
-      }
       bookings: {
         Row: {
-          created_at: string
+          created_at: string | null
           description: string | null
           id: string
           notes: string | null
           preferred_date: string | null
-          service_category_id: string
+          service_category_id: string | null
           status: string | null
           title: string
-          updated_at: string
+          updated_at: string | null
           user_id: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           description?: string | null
           id?: string
           notes?: string | null
           preferred_date?: string | null
-          service_category_id: string
+          service_category_id?: string | null
           status?: string | null
           title: string
-          updated_at?: string
+          updated_at?: string | null
           user_id: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           description?: string | null
           id?: string
           notes?: string | null
           preferred_date?: string | null
-          service_category_id?: string
+          service_category_id?: string | null
           status?: string | null
           title?: string
-          updated_at?: string
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: [
@@ -76,35 +61,131 @@ export type Database = {
           },
         ]
       }
-      customer_requests: {
+      curated_package_items: {
         Row: {
           created_at: string
+          description: string | null
           id: string
-          message: string
-          priority: string | null
-          status: string | null
-          subject: string
+          notes: string | null
+          package_id: string
+          quantity: number
+          service_category_id: string | null
+          title: string
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          notes?: string | null
+          package_id: string
+          quantity?: number
+          service_category_id?: string | null
+          title: string
+          total_price?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          notes?: string | null
+          package_id?: string
+          quantity?: number
+          service_category_id?: string | null
+          title?: string
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "curated_package_items_package_id_fkey"
+            columns: ["package_id"]
+            isOneToOne: false
+            referencedRelation: "curated_packages"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "curated_package_items_service_category_id_fkey"
+            columns: ["service_category_id"]
+            isOneToOne: false
+            referencedRelation: "service_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      curated_packages: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          party_size: number
+          prompt: string
+          status: string
+          title: string
+          total_price: number
+          travel_dates: Json | null
           updated_at: string
           user_id: string
         }
         Insert: {
           created_at?: string
+          description?: string | null
           id?: string
-          message: string
-          priority?: string | null
-          status?: string | null
-          subject: string
+          party_size?: number
+          prompt: string
+          status?: string
+          title: string
+          total_price?: number
+          travel_dates?: Json | null
           updated_at?: string
           user_id: string
         }
         Update: {
           created_at?: string
+          description?: string | null
+          id?: string
+          party_size?: number
+          prompt?: string
+          status?: string
+          title?: string
+          total_price?: number
+          travel_dates?: Json | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      customer_requests: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string
+          priority: string | null
+          status: string | null
+          subject: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message: string
+          priority?: string | null
+          status?: string | null
+          subject: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
           id?: string
           message?: string
           priority?: string | null
           status?: string | null
           subject?: string
-          updated_at?: string
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
@@ -113,49 +194,43 @@ export type Database = {
         Row: {
           booking_id: string | null
           content: string
-          created_at: string
+          created_at: string | null
           id: string
-          message_type: string
-          metadata: Json | null
+          message_type: string | null
           request_id: string | null
           sender_type: string
-          updated_at: string
           user_id: string
         }
         Insert: {
           booking_id?: string | null
           content: string
-          created_at?: string
+          created_at?: string | null
           id?: string
-          message_type?: string
-          metadata?: Json | null
+          message_type?: string | null
           request_id?: string | null
           sender_type: string
-          updated_at?: string
           user_id: string
         }
         Update: {
           booking_id?: string | null
           content?: string
-          created_at?: string
+          created_at?: string | null
           id?: string
-          message_type?: string
-          metadata?: Json | null
+          message_type?: string | null
           request_id?: string | null
           sender_type?: string
-          updated_at?: string
           user_id?: string
         }
         Relationships: [
           {
-            foreignKeyName: "fk_messages_booking"
+            foreignKeyName: "messages_booking_id_fkey"
             columns: ["booking_id"]
             isOneToOne: false
             referencedRelation: "bookings"
             referencedColumns: ["id"]
           },
           {
-            foreignKeyName: "fk_messages_request"
+            foreignKeyName: "messages_request_id_fkey"
             columns: ["request_id"]
             isOneToOne: false
             referencedRelation: "customer_requests"
@@ -163,120 +238,75 @@ export type Database = {
           },
         ]
       }
-      "No Barriers": {
-        Row: {
-          created_at: string
-          id: number
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-        }
-        Update: {
-          created_at?: string
-          id?: number
-        }
-        Relationships: []
-      }
-      payments: {
-        Row: {
-          amount: number
-          created_at: string
-          currency: string
-          description: string | null
-          guest_email: string | null
-          id: string
-          status: string
-          stripe_session_id: string | null
-          updated_at: string
-          user_id: string | null
-        }
-        Insert: {
-          amount: number
-          created_at?: string
-          currency?: string
-          description?: string | null
-          guest_email?: string | null
-          id?: string
-          status?: string
-          stripe_session_id?: string | null
-          updated_at?: string
-          user_id?: string | null
-        }
-        Update: {
-          amount?: number
-          created_at?: string
-          currency?: string
-          description?: string | null
-          guest_email?: string | null
-          id?: string
-          status?: string
-          stripe_session_id?: string | null
-          updated_at?: string
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
-          created_at: string
-          first_name: string | null
+          created_at: string | null
+          display_name: string | null
           id: string
-          last_name: string | null
-          phone: string | null
-          preferred_contact: string | null
           role: string | null
-          updated_at: string
+          updated_at: string | null
           user_id: string
         }
         Insert: {
-          created_at?: string
-          first_name?: string | null
+          created_at?: string | null
+          display_name?: string | null
           id?: string
-          last_name?: string | null
-          phone?: string | null
-          preferred_contact?: string | null
           role?: string | null
-          updated_at?: string
+          updated_at?: string | null
           user_id: string
         }
         Update: {
-          created_at?: string
-          first_name?: string | null
+          created_at?: string | null
+          display_name?: string | null
           id?: string
-          last_name?: string | null
-          phone?: string | null
-          preferred_contact?: string | null
           role?: string | null
-          updated_at?: string
+          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
       }
       service_categories: {
         Row: {
-          created_at: string
+          active: boolean | null
+          category_group: string | null
+          created_at: string | null
           description: string | null
+          features: string[] | null
           icon_name: string | null
           id: string
-          is_active: boolean | null
+          image_url: string | null
           name: string
+          price: number | null
+          sort_order: number | null
+          updated_at: string | null
         }
         Insert: {
-          created_at?: string
+          active?: boolean | null
+          category_group?: string | null
+          created_at?: string | null
           description?: string | null
+          features?: string[] | null
           icon_name?: string | null
           id?: string
-          is_active?: boolean | null
+          image_url?: string | null
           name: string
+          price?: number | null
+          sort_order?: number | null
+          updated_at?: string | null
         }
         Update: {
-          created_at?: string
+          active?: boolean | null
+          category_group?: string | null
+          created_at?: string | null
           description?: string | null
+          features?: string[] | null
           icon_name?: string | null
           id?: string
-          is_active?: boolean | null
+          image_url?: string | null
           name?: string
+          price?: number | null
+          sort_order?: number | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -285,10 +315,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      is_current_user_admin: {
-        Args: Record<PropertyKey, never>
-        Returns: boolean
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
