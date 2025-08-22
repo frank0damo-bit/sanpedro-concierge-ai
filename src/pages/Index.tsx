@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { ServiceCard } from "@/components/ServiceCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,13 +9,8 @@ import {
   UtensilsCrossed,
   Car,
   Compass,
-  Calendar,
-  Bed,
-  Home,
   MessageCircle,
   Phone,
-  Mail,
-  MapPin,
   Star,
   Users,
   Award,
@@ -29,9 +23,18 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
 
+// Define an interface for your service objects
+interface FeaturedService {
+  id: string;
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  image: string;
+}
+
 const Index = () => {
   const { toast } = useToast();
-  const [featuredServices, setFeaturedServices] = useState([]);
+  const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
 
   useEffect(() => {
     fetchFeaturedServices();
@@ -41,12 +44,46 @@ const Index = () => {
     try {
       const { data, error } = await supabase
         .from("service_categories")
-        .select("*")
-        .eq("active", true)
+        .select("id, name, description")
+        .in("name", [
+          "Fine Dining Reservations",
+          "Professional Photography",
+          "VIP Airport Transfers",
+          "Spa & Wellness",
+          "Private Excursions",
+          "Luxury Transportation",
+        ])
         .limit(6);
 
       if (error) throw error;
-      setFeaturedServices(data || []);
+
+      const iconMap: { [key: string]: React.ElementType } = {
+        "Fine Dining Reservations": UtensilsCrossed,
+        "Professional Photography": Camera,
+        "VIP Airport Transfers": Plane,
+        "Spa & Wellness": Heart,
+        "Private Excursions": Compass,
+        "Luxury Transportation": Car,
+      };
+
+      const imageMap: { [key: string]: string } = {
+        "Fine Dining Reservations": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
+        "Professional Photography": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
+        "VIP Airport Transfers": "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b",
+        "Spa & Wellness": "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
+        "Private Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
+        "Luxury Transportation": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
+      };
+
+      const services = (data || []).map(service => ({
+        id: service.id,
+        icon: iconMap[service.name] || Award,
+        title: service.name,
+        description: service.description,
+        image: imageMap[service.name],
+      }));
+
+      setFeaturedServices(services);
     } catch (error) {
       console.error("Error fetching services:", error);
     }
@@ -93,13 +130,6 @@ const Index = () => {
     },
   ];
 
-  const handleBookNow = (serviceName: string) => {
-    toast({
-      title: "Service Request Received",
-      description: `Our personal concierge will contact you shortly about ${serviceName.toLowerCase()}.`,
-    });
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <Header />
@@ -117,7 +147,7 @@ const Index = () => {
               Your personal concierge team creates unforgettable moments in San Pedro, Belize
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/book-service">
+              <Link to="/services">
                 <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
                   I'm Traveling to Belize
                 </Button>
@@ -198,44 +228,7 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {[
-              {
-                icon: UtensilsCrossed,
-                title: "Fine Dining Reservations",
-                description: "Exclusive access to San Pedro's most sought-after restaurants",
-                image: "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
-              },
-              {
-                icon: Camera,
-                title: "Professional Photography",
-                description: "Capture your perfect moments with our skilled photographers",
-                image: "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
-              },
-              {
-                icon: Plane,
-                title: "VIP Airport Transfers",
-                description: "Seamless arrival experience with meet & greet service",
-                image: "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b",
-              },
-              {
-                icon: Heart,
-                title: "Spa & Wellness",
-                description: "Rejuvenating treatments at Belize's premier wellness centers",
-                image: "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
-              },
-              {
-                icon: Compass,
-                title: "Private Excursions",
-                description: "Customized adventures to hidden gems only locals know",
-                image: "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
-              },
-              {
-                icon: Car,
-                title: "Luxury Transportation",
-                description: "Premium golf carts and private transfers around the island",
-                image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
-              },
-            ].map((service, index) => (
+            {featuredServices.map((service, index) => (
               <Card
                 key={index}
                 className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]"
@@ -255,7 +248,7 @@ const Index = () => {
                     <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
                   </div>
                   <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <Link to="/book-service">
+                  <Link to={`/service/${service.id}`}>
                     <Button
                       variant="outline"
                       className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
@@ -269,7 +262,7 @@ const Index = () => {
           </div>
 
           <div className="text-center">
-            <Link to="/book-service">
+            <Link to="/services">
               <Button size="lg" variant="ocean" className="text-lg px-8 py-6 font-semibold">
                 View All Services
               </Button>
@@ -377,7 +370,7 @@ const Index = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/book-service">
+              <Link to="/messages">
                 <Button variant="ocean" size="lg" className="text-lg px-8 py-6 font-semibold">
                   <MessageCircle className="h-5 w-5 mr-2" />
                   Start Planning My Trip
