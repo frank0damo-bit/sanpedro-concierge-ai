@@ -21,7 +21,7 @@ export function Header() {
         </Link>
         
         <nav className="hidden md:flex items-center gap-6">
-          <Link to="/book-service" className="text-foreground hover:text-accent transition-colors">Services</Link>
+          <Link to="/services" className="text-foreground hover:text-accent transition-colors">Services</Link>
           <a href="#about" className="text-foreground hover:text-accent transition-colors">About</a>
           <a href="#contact" className="text-foreground hover:text-accent transition-colors">Contact</a>
         </nav>
