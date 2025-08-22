@@ -298,6 +298,7 @@ const Index = () => {
             ))}
        </div>
                </div>
+        ))}
       </section>
 
       {/* Guest Testimonials */}
@@ -333,7 +334,7 @@ const Index = () => {
               </Card>
             ))}
           </div>
-            ))}
+        
         </div>
       </section>
 
