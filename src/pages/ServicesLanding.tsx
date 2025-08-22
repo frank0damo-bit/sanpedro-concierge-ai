@@ -102,14 +102,22 @@ const ServicesLanding = () => {
       <Header />
       <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary via-primary to-accent text-center text-primary-foreground">
         <div className="absolute inset-0 bg-black/20"></div>
-        <div className="flex justify-center gap-4 mb-12">
-            <Button size="lg" variant={userType === "travelling" ? "secondary" : "ghost"} onClick={() => setUserType("travelling")} className="text-lg px-8 py-6 font-semibold">
-              I'm Travelling
-            </Button>
-            <Button size="lg" variant={userType === "moving" ? "secondary" : "ghost"} onClick={() => setUserType("moving")} className="text-lg px-8 py-6 font-semibold">
-              I'm Moving
-            </Button>
-        </div>
+         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/services">
+                <Button size="lg" variant="secondary" className="text-lg px-8 py-6 font-semibold">
+                  I'm Traveling
+                </Button>
+              </Link>
+              <Link to="/moving-services">
+                <Button
+                  size="lg"
+                  variant="ghost"
+                  className="text-lg px-8 py-6 font-semibold text-primary-foreground border-primary-foreground/30 hover:bg-primary-foreground/10"
+                >
+                  I'm Moving
+                </Button>
+              </Link>
+            </div>
       </section>
 
       <section className="py-20 bg-accent-light/5">
