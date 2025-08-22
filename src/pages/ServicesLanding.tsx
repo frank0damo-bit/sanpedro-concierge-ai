@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
+import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { UtensilsCrossed, Car, Compass, Home, Briefcase, Award, Camera, Plane, Heart } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import ServicesToggleHeader from "@/components/ServicesToggleHeader";
 
 // Import images for featured services
 import fineDiningImg from "@/assets/san-pedro-hero.jpg";
@@ -25,22 +25,23 @@ interface FeaturedService {
 }
 
 const ServicesLanding = () => {
+  const [userType, setUserType] = useState<"travelling" | "moving">("travelling");
   const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
 
   useEffect(() => {
     const fetchFeaturedServices = async () => {
-      const { data, error } = await supabase
+      let query = supabase
         .from("service_categories")
         .select("id, name, description, category_group")
-        .in("name", [
-          "Restaurants",
-          "Excursions",
-          "Golf Cart Rentals",
-          "Long-Term Rentals",
-          "Residency Assistance",
-          "Photography Services",
-          "Spa & Wellness",
-        ]);
+        .eq("is_active", true);
+
+      if (userType === 'moving') {
+        query = query.eq('category_group', 'Relocation');
+      } else {
+        query = query.neq('category_group', 'Relocation');
+      }
+
+      const { data, error } = await query.limit(6);
 
       if (error) {
         console.error("Error fetching featured services:", error);
@@ -55,6 +56,7 @@ const ServicesLanding = () => {
         "Residency Assistance": Briefcase,
         "Photography Services": Camera,
         "Spa & Wellness": Heart,
+        "Airport Transfers": Plane,
       };
 
       const imageMap: { [key: string]: string } = {
@@ -65,6 +67,7 @@ const ServicesLanding = () => {
         "Residency Assistance": relocationAssistanceImg,
         "Photography Services": photographyImg,
         "Spa & Wellness": spaWellnessImg,
+        "Airport Transfers": luxuryTransportImg,
       };
       
       const services = data.map(service => ({
@@ -80,11 +83,33 @@ const ServicesLanding = () => {
     };
 
     fetchFeaturedServices();
-  }, []);
+  }, [userType]);
 
   return (
     <div className="min-h-screen bg-background">
-      <ServicesToggleHeader />
+      <Header />
+      <section className="relative pt-32 pb-20 bg-gradient-to-br from-primary via-primary to-accent text-center text-primary-foreground">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative z-10 container mx-auto px-4">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6">Our Services</h1>
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            Whether you're visiting for a week or moving for a lifetime, we have services tailored to your needs.
+          </p>
+          <div className="flex justify-center gap-4 mb-12">
+            <Link to="/book-service">
+              <Button size="lg" variant={userType === "travelling" ? "secondary" : "ghost"} onClick={() => setUserType("travelling")} className="text-lg px-8 py-6 font-semibold">
+                I'm Travelling
+              </Button>
+            </Link>
+            <Link to="/moving-services">
+              <Button size="lg" variant={userType === "moving" ? "secondary" : "ghost"} onClick={() => setUserType("moving")} className="text-lg px-8 py-6 font-semibold">
+                I'm Moving
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 bg-accent-light/5">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
