@@ -23,7 +23,7 @@ export function Header() {
         <nav className="hidden md:flex items-center gap-6">
           <Link to="/services" className="text-foreground hover:text-accent transition-colors">Services</Link>
           <Link to="/about" className="text-foreground hover:text-accent transition-colors">About</Link>
-          <a href="#contact" className="text-foreground hover:text-accent transition-colors">Contact</a>
+          <Link to="/contact" className="text-foreground hover:text-accent transition-colors">Contact</Link>
         </nav>
         
         <div className="flex items-center gap-3">
