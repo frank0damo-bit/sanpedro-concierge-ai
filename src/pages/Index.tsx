@@ -71,7 +71,7 @@ const Index = () => {
 
   const fetchFeaturedServices = async () => {
     try {
-      // Fetch all active services from the database using the correct column name
+      // Fetch all active services from the database
       const { data, error } = await supabase
         .from("service_categories")
         .select("id, name, description, icon_name, is_active")
@@ -307,51 +307,53 @@ const Index = () => {
       {/* Meet Your Concierge Team */}
       <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent bg-[length:200%_200%] animate-background-pan">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
-              Meet Your Personal Concierge Team
-            </h2>
-            <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
-              Our dedicated team of local experts is here to create your perfect Belizean
-              experience. Each team member brings years of hospitality expertise and deep local
-              knowledge.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {conciergeTeam.map((member, index) => (
-              <Card
-                key={index}
-                className="bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300 transform hover:-translate-y-2"
-              >
-                <CardContent className="p-6 text-center">
-                  <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-primary-foreground/30">
-                    <AvatarImage src={member.avatar} alt={member.name} />
-                    <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
-                      {member.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <h3 className="text-xl font-bold text-primary-foreground mb-2">
-                    {member.name}
-                  </h3>
-                  <p className="text-primary-foreground/80 mb-2">{member.role}</p>
-                  <p className="text-primary-foreground/70 text-sm mb-4">{member.experience}</p>
-                  <div className="flex flex-wrap gap-2 justify-center">
-                    {member.specialties.map((specialty, idx) => (
-                      <Badge
-                        key={idx}
-                        variant="secondary"
-                        className="bg-primary-foreground/20 text-primary-foreground/90 border-primary-foreground/30"
-                      >
-                        {specialty}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-primary-foreground">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Meet Your Personal Concierge Team
+              </h2>
+              <p className="text-xl text-primary-foreground/90 max-w-3xl">
+                Our dedicated team of local experts is here to create your perfect Belizean experience. Each team member brings years of hospitality expertise and deep local knowledge.
+              </p>
+            </div>
+            <div className="space-y-6">
+              {conciergeTeam.map((member, index) => (
+                <Card
+                  key={index}
+                  className="bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <CardContent className="p-6 flex items-center gap-6">
+                    <Avatar className="w-20 h-20 border-4 border-primary-foreground/30">
+                      <AvatarImage src={member.avatar} alt={member.name} />
+                      <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
+                        {member.name.split(" ").map((n) => n[0]).join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-bold text-primary-foreground mb-1">{member.name}</h3>
+                      <p className="text-primary-foreground/80 mb-3">{member.role}</p>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {member.specialties.map((specialty, idx) => (
+                          <Badge
+                            key={idx}
+                            variant="secondary"
+                            className="bg-primary-foreground/20 text-primary-foreground/90 border-primary-foreground/30"
+                          >
+                            {specialty}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                    <Link to="/messages" className="ml-auto">
+                      <Button variant="outline" className="bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30">
+                        <MessageCircle className="h-4 w-4 mr-2" />
+                        Chat Now
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
