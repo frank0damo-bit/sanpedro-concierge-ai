@@ -33,36 +33,14 @@ export function Hero() {
           </h1>
           
           <p 
-            className="text-lg md:text-xl max-w-2xl text-white/90 mb-10"
+            className="text-lg md:text-xl text-white/90 mb-10"
             style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.3)' }}
           >
             Your personal AI-powered concierge for exclusive experiences, seamless bookings, and expert local advice in San Pedro.
           </p>
-          
-          <div className="flex items-center gap-4 mb-12">
-            <Link to="/messages">
-              <Button 
-                variant="ocean" 
-                size="lg" 
-                className="text-lg px-8 py-6 font-semibold shadow-glow hover:shadow-ocean"
-              >
-                <MessageCircle className="h-5 w-5" />
-                Start Planning with AI
-              </Button>
-            </Link>
-            <Link to="/services">
-              <Button 
-                variant="ghost" 
-                size="lg" 
-                className="text-white hover:bg-white/10 hover:text-white"
-              >
-                Explore Services <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
-          </div>
 
           {/* Icon-based value propositions */}
-          <div className="space-y-6 text-white">
+          <div className="space-y-6 mb-12 text-white">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-white/10 rounded-full">
                 <Award className="h-6 w-6 text-accent-light" />
@@ -90,6 +68,28 @@ export function Hero() {
                 <p className="text-sm text-white/80">Unlock exclusive local experiences.</p>
               </div>
             </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <Link to="/messages">
+              <Button 
+                variant="ocean" 
+                size="lg" 
+                className="text-lg px-8 py-6 font-semibold shadow-glow hover:shadow-ocean"
+              >
+                <MessageCircle className="h-5 w-5" />
+                Start Planning with AI
+              </Button>
+            </Link>
+            <Link to="/services">
+              <Button 
+                variant="ghost" 
+                size="lg" 
+                className="text-white hover:bg-white/10 hover:text-white"
+              >
+                Explore Services <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            </Link>
           </div>
 
         </div>
