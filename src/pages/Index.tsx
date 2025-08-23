@@ -297,7 +297,10 @@ const Index = () => {
 
           <div className="text-center mt-12">
             <Link to="/services">
-              <Button size="lg" variant="ocean" className="text-lg px-8 py-6 font-semibold">
+              <Button 
+                size="lg" 
+                className="bg-gradient-ocean text-primary-foreground text-lg px-8 py-6 font-semibold shadow-ocean hover:shadow-glow transform hover:scale-105"
+              >
                 View All Services
               </Button>
             </Link>
