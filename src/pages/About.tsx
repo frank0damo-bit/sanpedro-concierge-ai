@@ -124,7 +124,7 @@ const About = () => {
                   key={index}
                   className="flex-shrink-0 w-[360px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
                 >
-                  <CardContent className="p-6 text-center flex flex-col items-center">
+                  <CardContent className="p-6 pt-8 text-center flex flex-col items-center">
                     <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
                       <AvatarImage src={member.avatar} alt={member.name} />
                       <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
