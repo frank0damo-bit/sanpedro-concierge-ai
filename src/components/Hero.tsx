@@ -22,11 +22,10 @@ export function Hero() {
         <div className="max-w-4xl mx-auto">
           
           <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground mb-8 leading-tight tracking-tight">
-            Your Unforgettable 
+            Your Story
             <span className="block bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-transparent animate-shimmer bg-[length:200%_auto]">
-              Belize Story
+              Starts Here
             </span>
-            Starts Here
           </h1>
           
           {/* Icon-based value propositions */}
