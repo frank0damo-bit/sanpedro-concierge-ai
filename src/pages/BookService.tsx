@@ -29,7 +29,7 @@ const BookService = () => {
         const { data, error } = await supabase
           .from('service_categories')
           .select('*')
-          .eq('active', true)
+          .eq('is_active', true)
           .neq('category_group', 'Relocation') // Exclude relocation services
           .order('category_group, name');
 
