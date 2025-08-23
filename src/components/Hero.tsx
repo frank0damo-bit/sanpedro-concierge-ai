@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, MapPin, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const heroImageUrl = "https://images.unsplash.com/photo-1520030210840-130674c18113?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fGNhcmlicmVhbiUyMGJlYWNofGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=1920&q=80";
+const heroImageUrl = "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8Y2FyaWJiZWFuJTIwYmVhY2h8ZW58MHx8MHx8&auto=format&fit=crop&w=1920&q=80";
 
 export function Hero() {
   return (
@@ -11,9 +11,7 @@ export function Hero() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroImageUrl})` }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/80 via-primary/60 to-transparent" />
-      </div>
+      />
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
@@ -36,7 +34,7 @@ export function Hero() {
             Awaits
           </h1>
           
-          <p className="text-xl md:text-2xl text-primary-foreground/90 mb-8 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-xl md:text-2l text-primary-foreground/90 mb-8 leading-relaxed max-w-3xl mx-auto">
             From exclusive dining reservations to private excursions, we curate unforgettable experiences 
             in paradise. Let our AI-powered concierge handle every detail of your Belizean adventure.
           </p>
