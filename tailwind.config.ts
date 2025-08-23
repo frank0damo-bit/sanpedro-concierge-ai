@@ -73,8 +73,7 @@ export default {
 			backgroundImage: {
 				'gradient-ocean': 'var(--gradient-ocean)',
 				'gradient-sunset': 'var(--gradient-sunset)',
-				'gradient-glass': 'var(--gradient-glass)',
-        'hero-image': "url('https://images.unsplash.com/photo-1528422162028-1f2b38042459?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+				'gradient-glass': 'var(--gradient-glass)'
 			},
 			boxShadow: {
 				'ocean': 'var(--shadow-ocean)',
