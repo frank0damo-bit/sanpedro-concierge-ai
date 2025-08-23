@@ -321,23 +321,22 @@ const Index = () => {
             {conciergeTeam.map((member, index) => (
               <Card
                 key={index}
-                className="flex-shrink-0 w-[320px] bg-primary-foreground/10 backdrop-blur-md border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300 transform hover:-translate-y-2"
+                className="flex-shrink-0 w-[320px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
               >
                 <CardContent className="p-6 text-center flex flex-col items-center">
-                  <Avatar className="w-24 h-24 mb-4 border-4 border-primary-foreground/30">
+                  <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
                     <AvatarImage src={member.avatar} alt={member.name} />
                     <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
                       {member.name.split(" ").map((n) => n[0]).join("")}
                     </AvatarFallback>
                   </Avatar>
-                  <h3 className="text-xl font-bold text-primary-foreground">{member.name}</h3>
-                  <p className="text-primary-foreground/80 mb-4">{member.role}</p>
+                  <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
+                  <p className="text-primary/80 mb-4">{member.role}</p>
                   <div className="flex flex-wrap gap-2 justify-center mb-6">
                     {member.specialties.map((specialty, idx) => (
                       <Badge
                         key={idx}
                         variant="secondary"
-                        className="bg-primary-foreground/20 text-primary-foreground/90 border-primary-foreground/30"
                       >
                         {specialty}
                       </Badge>
@@ -345,7 +344,7 @@ const Index = () => {
                   </div>
                   <div className="mt-auto w-full">
                     <Link to="/messages">
-                      <Button variant="outline" className="bg-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/30 w-full">
+                      <Button variant="ocean" className="w-full">
                         <MessageCircle className="h-4 w-4 mr-2" />
                         Chat with {member.name.split(' ')[0]}
                       </Button>
