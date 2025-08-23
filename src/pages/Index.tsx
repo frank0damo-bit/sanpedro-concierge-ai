@@ -74,7 +74,7 @@ const Index = () => {
       // Fetch all active services from the database
       const { data, error } = await supabase
         .from("service_categories")
-        .select("id, name, description, icon_name, active:is_active")
+        .select("id, name, description, icon_name, is_active")
         .eq('is_active', true)
         .neq('category_group', 'Relocation')
         .limit(12);
