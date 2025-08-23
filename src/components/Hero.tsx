@@ -1,12 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Star, ArrowRight } from "lucide-react";
+import { MessageCircle, Award, Users, ShieldCheck, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImageUrl from "@/assets/san-pedro-hero.jpg";
 
 export function Hero() {
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden text-center"
+      className="relative min-h-screen flex items-center overflow-hidden text-left"
     >
       {/* Background Image */}
       <img
@@ -15,44 +15,62 @@ export function Hero() {
         className="absolute inset-0 w-full h-full object-cover"
       />
       
-      {/* Reduced opacity overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Brighter Overlay */}
+      <div className="absolute inset-0 bg-black/20" />
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4">
-        <div className="max-w-4xl mx-auto">
-
-          <div className="flex justify-center items-center gap-2 mb-6">
-            <div className="flex text-yellow-400">
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-              <Star className="h-5 w-5 fill-current" />
-            </div>
-            <p className="text-primary-foreground/90 font-medium">
-              Trusted by 2,500+ travelers
-            </p>
-          </div>
+        <div className="max-w-xl">
           
           <h1 
-            className="text-5xl md:text-7xl font-bold text-primary-foreground mb-6 leading-tight"
-            style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.5)' }}
+            className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
+            style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.3)' }}
           >
-            Your Key to the Perfect 
-            <span className="block bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-transparent">
-              Belizean Adventure
+            The Heart of 
+            <span className="block text-accent-light">
+              Belize, Unlocked.
             </span>
           </h1>
           
           <p 
-            className="text-lg md:text-xl max-w-2xl mx-auto text-primary-foreground/90 mb-10"
-            style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.5)' }}
+            className="text-lg md:text-xl text-white/90 mb-10"
+            style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.3)' }}
           >
-            Unlock exclusive experiences, seamless bookings, and expert local advice with your personal AI-powered concierge for San Pedro.
+            Your personal AI-powered concierge for exclusive experiences, seamless bookings, and expert local advice in San Pedro.
           </p>
+
+          {/* Icon-based value propositions */}
+          <div className="space-y-6 mb-12 text-white">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-white/10 rounded-full">
+                <Award className="h-6 w-6 text-accent-light" />
+              </div>
+              <div>
+                <p className="font-semibold">Expertly Curated</p>
+                <p className="text-sm text-white/80">Vetted tours, dining, and rentals.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-white/10 rounded-full">
+                <ShieldCheck className="h-6 w-6 text-accent-light" />
+              </div>
+              <div>
+                <p className="font-semibold">AI-Powered Ease</p>
+                <p className="text-sm text-white/80">24/7 AI assistant plans every detail.</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-white/10 rounded-full">
+                <Users className="h-6 w-6 text-accent-light" />
+              </div>
+              <div>
+                <p className="font-semibold">Authentic Local Access</p>
+                <p className="text-sm text-white/80">Unlock exclusive local experiences.</p>
+              </div>
+            </div>
+          </div>
           
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex items-center gap-4">
             <Link to="/messages">
               <Button 
                 variant="ocean" 
@@ -67,7 +85,7 @@ export function Hero() {
               <Button 
                 variant="ghost" 
                 size="lg" 
-                className="text-primary-foreground hover:bg-white/10 hover:text-white"
+                className="text-white hover:bg-white/10 hover:text-white"
               >
                 Explore Services <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
