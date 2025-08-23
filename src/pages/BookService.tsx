@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Star, Plus } from 'lucide-react';
+import { Star, Plus, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useCart } from '@/contexts/CartContext';
 import { Header } from '@/components/Header';
 import { PaymentButton } from '@/components/PaymentButton';
+import { Link } from 'react-router-dom';
+
+const servicesHeroUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
+const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
 
 interface ServiceCategory {
   id: string;
@@ -29,7 +33,7 @@ const BookService = () => {
         const { data, error } = await supabase
           .from('service_categories')
           .select('*')
-          .eq('active', true)
+          .eq('is_active', true)
           .neq('category_group', 'Relocation') // Exclude relocation services
           .order('category_group, name');
 
@@ -38,7 +42,7 @@ const BookService = () => {
         const enrichedServices = (data || []).map(service => ({
           ...service,
           price: Math.floor(Math.random() * 500) + 50,
-          image_url: `https://placehold.co/600x400?text=${service.name.replace(/\s/g, "+")}`
+          image_url: `https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=2080&auto=format&fit=crop`
         }));
         
         setServiceCategories(enrichedServices);
@@ -72,7 +76,7 @@ const BookService = () => {
   };
   
   const groupedServices = serviceCategories.reduce((acc, service) => {
-    const group = service.category_group || 'Other';
+    const group = service.category_group || 'Other Experiences';
     if (!acc[group]) {
       acc[group] = [];
     }
@@ -93,69 +97,101 @@ const BookService = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-cyan-50 to-blue-100 relative">
+    <div className="min-h-screen bg-background">
       <Header />
-      <div className="container mx-auto px-4 py-24">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-foreground mb-4">Travel Services</h1>
-          <p className="text-xl text-muted-foreground">Curated experiences for your perfect vacation.</p>
-        </div>
+      <main>
+        {/* Hero Section */}
+        <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center text-center text-white">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${servicesHeroUrl})` }}
+          >
+            <div className="absolute inset-0 bg-black/40" />
+          </div>
+          <div className="relative z-10 p-4 animate-fade-in-up">
+            <h1 className="text-5xl md:text-7xl font-bold" style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.3)' }}>Curated Services</h1>
+            <p className="text-xl md:text-2xl mt-4 max-w-2xl mx-auto" style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.3)' }}>Every experience, hand-picked for your perfect getaway.</p>
+          </div>
+        </section>
 
-        {Object.entries(groupedServices).map(([group, services]) => (
-            <div key={group} className="mb-12">
-              <h2 className="text-3xl font-bold text-foreground mb-6 text-left">{group}</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {services.map((service) => (
-                  <Card key={service.id} className="group overflow-hidden hover:shadow-xl transition-all duration-500 hover:-translate-y-2 cursor-pointer border-0 bg-card/80 backdrop-blur-sm">
-                    <div className="aspect-video bg-muted overflow-hidden relative">
-                      <img 
-                        src={service.image_url} 
-                        alt={service.name}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    </div>
-                    <CardContent className="p-6">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-xl font-bold">{service.name}</h3>
-                        <div className="text-lg font-semibold text-primary">
-                          ${service.price}
+        {/* Services List */}
+        <section className="py-24">
+          <div className="container mx-auto px-4">
+            {Object.entries(groupedServices).map(([group, services]) => (
+                <div key={group} className="mb-16">
+                  <h2 className="text-4xl font-bold text-primary mb-8 text-left">{group}</h2>
+                  <div className="grid md:grid-cols-2 gap-8">
+                    {services.map((service) => (
+                      <Card key={service.id} className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0">
+                        <div className="aspect-video bg-muted overflow-hidden relative">
+                          <img 
+                            src={service.image_url} 
+                            alt={service.name}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          />
                         </div>
-                      </div>
-                      
-                      <p className="text-muted-foreground mb-4 line-clamp-2">
-                        {service.description}
-                      </p>
+                        <CardContent className="p-6">
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className="text-xl font-bold">{service.name}</h3>
+                            <div className="text-lg font-semibold text-primary">
+                              ${service.price}
+                            </div>
+                          </div>
+                          
+                          <p className="text-muted-foreground mb-4 line-clamp-2">
+                            {service.description}
+                          </p>
 
-                      <div className="flex items-center mb-4">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span className="ml-2 text-sm text-muted-foreground">(5.0)</span>
-                      </div>
+                          <div className="flex items-center mb-4">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            ))}
+                            <span className="ml-2 text-sm text-muted-foreground">(5.0)</span>
+                          </div>
 
-                      <div className="space-y-2">
-                        <Button 
-                          className="w-full"
-                          onClick={() => handleAddToCart(service)}
-                        >
-                          <Plus className="w-4 h-4 mr-2" />
-                          Add to Cart
-                        </Button>
-                        <PaymentButton 
-                          amount={service.price || 100}
-                          description={`${service.name} - Concierge Service`}
-                          className="w-full"
-                        />
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          ))}
-      </div>
+                          <div className="flex items-center gap-2">
+                            <Button 
+                              className="w-full"
+                              onClick={() => handleAddToCart(service)}
+                            >
+                              <Plus className="w-4 h-4 mr-2" />
+                              Add to Cart
+                            </Button>
+                            <PaymentButton 
+                              amount={service.price || 100}
+                              description={`${service.name} - Concierge Service`}
+                              className="w-full"
+                            />
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="relative py-24 text-white text-center">
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${ctaImageUrl})` }}
+          >
+            <div className="absolute inset-0 bg-primary/80" />
+          </div>
+          <div className="relative z-10 container mx-auto px-4">
+            <h2 className="text-4xl font-bold mb-4">Can't Decide?</h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto">Let our AI assistant craft the perfect itinerary just for you.</p>
+            <Link to="/messages">
+              <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-semibold">
+                <MessageCircle className="h-5 w-5 mr-2" />
+                Start Planning with AI
+              </Button>
+            </Link>
+          </div>
+        </section>
+      </main>
     </div>
   );
 };
