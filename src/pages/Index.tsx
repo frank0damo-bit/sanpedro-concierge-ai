@@ -25,6 +25,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+import sanPedroHero from "@/assets/san-pedro-hero.jpg";
 
 // Define an interface for your service objects
 interface FeaturedService {
@@ -98,7 +99,7 @@ const Index = () => {
         icon: iconMap[service.name] || Award,
         title: service.name,
         description: service.description,
-        image: imageMap[service.name] || "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
+        image: imageMap[service.name] || sanPedroHero,
       }));
 
       setFeaturedServices(services);
