@@ -28,11 +28,29 @@ import {
   Waves,
   ChefHat,
   CalendarHeart,
+  ShoppingCart,
+  Fish,
+  Sun,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+
+// Import local assets for a richer experience
 import sanPedroHero from "@/assets/san-pedro-hero.jpg";
+import photographyImg from "@/assets/photography.jpg";
+import airportTransferImg from "@/assets/airport-transfer.jpg";
+import spaWellnessImg from "@/assets/spa-wellness.jpg";
+import privateExcursionsImg from "@/assets/cultural-experience.jpg";
+import waterSportsImg from "@/assets/water-sports.jpg";
+import privateChefImg from "@/assets/private-chef.jpg";
+import eventPlanningImg from "@/assets/event-planning.jpg";
+import personalShoppingImg from "@/assets/personal-shopping.jpg";
+import fishingCharterImg from "@/assets/fishing-charter.jpg";
+import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
+import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
+import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
+
 
 // Define an interface for your service objects
 interface FeaturedService {
@@ -53,57 +71,61 @@ const Index = () => {
 
   const fetchFeaturedServices = async () => {
     try {
+      // Fetch all active services from the database
       const { data, error } = await supabase
         .from("service_categories")
-        .select("id, name, description")
-        .in("name", [
-          "Fine Dining Reservations",
-          "Professional Photography",
-          "VIP Airport Transfers",
-          "Spa & Wellness",
-          "Private Excursions",
-          "Luxury Transportation",
-          "Water Sports Equipment",
-          "Private Chef Services",
-          "Event Planning"
-        ])
-        .limit(9);
+        .select("id, name, description, icon_name")
+        .eq('is_active', true)
+        .neq('category_group', 'Relocation')
+        .limit(12);
 
       if (error) throw error;
 
       const iconMap: { [key: string]: React.ElementType } = {
-        "Fine Dining Reservations": UtensilsCrossed,
-        "Professional Photography": Camera,
-        "VIP Airport Transfers": Plane,
-        "Spa & Wellness": Heart,
-        "Private Excursions": Compass,
-        "Luxury Transportation": Car,
-        "Water Sports Equipment": Waves,
-        "Private Chef Services": ChefHat,
-        "Event Planning": CalendarHeart,
-        "Restaurants": UtensilsCrossed,
-        "Golf Cart Rentals": Car,
-        "Excursions": Compass,
+        "plane": Plane,
+        "shopping-bag": ShoppingCart,
+        "heart": Heart,
+        "waves": Waves,
+        "chef-hat": ChefHat,
+        "camera": Camera,
+        "fish": Fish,
+        "music": Sun,
+        "plus-circle": Award,
+        "shopping-cart": ShoppingCart,
+        "calendar-heart": CalendarHeart,
+        "shirt": Award,
+        "utensils": UtensilsCrossed,
+        "car": Car,
+        "compass": Compass,
+        "default": Award,
       };
 
       const imageMap: { [key: string]: string } = {
-        "Fine Dining Reservations": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
-        "Professional Photography": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
-        "VIP Airport Transfers": "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b",
-        "Spa & Wellness": "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
-        "Private Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
-        "Luxury Transportation": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
-        "Water Sports Equipment": "https://images.unsplash.com/photo-1511222955395-58448a1a3e9c",
-        "Private Chef Services": "https://images.unsplash.com/photo-1621996346565-e326b20f545a",
-        "Event Planning": "https://images.unsplash.com/photo-1519167758481-939e6573b4b6",
-        "Restaurants": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
+        "Fine Dining Reservations": sanPedroHero,
+        "Restaurants": sanPedroHero,
+        "Professional Photography": photographyImg,
+        "Photography Services": photographyImg,
+        "VIP Airport Transfers": airportTransferImg,
+        "Airport Transfers": airportTransferImg,
+        "Spa & Wellness": spaWellnessImg,
+        "Private Excursions": privateExcursionsImg,
+        "Excursions": privateExcursionsImg,
+        "Luxury Transportation": airportTransferImg,
+        "Water Sports Equipment": waterSportsImg,
+        "Private Chef Services": privateChefImg,
+        "Event Planning": eventPlanningImg,
+        "Personal Shopping": personalShoppingImg,
+        "Fishing Charters": fishingCharterImg,
+        "Cultural Experiences": privateExcursionsImg,
+        "Medical & Emergency": medicalEmergencyImg,
+        "Grocery & Essentials": groceryEssentialsImg,
+        "Laundry & Housekeeping": laundryHousekeepingImg,
         "Golf Cart Rentals": "https://images.unsplash.com/photo-1589139893118-842263886561",
-        "Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
       };
 
       const services = (data || []).map(service => ({
         id: service.id,
-        icon: iconMap[service.name] || Award,
+        icon: iconMap[service.icon_name as string] || iconMap["default"],
         title: service.name,
         description: service.description,
         image: imageMap[service.name] || sanPedroHero,
@@ -112,6 +134,11 @@ const Index = () => {
       setFeaturedServices(services);
     } catch (error) {
       console.error("Error fetching services:", error);
+      toast({
+        title: "Error fetching services",
+        description: "Could not load the featured experiences.",
+        variant: "destructive"
+      })
     }
   };
 
