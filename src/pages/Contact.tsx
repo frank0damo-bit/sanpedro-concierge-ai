@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const contactImageUrl = "https://images.unsplash.com/photo-1587560699334-cc426240169f";
+const contactImageUrl = "https://images.unsplash.com/photo-1528422162028-1f2b38042459";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -44,17 +44,17 @@ const Contact = () => {
         {/* Contact Form and Info Section */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-2 gap-12">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
               {/* Contact Information */}
               <div className="space-y-8">
                 <div>
                   <h2 className="text-3xl font-bold mb-4">Contact Information</h2>
                   <p className="text-muted-foreground mb-6">
-                    Have a question or need to speak with us directly? Here's how you can reach us.
+                    Have a question or need to speak with us directly? Here's how you can reach us. We're available during local business hours to assist you.
                   </p>
                 </div>
                 <div className="space-y-6">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-accent-light/20 transition-colors">
                     <div className="p-3 bg-primary/10 rounded-lg text-primary">
                       <Phone className="h-6 w-6" />
                     </div>
@@ -64,7 +64,7 @@ const Contact = () => {
                       <p className="text-sm text-muted-foreground">Available 6:00 AM - 10:00 PM</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-accent-light/20 transition-colors">
                     <div className="p-3 bg-primary/10 rounded-lg text-primary">
                       <Mail className="h-6 w-6" />
                     </div>
@@ -74,7 +74,7 @@ const Contact = () => {
                       <p className="text-sm text-muted-foreground">Replies within 2 hours</p>
                     </div>
                   </div>
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-start gap-4 p-4 rounded-lg hover:bg-accent-light/20 transition-colors">
                     <div className="p-3 bg-primary/10 rounded-lg text-primary">
                       <MapPin className="h-6 w-6" />
                     </div>
@@ -88,7 +88,7 @@ const Contact = () => {
               </div>
 
               {/* Contact Form */}
-              <Card>
+              <Card className="bg-card/80 backdrop-blur-sm border-border/50 shadow-lg">
                 <CardHeader>
                   <CardTitle>Send us a Message</CardTitle>
                   <CardDescription>
