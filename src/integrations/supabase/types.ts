@@ -267,7 +267,7 @@ export type Database = {
       }
       service_categories: {
         Row: {
-          is_active: boolean | null
+          active: boolean | null
           category_group: string | null
           created_at: string | null
           description: string | null
@@ -281,7 +281,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
-          is_active?: boolean | null
+          active?: boolean | null
           category_group?: string | null
           created_at?: string | null
           description?: string | null
@@ -295,7 +295,7 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
-          is_active?: boolean | null
+          active?: boolean | null
           category_group?: string | null
           created_at?: string | null
           description?: string | null

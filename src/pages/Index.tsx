@@ -1,17 +1,10 @@
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero";
+import { Hero } from "@/components/Hero"; // Make sure Hero is imported
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 import {
   UtensilsCrossed,
   Car,
@@ -28,29 +21,10 @@ import {
   Waves,
   ChefHat,
   CalendarHeart,
-  ShoppingCart,
-  Fish,
-  Sun,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
-
-// Import local assets for a richer experience
-import sanPedroHero from "@/assets/san-pedro-hero.jpg";
-import photographyImg from "@/assets/photography.jpg";
-import airportTransferImg from "@/assets/airport-transfer.jpg";
-import spaWellnessImg from "@/assets/spa-wellness.jpg";
-import privateExcursionsImg from "@/assets/cultural-experience.jpg";
-import waterSportsImg from "@/assets/water-sports.jpg";
-import privateChefImg from "@/assets/private-chef.jpg";
-import eventPlanningImg from "@/assets/event-planning.jpg";
-import personalShoppingImg from "@/assets/personal-shopping.jpg";
-import fishingCharterImg from "@/assets/fishing-charter.jpg";
-import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
-import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
-import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
-
 
 // Define an interface for your service objects
 interface FeaturedService {
@@ -71,74 +45,65 @@ const Index = () => {
 
   const fetchFeaturedServices = async () => {
     try {
-      // Fetch all active services from the database
       const { data, error } = await supabase
         .from("service_categories")
-        .select("id, name, description, icon_name, is_active")
-        .eq('is_active', true)
-        .neq('category_group', 'Relocation')
-        .limit(12);
+        .select("id, name, description")
+        .in("name", [
+          "Fine Dining Reservations",
+          "Professional Photography",
+          "VIP Airport Transfers",
+          "Spa & Wellness",
+          "Private Excursions",
+          "Luxury Transportation",
+          "Water Sports Equipment",
+          "Private Chef Services",
+          "Event Planning"
+        ])
+        .limit(6);
 
       if (error) throw error;
 
       const iconMap: { [key: string]: React.ElementType } = {
-        "plane": Plane,
-        "shopping-bag": ShoppingCart,
-        "heart": Heart,
-        "waves": Waves,
-        "chef-hat": ChefHat,
-        "camera": Camera,
-        "fish": Fish,
-        "music": Sun,
-        "plus-circle": Award,
-        "shopping-cart": ShoppingCart,
-        "calendar-heart": CalendarHeart,
-        "shirt": Award,
-        "utensils": UtensilsCrossed,
-        "car": Car,
-        "compass": Compass,
-        "default": Award,
+        "Fine Dining Reservations": UtensilsCrossed,
+        "Professional Photography": Camera,
+        "VIP Airport Transfers": Plane,
+        "Spa & Wellness": Heart,
+        "Private Excursions": Compass,
+        "Luxury Transportation": Car,
+        "Water Sports Equipment": Waves,
+        "Private Chef Services": ChefHat,
+        "Event Planning": CalendarHeart,
+        "Restaurants": UtensilsCrossed,
+        "Golf Cart Rentals": Car,
+        "Excursions": Compass,
       };
 
       const imageMap: { [key: string]: string } = {
-        "Fine Dining Reservations": sanPedroHero,
-        "Restaurants": sanPedroHero,
-        "Professional Photography": photographyImg,
-        "Photography Services": photographyImg,
-        "VIP Airport Transfers": airportTransferImg,
-        "Airport Transfers": airportTransferImg,
-        "Spa & Wellness": spaWellnessImg,
-        "Private Excursions": privateExcursionsImg,
-        "Excursions": privateExcursionsImg,
-        "Luxury Transportation": airportTransferImg,
-        "Water Sports Equipment": waterSportsImg,
-        "Private Chef Services": privateChefImg,
-        "Event Planning": eventPlanningImg,
-        "Personal Shopping": personalShoppingImg,
-        "Fishing Charters": fishingCharterImg,
-        "Cultural Experiences": privateExcursionsImg,
-        "Medical & Emergency": medicalEmergencyImg,
-        "Grocery & Essentials": groceryEssentialsImg,
-        "Laundry & Housekeeping": laundryHousekeepingImg,
+        "Fine Dining Reservations": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
+        "Professional Photography": "https://images.unsplash.com/photo-1542038784456-1ea8e935640e",
+        "VIP Airport Transfers": "https://images.unsplash.com/photo-1570710891163-6d3b5c47248b",
+        "Spa & Wellness": "https://images.unsplash.com/photo-1540555700478-4be289fbecef",
+        "Private Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
+        "Luxury Transportation": "https://images.unsplash.com/photo-1449824913935-59a10b8d2000",
+        "Water Sports Equipment": "https://images.unsplash.com/photo-1511222955395-58448a1a3e9c",
+        "Private Chef Services": "https://images.unsplash.com/photo-1621996346565-e326b20f545a",
+        "Event Planning": "https://images.unsplash.com/photo-1519167758481-939e6573b4b6",
+        "Restaurants": "https://images.unsplash.com/photo-1537047902294-62a40c20a6ae",
         "Golf Cart Rentals": "https://images.unsplash.com/photo-1589139893118-842263886561",
+        "Excursions": "https://images.unsplash.com/photo-1544551763-46a013bb70d5",
       };
 
       const services = (data || []).map(service => ({
         id: service.id,
-        icon: iconMap[service.icon_name as string] || iconMap["default"],
+        icon: iconMap[service.name] || Award,
         title: service.name,
         description: service.description,
-        image: imageMap[service.name] || sanPedroHero,
+        image: imageMap[service.name] || "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
       }));
 
       setFeaturedServices(services);
     } catch (error) {
       console.error("Error fetching services:", error);
-      toast({
-        title: "Error fetching services",
-        description: "Could not load the featured experiences.",
-        variant: "destructive"
-      })
     }
   };
 
@@ -246,55 +211,41 @@ const Index = () => {
             </p>
           </div>
 
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full"
-          >
-            <CarouselContent>
-              {featuredServices.map((service) => (
-                <CarouselItem key={service.id} className="md:basis-1/2 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]">
-                      <div className="relative aspect-video overflow-hidden">
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                        <div className="absolute bottom-4 left-4 text-white">
-                          <div className="flex items-center gap-3">
-                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
-                              <service.icon className="h-5 w-5" />
-                            </div>
-                            <h3 className="text-xl font-bold">{service.title}</h3>
-                          </div>
-                        </div>
-                      </div>
-                      <CardContent className="p-6">
-                        <p className="text-muted-foreground mb-4 h-12">{service.description}</p>
-                        <Link to={`/service/${service.id}`}>
-                          <Button
-                            variant="outline"
-                            className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                          >
-                            Learn More
-                          </Button>
-                        </Link>
-                      </CardContent>
-                    </Card>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {featuredServices.map((service, index) => (
+              <Card
+                key={index}
+                className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]"
+              >
+                <div className="aspect-video overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="p-2 bg-primary rounded-lg">
+                      <service.icon className="h-5 w-5 text-primary-foreground" />
+                    </div>
+                    <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
                   </div>
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:flex" />
-            <CarouselNext className="hidden md:flex" />
-          </Carousel>
+                  <p className="text-muted-foreground mb-4">{service.description}</p>
+                  <Link to={`/service/${service.id}`}>
+                    <Button
+                      variant="outline"
+                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    >
+                      Learn More
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center">
             <Link to="/services">
               <Button size="lg" variant="ocean" className="text-lg px-8 py-6 font-semibold">
                 View All Services
@@ -305,7 +256,7 @@ const Index = () => {
       </section>
 
       {/* Meet Your Concierge Team */}
-      <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent bg-[length:200%_200%] animate-background-pan">
+      <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
@@ -321,7 +272,7 @@ const Index = () => {
             {conciergeTeam.map((member, index) => (
               <Card
                 key={index}
-                className="bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300 transform hover:-translate-y-2"
+                className="bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300"
               >
                 <CardContent className="p-6 text-center">
                   <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-primary-foreground/30">
