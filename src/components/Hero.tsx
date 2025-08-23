@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Award, Users, ShieldCheck, ArrowRight, MessageCircle } from "lucide-react";
+import { Award, Users, ShieldCheck, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImageUrl from "@/assets/san-pedro-hero.jpg";
 
@@ -38,21 +38,9 @@ export function Hero() {
           >
             Your personal AI-powered concierge for exclusive experiences, seamless bookings, and expert local advice in San Pedro.
           </p>
-          
-          <div className="flex items-center gap-4 mb-12">
-            <Link to="/services">
-              <Button 
-                variant="ocean" 
-                size="lg" 
-                className="text-lg px-8 py-6 font-semibold shadow-glow hover:shadow-ocean"
-              >
-                Explore Services <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
-            </Link>
-          </div>
 
           {/* Icon-based value propositions */}
-          <div className="space-y-6 text-white">
+          <div className="space-y-6 text-white mb-12">
             <div className="flex items-center gap-4">
               <div className="p-3 bg-white/10 rounded-full">
                 <Award className="h-6 w-6 text-accent-light" />
@@ -80,6 +68,18 @@ export function Hero() {
                 <p className="text-sm text-white/80">Unlock exclusive local experiences.</p>
               </div>
             </div>
+          </div>
+          
+          <div className="flex items-center gap-4">
+            <Link to="/services">
+              <Button 
+                variant="ocean" 
+                size="lg" 
+                className="text-lg px-8 py-6 font-semibold shadow-glow hover:shadow-ocean"
+              >
+                Explore Services <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
+            </Link>
           </div>
 
         </div>
