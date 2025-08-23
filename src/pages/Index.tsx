@@ -257,8 +257,8 @@ const Index = () => {
             <CarouselContent>
               {featuredServices.map((service) => (
                 <CarouselItem key={service.id} className="basis-full md:basis-1/3 lg:basis-1/3">
-                  <div className="p-1">
-                    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]">
+                  <div className="p-1 h-full">
+                    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-ocean transition-all duration-500 hover:scale-[1.02] flex flex-col h-full">
                       <div className="relative aspect-video overflow-hidden">
                         <img
                           src={service.image}
@@ -275,16 +275,18 @@ const Index = () => {
                           </div>
                         </div>
                       </div>
-                      <CardContent className="p-6">
-                        <p className="text-muted-foreground mb-4 h-12">{service.description}</p>
-                        <Link to={`/service/${service.id}`}>
-                          <Button
-                            variant="outline"
-                            className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                          >
-                            Learn More
-                          </Button>
-                        </Link>
+                      <CardContent className="p-6 flex flex-col flex-grow">
+                        <p className="text-muted-foreground mb-4 flex-grow">{service.description}</p>
+                        <div className="mt-auto">
+                          <Link to={`/service/${service.id}`}>
+                            <Button
+                              variant="outline"
+                              className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                            >
+                              Learn More
+                            </Button>
+                          </Link>
+                        </div>
                       </CardContent>
                     </Card>
                   </div>
