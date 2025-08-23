@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { MessageCircle, Award, Users, ShieldCheck, ArrowRight } from "lucide-react";
+import { Award, Users, ShieldCheck, ArrowRight, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import heroImageUrl from "@/assets/san-pedro-hero.jpg";
 
@@ -40,21 +40,11 @@ export function Hero() {
           </p>
           
           <div className="flex items-center gap-4 mb-12">
-            <Link to="/messages">
+            <Link to="/services">
               <Button 
                 variant="ocean" 
                 size="lg" 
                 className="text-lg px-8 py-6 font-semibold shadow-glow hover:shadow-ocean"
-              >
-                <MessageCircle className="h-5 w-5" />
-                Start Planning with AI
-              </Button>
-            </Link>
-            <Link to="/services">
-              <Button 
-                variant="ghost" 
-                size="lg" 
-                className="text-white hover:bg-white/10 hover:text-white"
               >
                 Explore Services <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
