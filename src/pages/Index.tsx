@@ -316,43 +316,44 @@ const Index = () => {
               Meet the local experts and hospitality professionals dedicated to crafting your unforgettable Belizean adventure.
             </p>
           </div>
-
-          <div className="flex overflow-x-auto space-x-8 pb-8 -mx-4 px-4 scrollbar-hide">
-            {conciergeTeam.map((member, index) => (
-              <Card
-                key={index}
-                className="flex-shrink-0 w-[320px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
-              >
-                <CardContent className="p-6 text-center flex flex-col items-center">
-                  <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
-                    <AvatarImage src={member.avatar} alt={member.name} />
-                    <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
-                      {member.name.split(" ").map((n) => n[0]).join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
-                  <p className="text-primary/80 mb-4">{member.role}</p>
-                  <div className="flex flex-wrap gap-2 justify-center mb-6">
-                    {member.specialties.map((specialty, idx) => (
-                      <Badge
-                        key={idx}
-                        variant="secondary"
-                      >
-                        {specialty}
-                      </Badge>
-                    ))}
-                  </div>
-                  <div className="mt-auto w-full">
-                    <Link to="/messages">
-                      <Button variant="ocean" className="w-full">
-                        <MessageCircle className="h-4 w-4 mr-2" />
-                        Chat with {member.name.split(' ')[0]}
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="flex justify-center">
+            <div className="flex overflow-x-auto space-x-8 pb-8 scrollbar-hide">
+              {conciergeTeam.map((member, index) => (
+                <Card
+                  key={index}
+                  className="flex-shrink-0 w-[360px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
+                >
+                  <CardContent className="p-6 text-center flex flex-col items-center">
+                    <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
+                      <AvatarImage src={member.avatar} alt={member.name} />
+                      <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
+                        {member.name.split(" ").map((n) => n[0]).join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
+                    <p className="text-primary/80 mb-4">{member.role}</p>
+                    <div className="flex flex-wrap gap-2 justify-center mb-6">
+                      {member.specialties.map((specialty, idx) => (
+                        <Badge
+                          key={idx}
+                          variant="secondary"
+                        >
+                          {specialty}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="mt-auto w-full">
+                      <Link to="/messages">
+                        <Button variant="ocean" className="w-full">
+                          <MessageCircle className="h-4 w-4 mr-2" />
+                          Chat with {member.name.split(' ')[0]}
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
       </section>
