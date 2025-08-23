@@ -1,16 +1,20 @@
 import { Button } from "@/components/ui/button";
 import { MessageCircle, Award, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
-
-// A vibrant, community-focused image
-const heroImageUrl = "https://images.unsplash.com/photo-1528422162028-1f2b38042459?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
+import heroImageUrl from "@/assets/san-pedro-hero.jpg";
 
 export function Hero() {
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden text-center bg-cover bg-center"
-      style={{ backgroundImage: `url(${heroImageUrl})` }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden text-center"
     >
+      {/* Background Image */}
+      <img
+        src={heroImageUrl}
+        alt="A beautiful view of the San Pedro coast in Belize"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      
       {/* Darkening overlay for text readability */}
       <div className="absolute inset-0 bg-black/50" />
       
