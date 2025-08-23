@@ -15,8 +15,8 @@ export function Hero() {
         className="absolute inset-0 w-full h-full object-cover"
       />
       
-      {/* Brighter Overlay */}
-      <div className="absolute inset-0 bg-black/20" />
+      {/* Gradient Overlay for Text Readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4">
