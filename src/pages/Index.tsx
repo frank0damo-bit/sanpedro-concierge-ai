@@ -74,7 +74,7 @@ const Index = () => {
       // Fetch all active services from the database
       const { data, error } = await supabase
         .from("service_categories")
-        .select("id, name, description, icon_name")
+        .select("id, name, description, icon_name, active:is_active")
         .eq('is_active', true)
         .neq('category_group', 'Relocation')
         .limit(12);
@@ -305,7 +305,7 @@ const Index = () => {
       </section>
 
       {/* Meet Your Concierge Team */}
-      <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent">
+      <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent bg-[length:200%_200%] animate-background-pan">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
@@ -321,7 +321,7 @@ const Index = () => {
             {conciergeTeam.map((member, index) => (
               <Card
                 key={index}
-                className="bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300"
+                className="bg-primary-foreground/10 backdrop-blur-sm border-primary-foreground/20 hover:bg-primary-foreground/20 transition-all duration-300 transform hover:-translate-y-2"
               >
                 <CardContent className="p-6 text-center">
                   <Avatar className="w-24 h-24 mx-auto mb-4 border-4 border-primary-foreground/30">
