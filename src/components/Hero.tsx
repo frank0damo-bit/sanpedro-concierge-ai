@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import { MessageCircle, Award, Users, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
-// A more community-focused and fun image
+// This image shows community and fun, fitting the new direction
 const heroImageUrl = "https://images.unsplash.com/photo-1528422162028-1f2b38042459?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden text-center">
-      {/* Background Image */}
+      {/* Background Image - Corrected Implementation */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: `url(${heroImageUrl})` }}
@@ -22,9 +22,9 @@ export function Hero() {
         <div className="max-w-4xl mx-auto">
           
           <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground mb-8 leading-tight tracking-tight">
-            Your Story
+            The Heart of 
             <span className="block bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-transparent animate-shimmer bg-[length:200%_auto]">
-              Starts Here
+              Belize, Unlocked.
             </span>
           </h1>
           
