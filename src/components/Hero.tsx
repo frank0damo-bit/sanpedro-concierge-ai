@@ -11,7 +11,10 @@ export function Hero() {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroImageUrl})` }}
-      />
+      >
+        {/* Subtle Dark Overlay */}
+        <div className="absolute inset-0 bg-black/30" />
+      </div>
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
@@ -28,13 +31,15 @@ export function Hero() {
             </div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground mb-6 leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground mb-6 leading-tight tracking-tight">
             Your Luxury
-            <span className="text-accent block">Caribbean Experience</span>
+            <span className="block bg-gradient-to-r from-accent via-accent-light to-accent bg-clip-text text-transparent animate-shimmer bg-[length:200%_auto]">
+              Caribbean Experience
+            </span>
             Awaits
           </h1>
           
-          <p className="text-xl md:text-2l text-primary-foreground/90 mb-8 leading-relaxed max-w-3xl mx-auto">
+          <p className="text-xl md:text-2l text-primary-foreground/90 mb-8 leading-relaxed max-w-3xl mx-auto font-light">
             From exclusive dining reservations to private excursions, we curate unforgettable experiences 
             in paradise. Let our AI-powered concierge handle every detail of your Belizean adventure.
           </p>
@@ -44,7 +49,7 @@ export function Hero() {
               <Button 
                 variant="ocean" 
                 size="lg" 
-                className="text-lg px-8 py-6 font-semibold"
+                className="text-lg px-8 py-6 font-semibold shadow-glow hover:shadow-ocean"
               >
                 <MessageCircle className="h-5 w-5" />
                 Chat with AI Concierge
@@ -75,7 +80,7 @@ export function Hero() {
       </div>
       
       {/* Floating Elements */}
-      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+      <div className="absolute bottom-10 left-12 transform -translate-x-1/2 animate-bounce">
         <div className="w-6 h-10 border-2 border-primary-foreground/50 rounded-full flex justify-center">
           <div className="w-1 h-3 bg-primary-foreground/50 rounded-full mt-2 animate-pulse" />
         </div>
