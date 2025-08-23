@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
-import { Hero } from "@/components/Hero"; // Make sure Hero is imported
+import { Hero } from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import {
   UtensilsCrossed,
   Car,
@@ -60,7 +67,7 @@ const Index = () => {
           "Private Chef Services",
           "Event Planning"
         ])
-        .limit(6);
+        .limit(9);
 
       if (error) throw error;
 
@@ -212,41 +219,55 @@ const Index = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-            {featuredServices.map((service, index) => (
-              <Card
-                key={index}
-                className="group overflow-hidden hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]"
-              >
-                <div className="aspect-video overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-primary rounded-lg">
-                      <service.icon className="h-5 w-5 text-primary-foreground" />
-                    </div>
-                    <h3 className="text-xl font-bold text-foreground">{service.title}</h3>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent>
+              {featuredServices.map((service) => (
+                <CarouselItem key={service.id} className="md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1">
+                    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-ocean transition-all duration-500 hover:scale-[1.02]">
+                      <div className="relative aspect-video overflow-hidden">
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute bottom-4 left-4 text-white">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                              <service.icon className="h-5 w-5" />
+                            </div>
+                            <h3 className="text-xl font-bold">{service.title}</h3>
+                          </div>
+                        </div>
+                      </div>
+                      <CardContent className="p-6">
+                        <p className="text-muted-foreground mb-4 h-12">{service.description}</p>
+                        <Link to={`/service/${service.id}`}>
+                          <Button
+                            variant="outline"
+                            className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                          >
+                            Learn More
+                          </Button>
+                        </Link>
+                      </CardContent>
+                    </Card>
                   </div>
-                  <p className="text-muted-foreground mb-4">{service.description}</p>
-                  <Link to={`/service/${service.id}`}>
-                    <Button
-                      variant="outline"
-                      className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                    >
-                      Learn More
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden md:flex" />
+            <CarouselNext className="hidden md:flex" />
+          </Carousel>
 
-          <div className="text-center">
+          <div className="text-center mt-12">
             <Link to="/services">
               <Button size="lg" variant="ocean" className="text-lg px-8 py-6 font-semibold">
                 View All Services
