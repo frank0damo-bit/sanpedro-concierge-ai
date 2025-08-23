@@ -71,12 +71,13 @@ const Index = () => {
 
   const fetchFeaturedServices = async () => {
     try {
-      // Fetch all active services from the database
+      // Fetch all active services from the database using the correct column name
       const { data, error } = await supabase
         .from("service_categories")
         .select("id, name, description, icon_name, is_active")
         .eq('is_active', true)
-        .neq('category_group', 'Relocation');
+        .neq('category_group', 'Relocation')
+        .limit(12);
 
       if (error) throw error;
 
