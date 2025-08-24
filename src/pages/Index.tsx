@@ -50,6 +50,9 @@ import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import { BuildMyTripButton } from "@/components/BuildMyTripButton";
 
+const ctaImageUrl = "https://images.unsplash.com/photo-1520106212299-d99c443e4568";
+
+
 
 interface FeaturedService {
   id: string;
