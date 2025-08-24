@@ -46,8 +46,8 @@ export function Hero() {
                 <ShieldCheck className="h-6 w-6 text-accent-light" />
               </div>
               <div>
-                <p className="font-semibold">AI-Powered Ease</p>
-                <p className="text-sm text-white/80">24/7 AI assistant plans every detail.</p>
+                <p className="font-semibold">Seamless Planning</p>
+                <p className="text-sm text-white/80">Our 24/7 concierge plans every detail.</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
