@@ -12,15 +12,12 @@ export function Footer() {
   const companyLinks = [
     { to: "/about", label: "About Us" },
     { to: "/contact", label: "Contact" },
-    { to: "/services", label: "All Services" },
-    { to: "/moving-services", label: "Relocation Services" },
   ];
 
   const servicesLinks = [
-    { to: "/service/1", label: "Dining Reservations" },
     { to: "/services", label: "Travel" },
-    { to: "/moving-services", label: "Relocation" },
-    { to: "/service/4", label: "Private Transportation" },
+    { to: "/moving-services", label: "Relocation Services" }, 
+    { to: "/services", label: "All Services" },
   ];
 
   const legalLinks = [
