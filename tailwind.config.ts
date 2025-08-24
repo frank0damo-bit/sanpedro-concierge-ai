@@ -70,13 +70,15 @@ export default {
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)',
 			},
-			backgroundImage: {
-				'gradient-ocean': 'var(--gradient-ocean)',
-				'gradient-sunset': 'var(--gradient-sunset)',
-				'gradient-glass': 'var(--gradient-glass)',
-				'gradient-mango': 'var(--gradient-mango)', // ADD THIS
-      		  'gradient-sky': 'var(--gradient-sky)',     // ADD THIS
-			},
+		// tailwind.config.ts
+
+backgroundImage: {
+  'gradient-ocean': 'var(--gradient-ocean)',
+  'gradient-sunset': 'var(--gradient-sunset)',
+  'gradient-glass': 'var(--gradient-glass)',
+  'gradient-mango': 'var(--gradient-mango)',
+  'gradient-sky': 'var(--gradient-sky)',
+},
 			boxShadow: {
 				'ocean': 'var(--shadow-ocean)',
 				'soft': 'var(--shadow-soft)',
