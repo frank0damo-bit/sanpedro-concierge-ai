@@ -92,7 +92,6 @@ serve(async (req) => {
       cancel_url: `${base}/payment-cancelled`,
 
     });
-     const url = new URL(req.url);
      const base = origin || `${url.protocol}//${url.host}`;
 
 
