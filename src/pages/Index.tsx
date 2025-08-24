@@ -312,7 +312,7 @@ const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
         id="contact"
         className="relative py-24 text-center"
       >
-     <div
+<div
   className="absolute inset-0 bg-cover bg-center"
   style={{ backgroundImage: `url(${ctaImageUrl})` }}
 ></div>
