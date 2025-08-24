@@ -123,46 +123,45 @@ const About = () => {
                 The friendly faces behind your perfect vacation.
               </p>
             </div>
-            <div className="flex justify-center">
-              <div className="flex overflow-x-auto space-x-8 pb-8 scrollbar-hide">
-                {team.map((member, index) => (
-                  <Card
-                    key={index}
-                    className="flex-shrink-0 w-[340px] bg-white shadow-lg border-0 rounded-2xl overflow-hidden group"
-                  >
-                    <CardContent className="p-6 text-center flex flex-col items-center">
-                      <Avatar className="w-28 h-28 mb-4 border-4 border-accent-light/50 transition-all duration-300 group-hover:border-accent">
-                        <AvatarImage src={member.avatar} alt={member.name} />
-                        <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
-                          {member.name.split(" ").map((n) => n[0]).join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <h3 className="text-2xl font-bold text-foreground">{member.name}</h3>
-                      <p className="text-primary/80 mb-4">{member.role}</p>
-                      <div className="flex flex-wrap gap-2 justify-center mb-6">
-                        {member.specialties.map((specialty, idx) => (
-                          <Badge
-                            key={idx}
-                            variant="secondary"
-                            className="bg-accent/10 text-accent-foreground"
-                          >
-                            {specialty}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="mt-auto w-full">
-                          <Button
-                              variant="outline"
-                              className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                            >
-                              Say Hello
-                            </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+             <div className="flex justify-center">
+            <div className="flex overflow-x-auto space-x-8 pb-8 scrollbar-hide">
+              {conciergeTeam.map((member, index) => (
+                <Card
+                  key={index}
+                  className="flex-shrink-0 w-[360px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
+                >
+                  <CardContent className="p-6 pt-8 text-center flex flex-col items-center">
+                    <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
+                      <AvatarImage src={member.avatar} alt={member.name} />
+                      <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
+                        {member.name.split(" ").map((n) => n[0]).join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
+                    <p className="text-primary/80 mb-4">{member.role}</p>
+                    <div className="flex flex-wrap gap-2 justify-center mb-6">
+                      {member.specialties.map((specialty, idx) => (
+                        <Badge
+                          key={idx}
+                          variant="secondary"
+                        >
+                          {specialty}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="mt-auto w-full">
+                      <Link to="/messages">
+                        <Button variant="ocean" className="w-full">
+                          <MessageCircle className="h-4 w-4 mr-2" />
+                          Chat with {member.name.split(' ')[0]}
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
+          </div>
           </div>
         </section>
 
