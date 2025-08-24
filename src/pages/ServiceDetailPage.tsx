@@ -114,7 +114,7 @@ const ServiceDetailPage = () => {
     return <div className="container mx-auto px-4 py-24 text-center">Service not found.</div>;
   }
   
-  const features = service.features || ['Personalized Itineraries', '24/7 Support', 'Vetted Local Partners', 'Exclusive Access'];
+  const features = service.features || [];
 
   return (
     <>
