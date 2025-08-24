@@ -83,7 +83,7 @@ serve(async (req) => {
     const userName = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() : 'there';
 
     // System prompt with local knowledge about San Pedro, Belize
-    const systemPrompt = `You are an AI concierge assistant for Caribe Concierge, specializing in San Pedro, Ambergris Caye, Belize. You help guests with recommendations, bookings, and local information.
+    const systemPrompt = `You are a concierge assistant for Caribe Concierge, specializing in San Pedro, Ambergris Caye, Belize. You help guests with recommendations, bookings, and local information.
 
 ABOUT SAN PEDRO, BELIZE:
 - Located on Ambergris Caye, the largest island in Belize
@@ -160,32 +160,32 @@ Current message: ${message}`;
     }
 
     const data = await response.json();
-    const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'I apologize, but I encountered an error. Please try again.';
+    const conciergeResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'I apologize, but I encountered an error. Please try again.';
 
     // Save AI response to database
-    const { error: aiInsertError } = await supabaseClient
+    const { error: conciergeInsertError } = await supabaseClient
       .from('messages')
       .insert({
         user_id: user.id,
-        content: aiResponse,
-        sender_type: 'ai',
+        content: conciergeResponse,
+        sender_type: 'ai', // Keep this as 'ai' for now to differentiate in the database
         booking_id: booking_id || null,
         request_id: request_id || null,
       });
 
-    if (aiInsertError) {
-      console.error('Error saving AI message:', aiInsertError);
+    if (conciergeInsertError) {
+      console.error('Error saving concierge message:', conciergeInsertError);
     }
 
     return new Response(JSON.stringify({ 
-      response: aiResponse,
+      response: conciergeResponse,
       success: true
     }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     });
 
   } catch (error) {
-    console.error('Error in ai-chat function:', error);
+    console.error('Error in concierge-chat function:', error);
     return new Response(JSON.stringify({ 
       error: error.message,
       success: false 
