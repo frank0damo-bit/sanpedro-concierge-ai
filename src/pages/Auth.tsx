@@ -5,8 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { ArrowLeft } from 'lucide-react';
-
-const authImageUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
+import authImageUrl from "@/assets/secret-beach-belize.png";
 
 const Auth = () => {
   const { user } = useAuth();
