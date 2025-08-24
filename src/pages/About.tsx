@@ -151,9 +151,12 @@ const About = () => {
                         ))}
                       </div>
                       <div className="mt-auto w-full">
-                        <Button variant="outline" className="w-full border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-                          Say Hello
-                        </Button>
+                          <Button
+                              variant="outline"
+                              className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                            >
+                              Say Hello
+                            </Button>
                       </div>
                     </CardContent>
                   </Card>
