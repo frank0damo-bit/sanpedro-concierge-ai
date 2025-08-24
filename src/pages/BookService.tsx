@@ -9,6 +9,19 @@ import {
   Search,
   Wand2,
   Tag,
+  UtensilsCrossed,
+  Car,
+  Compass,
+  Award,
+  Plane,
+  ShoppingCart,
+  Heart,
+  Waves,
+  ChefHat,
+  Camera,
+  Fish,
+  Sun,
+  CalendarHeart,
 } from "lucide-react";
 import ServiceCard from "@/components/ServiceCard";
 import ServicesToggleHeader from "@/components/ServicesToggleHeader";
@@ -21,7 +34,31 @@ interface ServiceCategory {
   image_url: string;
   category_group: string;
   tags: string[];
+  icon_name: string;
+  features?: string[];
+  // This will hold the actual icon component
+  icon?: React.ElementType; 
 }
+
+// Icon map to convert string names from Supabase to Lucide icon components
+const iconMap: { [key: string]: React.ElementType } = {
+  plane: Plane,
+  "shopping-bag": ShoppingCart,
+  heart: Heart,
+  waves: Waves,
+  "chef-hat": ChefHat,
+  camera: Camera,
+  fish: Fish,
+  music: Sun,
+  "plus-circle": Award,
+  "shopping-cart": ShoppingCart,
+  "calendar-heart": CalendarHeart,
+  shirt: Award,
+  utensils: UtensilsCrossed,
+  car: Car,
+  compass: Compass,
+  default: Award,
+};
 
 const BookService = () => {
   const { toast } = useToast();
@@ -42,10 +79,14 @@ const BookService = () => {
 
         if (error) throw error;
         
-        const serviceData = data || [];
+        // Transform the data here, converting icon_name to an icon component
+        const serviceData = (data || []).map(service => ({
+          ...service,
+          icon: iconMap[service.icon_name as string] || iconMap["default"],
+        }));
+        
         setServices(serviceData);
 
-        // Extract unique tags
         const uniqueTags = new Set<string>();
         serviceData.forEach(service => {
           if (service.tags) {
@@ -120,7 +161,6 @@ const BookService = () => {
             </div>
           </div>
           
-          {/* Filter Tags */}
           <div className="mb-12 flex flex-wrap gap-2 items-center">
              <Tag className="h-5 w-5 text-muted-foreground mr-2"/>
              <span className="font-semibold mr-2">Filter by:</span>
