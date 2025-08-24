@@ -166,9 +166,9 @@ const About = () => {
               </div>
             </div>
              <div className="text-center mt-20">
-              <Link to="/messages">
+              <Link to="/contact">
                           <Button variant="ocean" className="w-full">
-                            Chat with {member.name.split(' ')[0]}
+                            Contact Us Today
                           </Button>
                         </Link>
             </div>
