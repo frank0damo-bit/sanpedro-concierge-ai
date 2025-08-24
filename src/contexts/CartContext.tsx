@@ -18,10 +18,14 @@ export interface CartItem {
 
 interface CartContextType {
   cart: CartItem[];
+  items: CartItem[]; // Alias for cart
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
   removeFromCart: (itemId: string) => void;
+  updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
   cartCount: number;
+  getItemCount: () => number; // Alias for cartCount
+  getTotalPrice: () => number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -60,6 +64,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     });
   };
 
+  const updateQuantity = (itemId: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(itemId);
+      return;
+    }
+    setCart(prevCart => 
+      prevCart.map(item => 
+        item.id === itemId ? { ...item, quantity } : item
+      )
+    );
+  };
+
   const removeFromCart = (itemId: string) => {
     setCart(prevCart => prevCart.filter(item => item.id !== itemId));
   };
@@ -69,9 +85,21 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const cartCount = cart.reduce((count, item) => count + item.quantity, 0);
+  const getItemCount = () => cartCount;
+  const getTotalPrice = () => cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart, cartCount }}>
+    <CartContext.Provider value={{ 
+      cart, 
+      items: cart, // Alias for cart
+      addToCart, 
+      removeFromCart, 
+      updateQuantity,
+      clearCart, 
+      cartCount,
+      getItemCount,
+      getTotalPrice
+    }}>
       {children}
     </CartContext.Provider>
   );

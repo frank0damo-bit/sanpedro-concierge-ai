@@ -102,6 +102,7 @@ export default function ServicesLanding() {
       name: service.title,
       description: service.description,
       price: 100, // Default price
+      basePrice: 100, // Default base price
     });
   };
 

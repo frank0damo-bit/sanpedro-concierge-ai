@@ -62,6 +62,7 @@ const MovingServices = () => {
       name: service.name,
       description: service.description,
       price: service.price || 100,
+      basePrice: service.price || 100,
       image_url: service.image_url,
     });
     
