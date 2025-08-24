@@ -227,6 +227,58 @@ const Index = () => {
         </div>
       </section>
 
+      <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent bg-[length:200%_200%] animate-background-pan overflow-hidden">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
+              Your Dedicated Concierge Team
+            </h2>
+            <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
+              Meet the local experts and hospitality professionals dedicated to crafting your unforgettable Belizean adventure.
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <div className="flex overflow-x-auto space-x-8 pb-8 scrollbar-hide">
+              {conciergeTeam.map((member, index) => (
+                <Card
+                  key={index}
+                  className="flex-shrink-0 w-[360px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
+                >
+                  <CardContent className="p-6 pt-8 text-center flex flex-col items-center">
+                    <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
+                      <AvatarImage src={member.avatar} alt={member.name} />
+                      <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
+                        {member.name.split(" ").map((n) => n[0]).join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
+                    <p className="text-primary/80 mb-4">{member.role}</p>
+                    <div className="flex flex-wrap gap-2 justify-center mb-6">
+                      {member.specialties.map((specialty, idx) => (
+                        <Badge
+                          key={idx}
+                          variant="secondary"
+                        >
+                          {specialty}
+                        </Badge>
+                      ))}
+                    </div>
+                    <div className="mt-auto w-full">
+                      <Link to="/messages">
+                        <Button variant="ocean" className="w-full">
+                          <MessageCircle className="h-4 w-4 mr-2" />
+                          Chat with {member.name.split(' ')[0]}
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="services" className="py-20 bg-accent-light/5">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -299,58 +351,6 @@ const Index = () => {
                 View All Services
               </Button>
             </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent bg-[length:200%_200%] animate-background-pan overflow-hidden">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
-              Your Dedicated Concierge Team
-            </h2>
-            <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
-              Meet the local experts and hospitality professionals dedicated to crafting your unforgettable Belizean adventure.
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <div className="flex overflow-x-auto space-x-8 pb-8 scrollbar-hide">
-              {conciergeTeam.map((member, index) => (
-                <Card
-                  key={index}
-                  className="flex-shrink-0 w-[360px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
-                >
-                  <CardContent className="p-6 pt-8 text-center flex flex-col items-center">
-                    <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
-                      <AvatarImage src={member.avatar} alt={member.name} />
-                      <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
-                        {member.name.split(" ").map((n) => n[0]).join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
-                    <p className="text-primary/80 mb-4">{member.role}</p>
-                    <div className="flex flex-wrap gap-2 justify-center mb-6">
-                      {member.specialties.map((specialty, idx) => (
-                        <Badge
-                          key={idx}
-                          variant="secondary"
-                        >
-                          {specialty}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="mt-auto w-full">
-                      <Link to="/messages">
-                        <Button variant="ocean" className="w-full">
-                          <MessageCircle className="h-4 w-4 mr-2" />
-                          Chat with {member.name.split(' ')[0]}
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
           </div>
         </div>
       </section>
