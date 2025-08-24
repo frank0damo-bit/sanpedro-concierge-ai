@@ -30,6 +30,7 @@ import {
   ShoppingCart,
   Fish,
   Sun,
+  Wand2,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -47,6 +48,7 @@ import fishingCharterImg from "@/assets/fishing-charter.jpg";
 import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
 import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
+import { BuildMyTripButton } from "@/components/BuildMyTripButton";
 
 interface FeaturedService {
   id: string;
@@ -398,12 +400,12 @@ const Index = () => {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/messages">
+              <BuildMyTripButton>
                 <Button variant="ocean" size="lg" className="text-lg px-8 py-6 font-semibold">
-                  <MessageCircle className="h-5 w-5 mr-2" />
-                  Start Planning My Trip
+                  <Wand2 className="h-5 w-5 mr-2" />
+                  Build My Trip
                 </Button>
-              </Link>
+              </BuildMyTripButton>
               <Button
                 variant="outline"
                 size="lg"
