@@ -6,8 +6,9 @@ export function Layout() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
+      {/* This main tag is crucial. It grows to fill all available space. */}
       <main className="flex-grow pt-16">
-        <Outlet /> {/* This is where your page content will be rendered */}
+        <Outlet /> {/* This renders the content of your individual pages */}
       </main>
       <Footer />
     </div>
