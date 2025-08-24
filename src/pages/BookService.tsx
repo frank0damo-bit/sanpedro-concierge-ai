@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Star, Plus, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -9,7 +8,7 @@ import { useCart } from '@/contexts/CartContext';
 import { PaymentButton } from '@/components/PaymentButton';
 import { Link } from 'react-router-dom';
 
-
+const servicesHeroUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
 const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
 
 interface ServiceCategory {
@@ -26,25 +25,16 @@ const BookService = () => {
   const { toast } = useToast();
   const [serviceCategories, setServiceCategories] = useState<ServiceCategory[]>([]);
   const [loadingServices, setLoadingServices] = useState(true);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'travel' | 'relocation'>('all');
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        let query = supabase
+        const { data, error } = await supabase
           .from('service_categories')
           .select('*')
-          .eq('is_active', true);
-
-        // Apply filter based on activeFilter
-        if (activeFilter === 'travel') {
-          query = query.neq('category_group', 'Relocation');
-        } else if (activeFilter === 'relocation') {
-          query = query.eq('category_group', 'Relocation');
-        }
-        // For 'all', no additional filter needed
-
-        const { data, error } = await query.order('category_group, name');
+          .eq('is_active', true) // CORRECTED
+          .neq('category_group', 'Relocation')
+          .order('category_group, name');
 
         if (error) throw error;
         
@@ -67,7 +57,7 @@ const BookService = () => {
     };
 
     fetchServices();
-  }, [toast, activeFilter]);
+  }, [toast]);
 
   const handleAddToCart = (service: ServiceCategory) => {
     addToCart({
@@ -93,13 +83,10 @@ const BookService = () => {
     return acc;
   }, {} as Record<string, ServiceCategory[]>);
 
-
-  if (loadingServices) {
+if (loadingServices) {
     return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <div className="flex-grow container mx-auto px-4 py-24 flex items-center justify-center">
-          <div className="text-xl">Loading services...</div>
-        </div>
+      <div className="container mx-auto px-4 py-24 flex items-center justify-center">
+        <div className="text-xl">Loading services...</div>
       </div>
     );
   }
