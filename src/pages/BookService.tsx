@@ -1,183 +1,136 @@
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Star, MessageCircle } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
-import { supabase } from '@/integrations/supabase/client';
-import { Link } from 'react-router-dom';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { supabase } from "@/integrations/supabase/client";
+import { Link } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Search,
+  Wand2,
+} from "lucide-react";
+import ServiceCard from "@/components/ServiceCard";
+import ServicesToggleHeader from "@/components/ServicesToggleHeader";
+import cantDecideImg from "@/assets/Boca-del-Rio-ariel.jpg";
 
 interface ServiceCategory {
   id: string;
   name: string;
   description: string;
-  image_url?: string;
-  price?: number;
-  category_group: string | null;
+  image_url: string;
+  category_group: string;
 }
 
 const BookService = () => {
   const { toast } = useToast();
-  const [serviceCategories, setServiceCategories] = useState<ServiceCategory[]>([]);
-  const [loadingServices, setLoadingServices] = useState(true);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'travel' | 'relocation' | 'essentials'>('all');
+  const [services, setServices] = useState<ServiceCategory[]>([]);
+  const [filteredServices, setFilteredServices] = useState<ServiceCategory[]>([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [activeGroup, setActiveGroup] = useState("Vacation");
 
   useEffect(() => {
     const fetchServices = async () => {
-      setLoadingServices(true);
       try {
-        let query = supabase
-          .from('service_categories')
-          .select('*')
-          .eq('is_active', true); // CORRECTED QUERY
-
-        if (activeFilter === 'all') {
-          query = query.eq('category_group', 'Travel');
-        } else if (activeFilter === 'relocation') {
-          query = query.eq('category_group', 'Relocation');
-        } else if (activeFilter === 'essentials') {
-          query = query.eq('category_group', 'Essentials');
-        }
-        
-        const { data, error } = await query.order('category_group, name');
+        const { data, error } = await supabase
+          .from("service_categories")
+          .select("*")
+          .eq("is_active", true);
 
         if (error) throw error;
-        
-        const enrichedServices = (data || []).map(service => ({
-          ...service,
-          price: Math.floor(Math.random() * 500) + 50,
-          image_url: `https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=2080&auto=format&fit=crop`
-        }));
-        
-        setServiceCategories(enrichedServices);
-      } catch (error: any) {
+        setServices(data || []);
+      } catch (error) {
+        console.error("Error fetching services:", error);
         toast({
           title: "Error",
-          description: "Failed to load services.",
+          description: "Could not fetch services.",
           variant: "destructive",
         });
-      } finally {
-        setLoadingServices(false);
       }
     };
 
     fetchServices();
-  }, [toast, activeFilter]);
-  
-  const groupedServices = serviceCategories.reduce((acc, service) => {
-    const group = service.category_group || 'Other Experiences';
-    if (!acc[group]) {
-      acc[group] = [];
-    }
-    acc[group].push(service);
-    return acc;
-  }, {} as Record<string, ServiceCategory[]>);
+  }, [toast]);
 
-
-  if (loadingServices) {
-    return (
-      <div className="container mx-auto px-4 py-24 flex items-center justify-center">
-        <div className="text-xl">Loading services...</div>
-      </div>
+  useEffect(() => {
+    const filtered = services.filter(
+      (service) =>
+        service.category_group === activeGroup &&
+        service.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }
+    setFilteredServices(filtered);
+  }, [searchTerm, services, activeGroup]);
 
   return (
     <>
-      <section className="py-24">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Our Services</h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Choose from our comprehensive range of travel, relocation, and essential services.
-            </p>
-          </div>
-
-          <Tabs value={activeFilter} onValueChange={(value) => setActiveFilter(value as 'all' | 'travel' | 'relocation' | 'essentials')} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-12 max-w-2xl mx-auto">
-              <TabsTrigger value="all">All Services</TabsTrigger>
-              <TabsTrigger value="travel">Travel</TabsTrigger>
-              <TabsTrigger value="relocation">Relocation</TabsTrigger>
-              <TabsTrigger value="essentials">Essentials</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value={activeFilter} className="mt-0">
-              {Object.entries(groupedServices).length > 0 ? (
-                Object.entries(groupedServices).map(([group, services]) => (
-                  <div key={group} className="mb-16">
-                    <div className="relative my-12">
-                      <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                        <div className="w-full border-t border-border" />
-                      </div>
-                      <div className="relative flex justify-center">
-                        <span className="bg-background px-6 text-3xl font-bold text-primary">
-                          {group}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                      {services.map((service) => (
-                        <Card key={service.id} className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0">
-                          <div className="aspect-video bg-muted overflow-hidden relative">
-                            <img 
-                              src={service.image_url} 
-                              alt={service.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            />
-                          </div>
-                          <CardContent className="p-6 flex flex-col flex-grow">
-                            <div className="flex justify-between items-start mb-2">
-                              <h3 className="text-xl font-bold">{service.name}</h3>
-                              <div className="text-lg font-semibold text-primary">
-                                ${service.price}
-                              </div>
-                            </div>
-                            
-                            <p className="text-muted-foreground mb-4 flex-grow line-clamp-2">
-                              {service.description}
-                            </p>
-
-                            <div className="mt-auto">
-                              <Link to={`/service/${service.id}`}>
-                                <Button className="w-full" variant="outline">
-                                  Learn More
-                                </Button>
-                              </Link>
-                            </div>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <div className="text-center py-16">
-                  <p className="text-xl text-muted-foreground">No services found for this category.</p>
-                </div>
-              )}
-            </TabsContent>
-          </Tabs>
+      <section className="relative h-[50vh] min-h-[400px] -mt-16 flex items-center justify-center text-center text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${cantDecideImg})` }}
+        >
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative z-10 p-4">
+          <h1 className="text-5xl md:text-7xl font-bold">Explore Our Services</h1>
+          <p className="text-xl md:text-2xl mt-4 max-w-2xl mx-auto">
+            From adventure to relaxation, we have everything you need for the perfect Belizean getaway.
+          </p>
         </div>
       </section>
 
-      <section className="relative py-24 text-white text-center">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${ctaImageUrl})` }}
-        >
-          <div className="absolute inset-0 bg-primary/80" />
-        </div>
-        <div className="relative z-10 container mx-auto px-4">
-          <h2 className="text-4xl font-bold mb-4">Can't Decide?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">Let our concierge team craft the perfect itinerary just for you.</p>
-          <Link to="/messages">
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-semibold">
-              <MessageCircle className="h-5 w-5 mr-2" />
-              Build My Trip
-            </Button>
-          </Link>
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <ServicesToggleHeader
+            activeGroup={activeGroup}
+            setActiveGroup={setActiveGroup}
+          />
+
+          <div className="mb-12">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search services (e.g., 'fishing', 'spa')..."
+                className="w-full pl-10 py-6 text-lg"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredServices.map((service) => (
+              <ServiceCard key={service.id} service={service} />
+            ))}
+          </div>
+
+          {filteredServices.length === 0 && (
+            <div className="text-center py-16 border rounded-lg">
+              <h2 className="text-2xl font-bold mb-4">No Services Found</h2>
+              <p className="text-muted-foreground">
+                We couldn't find any services matching your search in the "{activeGroup}" category.
+              </p>
+            </div>
+          )}
+
+          <Card className="mt-16 overflow-hidden">
+            <div className="grid md:grid-cols-2 items-center">
+              <div className="p-8 md:p-12">
+                <h2 className="text-3xl font-bold mb-4">Can't Decide?</h2>
+                <p className="text-muted-foreground mb-6">
+                  Let our expert concierge team craft a personalized itinerary just for you. Tell us your interests, and we'll handle the rest!
+                </p>
+                <Link to="/build-my-trip">
+                  <Button variant="ocean" size="lg">
+                    <Wand2 className="mr-2 h-5 w-5" />
+                    Build My Perfect Trip
+                  </Button>
+                </Link>
+              </div>
+              <div className="h-64 md:h-full">
+                <img src={cantDecideImg} alt="Beautiful aerial view of San Pedro, Belize" className="w-full h-full object-cover"/>
+              </div>
+            </div>
+          </Card>
         </div>
       </section>
     </>
