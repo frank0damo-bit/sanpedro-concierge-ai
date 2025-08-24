@@ -16,27 +16,22 @@ export function Footer() {
               Your gateway to luxury experiences in San Pedro, Belize.
             </p>
           </div>
-
           <div>
             <h4 className="font-semibold mb-4">Services</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/80">
-              <li><Link to="/services" className="hover:text-accent-light">Restaurant Reservations</Link></li>
-              <li><Link to="/services" className="hover:text-accent-light">Golf Cart Rentals</Link></li>
+              <li><Link to="/services" className="hover:text-accent-light">All Services</Link></li>
               <li><Link to="/services" className="hover:text-accent-light">Tours & Excursions</Link></li>
-              <li><Link to="/services" className="hover:text-accent-light">Accommodations</Link></li>
+              <li><Link to="/services" className="hover:text-accent-light">Golf Cart Rentals</Link></li>
             </ul>
           </div>
-
           <div>
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/80">
               <li><Link to="/messages" className="hover:text-accent-light">24/7 AI Assistant</Link></li>
-              <li><Link to="/contact" className="hover:text-accent-light">Emergency Hotline</Link></li>
-              <li><Link to="/contact" className="hover:text-accent-light">Guest Services</Link></li>
-              <li><Link to="/contact" className="hover:text-accent-light">Feedback</Link></li>
+              <li><Link to="/contact" className="hover:text-accent-light">Contact Us</Link></li>
+              <li><Link to="/about" className="hover:text-accent-light">About Us</Link></li>
             </ul>
           </div>
-
           <div>
             <h4 className="font-semibold mb-4">Location</h4>
             <p className="text-sm text-primary-foreground/80">
@@ -48,10 +43,9 @@ export function Footer() {
             </p>
           </div>
         </div>
-
         <div className="border-t border-primary-foreground/20 pt-8 text-center">
           <p className="text-sm text-primary-foreground/60">
-            © 2025 Caribe Concierge. All rights reserved. | Powered by AI Excellence
+            © {new Date().getFullYear()} Caribe Concierge. All rights reserved. | Powered by AI Excellence
           </p>
         </div>
       </div>
