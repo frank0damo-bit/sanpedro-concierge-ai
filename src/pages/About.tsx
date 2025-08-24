@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
@@ -5,35 +6,44 @@ import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Sun, Map, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { useToast } from "@/hooks/use-toast";
+
 
 // New images for a more vibrant and relaxing feel
 const aboutHeroUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
 const philosophyImageUrl = "https://images.unsplash.com/photo-1516832677958-6a9a0b182a12";
 const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
 
-
-const team = [
-  {
-    name: "Sofia Martinez",
-    role: "Senior Concierge Specialist",
-    avatar: "/api/placeholder/150/150",
-    specialties: ["Fine Dining", "Cultural Tours", "VIP Services"],
-  },
-  {
-    name: "Carlos Rivera",
-    role: "Adventure & Excursions Expert",
-    avatar: "/api/placeholder/150/150",
-    specialties: ["Diving", "Fishing", "Mayan Sites"],
-  },
-  {
-    name: "Isabella Chen",
-    role: "Wellness & Lifestyle Curator",
-    avatar: "/api/placeholder/150/150",
-    specialties: ["Spa Services", "Photography", "Events"],
-  },
-];
+interface TeamMember {
+  name: string;
+  role: string;
+  avatar: string;
+  specialties: string[];
+}
 
 const About = () => {
+  const [team, setTeam] = useState<TeamMember[]>([]);
+  const { toast } = useToast();
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const { data, error } = await supabase.from('team_members').select('*');
+        if (error) throw error;
+        setTeam(data || []);
+      } catch (error) {
+        console.error("Error fetching team:", error);
+        toast({
+          title: "Error fetching team data",
+          variant: "destructive",
+        });
+      }
+    };
+    fetchTeam();
+  }, [toast]);
+
+
   return (
     <div className="min-h-screen bg-background">
       <Header />
