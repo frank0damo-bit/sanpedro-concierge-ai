@@ -5,7 +5,6 @@ import footerImage from '../assets/SUNBREEZE-belize-friends-vacation4.jpg';
 export function Footer() {
   return (
     <footer className="bg-primary text-primary-foreground py-12">
-      <img src="/assets/Boca-del-Rio-ariel.jpg" alt="CTAimage" className="h-10" />
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
