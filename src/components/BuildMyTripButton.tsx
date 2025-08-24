@@ -1,29 +1,14 @@
-import { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
-import { TripBuilderForm } from "./TripBuilderForm";
+import { Link } from "react-router-dom";
+import { ReactNode } from "react";
 
 interface BuildMyTripButtonProps {
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
-export default function BuildMyTripButton({ children }: { children: React.ReactNode }) {
-  
-  const [isOpen, setIsOpen] = useState(false);
-
+export default function BuildMyTripButton({ children }: BuildMyTripButtonProps) {
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogTrigger asChild>
-        {children}
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle className="text-2xl">Describe Your Perfect Trip</DialogTitle>
-          <DialogDescription>
-            Provide the details below, and our AI concierge will craft a personalized itinerary just for you.
-          </DialogDescription>
-        </DialogHeader>
-        <TripBuilderForm onClose={() => setIsOpen(false)} />
-      </DialogContent>
-    </Dialog>
+    <Link to="/build-my-trip">
+      {children}
+    </Link>
   );
 }
