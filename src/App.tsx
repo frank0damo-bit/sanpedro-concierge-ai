@@ -1,7 +1,6 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import Index from "./pages/Index";
 import About from "./pages/About";
-import ServicesLanding from "./pages/ServicesLanding";
 import BookService from "./pages/BookService";
 import ServiceDetailPage from "./pages/ServiceDetailPage";
 import MovingServices from "./pages/MovingServices";
@@ -32,7 +31,6 @@ function App() {
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<BookService />} />
-              <Route path="/services-landing" element={<ServicesLanding />} />
               <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
               <Route path="/moving-services" element={<MovingServices />} />
               <Route path="/contact" element={<Contact />} />
