@@ -21,6 +21,7 @@ import { CartPage } from "./pages/CartPage";
 import { BuildMyTripPage } from "./pages/BuildMyTripPage";
 import { TripPackagePage } from "./pages/TripPackagePage";
 import ContactSupport from "./pages/ContactSupport";
+import ScrollToTop from "./components/ScrollToTop"; // Import the new component
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <CartProvider>
         <Toaster />
         <Router>
+          <ScrollToTop /> {/* Add the component here */}
           <Routes>
             {/* Routes with the main layout (Header, Footer, etc.) */}
             <Route element={<Layout />}>
