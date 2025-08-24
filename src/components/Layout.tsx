@@ -8,7 +8,7 @@ export function Layout() {
   const location = useLocation();
 
   // Define paths where FooterCTA should appear
-  const showFooterCTAOn = ["/", "/about", "/services"];
+  const showFooterCTAOn = ["/", "/about"];
   const shouldShowFooterCTA = showFooterCTAOn.includes(location.pathname);
 
   return (
