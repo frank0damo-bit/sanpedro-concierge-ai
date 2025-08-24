@@ -60,123 +60,75 @@ interface FeaturedService {
   image: string;
 }
 
+interface TeamMember {
+  name: string;
+  role: string;
+  avatar: string;
+  specialties: string[];
+}
+
+interface Testimonial {
+  name: string;
+  location: string;
+  text: string;
+  rating: number;
+  service: string;
+}
+
 const Index = () => {
   const { toast } = useToast();
   const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
+  const [conciergeTeam, setConciergeTeam] = useState<TeamMember[]>([]);
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
 
   useEffect(() => {
-    fetchFeaturedServices();
-  }, []);
+    const fetchData = async () => {
+      try {
+        const { data: servicesData, error: servicesError } = await supabase
+          .from("service_categories")
+          .select("id, name, description, icon_name")
+          .eq('is_active', true)
+          .neq('category_group', 'Relocation')
+          .limit(12);
 
-  const fetchFeaturedServices = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("service_categories")
-        .select("id, name, description, icon_name")
-        .eq('is_active', true)
-        .neq('category_group', 'Relocation')
-        .limit(12);
+        if (servicesError) throw servicesError;
 
-      if (error) throw error;
+        const iconMap: { [key: string]: React.ElementType } = {
+          plane: Plane, "shopping-bag": ShoppingCart, heart: Heart, waves: Waves, "chef-hat": ChefHat, camera: Camera, fish: Fish, music: Sun, "plus-circle": Award, "shopping-cart": ShoppingCart, "calendar-heart": CalendarHeart, shirt: Award, utensils: UtensilsCrossed, car: Car, compass: Compass, default: Award,
+        };
+        const imageMap: { [key: string]: string } = {
+          "Fine Dining Reservations": sanPedroHero, Restaurants: sanPedroHero, "Professional Photography": photographyImg, "Photography Services": photographyImg, "VIP Airport Transfers": airportTransferImg, "Airport Transfers": airportTransferImg, "Spa & Wellness": spaWellnessImg, "Private Excursions": privateExcursionsImg, Excursions: privateExcursionsImg, "Luxury Transportation": airportTransferImg, "Water Sports Equipment": waterSportsImg, "Private Chef Services": privateChefImg, "Event Planning": eventPlanningImg, "Personal Shopping": personalShoppingImg, "Fishing Charters": fishingCharterImg, "Cultural Experiences": privateExcursionsImg, "Medical & Emergency": medicalEmergencyImg, "Grocery & Essentials": groceryEssentialsImg, "Laundry & Housekeeping": laundryHousekeepingImg, "Golf Cart Rentals": "https://images.unsplash.com/photo-1589139893118-842263886561",
+        };
 
-      const iconMap: { [key: string]: React.ElementType } = {
-        plane: Plane,
-        "shopping-bag": ShoppingCart,
-        heart: Heart,
-        waves: Waves,
-        "chef-hat": ChefHat,
-        camera: Camera,
-        fish: Fish,
-        music: Sun,
-        "plus-circle": Award,
-        "shopping-cart": ShoppingCart,
-        "calendar-heart": CalendarHeart,
-        shirt: Award,
-        utensils: UtensilsCrossed,
-        car: Car,
-        compass: Compass,
-        default: Award,
-      };
+        const services = (servicesData || []).map(service => ({
+          id: service.id,
+          icon: iconMap[service.icon_name as string] || iconMap["default"],
+          title: service.name,
+          description: service.description,
+          image: imageMap[service.name] || sanPedroHero,
+        }));
+        setFeaturedServices(services);
 
-      const imageMap: { [key: string]: string } = {
-        "Fine Dining Reservations": sanPedroHero,
-        Restaurants: sanPedroHero,
-        "Professional Photography": photographyImg,
-        "Photography Services": photographyImg,
-        "VIP Airport Transfers": airportTransferImg,
-        "Airport Transfers": airportTransferImg,
-        "Spa & Wellness": spaWellnessImg,
-        "Private Excursions": privateExcursionsImg,
-        Excursions: privateExcursionsImg,
-        "Luxury Transportation": airportTransferImg,
-        "Water Sports Equipment": waterSportsImg,
-        "Private Chef Services": privateChefImg,
-        "Event Planning": eventPlanningImg,
-        "Personal Shopping": personalShoppingImg,
-        "Fishing Charters": fishingCharterImg,
-        "Cultural Experiences": privateExcursionsImg,
-        "Medical & Emergency": medicalEmergencyImg,
-        "Grocery & Essentials": groceryEssentialsImg,
-        "Laundry & Housekeeping": laundryHousekeepingImg,
-        "Golf Cart Rentals": "https://images.unsplash.com/photo-1589139893118-842263886561",
-      };
+        const { data: teamData, error: teamError } = await supabase.from('team_members').select('*');
+        if (teamError) throw teamError;
+        setConciergeTeam(teamData || []);
 
-      const services = (data || []).map(service => ({
-        id: service.id,
-        icon: iconMap[service.icon_name as string] || iconMap["default"],
-        title: service.name,
-        description: service.description,
-        image: imageMap[service.name] || sanPedroHero,
-      }));
+        const { data: testimonialsData, error: testimonialsError } = await supabase.from('testimonials').select('*');
+        if (testimonialsError) throw testimonialsError;
+        setTestimonials(testimonialsData || []);
 
-      setFeaturedServices(services);
-    } catch (error) {
-      console.error("Error fetching services:", error);
-      toast({
-        title: "Error fetching services",
-        description: "Could not load the featured experiences.",
-        variant: "destructive",
-      });
-    }
-  };
+      } catch (error) {
+        console.error("Error fetching page data:", error);
+        toast({
+          title: "Error fetching data",
+          description: "Could not load all page content.",
+          variant: "destructive",
+        });
+      }
+    };
+    fetchData();
+  }, [toast]);
 
-  const conciergeTeam = [
-    {
-      name: "Sofia Martinez",
-      role: "Senior Concierge Specialist",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
-      specialties: ["Fine Dining", "Cultural Tours", "VIP Services"],
-    },
-    {
-      name: "Carlos Rivera",
-      role: "Adventure & Excursions Expert",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
-      specialties: ["Diving", "Fishing", "Mayan Sites"],
-    },
-    {
-      name: "Isabella Chen",
-      role: "Wellness & Lifestyle Curator",
-      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956",
-      specialties: ["Spa Services", "Photography", "Events"],
-    },
-  ];
-
-  const testimonials = [
-    {
-      name: "Sarah & Mike Johnson",
-      location: "Dallas, Texas",
-      text: "Sofia and her team made our anniversary trip absolutely magical. From the private beach dinner to the surprise helicopter tour, every detail was perfect.",
-      rating: 5,
-      service: "Romantic Getaway Package",
-    },
-    {
-      name: "The Thompson Family",
-      location: "Vancouver, Canada",
-      text: "Carlos arranged the most incredible snorkeling adventure for our kids. They're still talking about swimming with nurse sharks at Hol Chan!",
-      rating: 5,
-      service: "Family Adventure Tours",
-    },
-  ];
 
   return (
     <>
