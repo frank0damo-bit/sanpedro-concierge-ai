@@ -35,6 +35,8 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
+
+// Importing all images from your assets folder
 import sanPedroHero from "@/assets/san-pedro-hero.jpg";
 import photographyImg from "@/assets/photography.jpg";
 import airportTransferImg from "@/assets/airport-transfer.jpg";
@@ -48,9 +50,12 @@ import fishingCharterImg from "@/assets/fishing-charter.jpg";
 import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
 import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
-import { BuildMyTripButton } from "@/components/BuildMyTripButton";
+// Assuming you've added images with these names
+import ctaImageUrl from "@/assets/belize-cta-boat.jpg"; 
+import golfCartImg from "@/assets/golf-cart-belize.jpg"; 
 
-const ctaImageUrl = "https://images.unsplash.com/photo-1520106212299-d99c443e4568";
+
+import { BuildMyTripButton } from "@/components/BuildMyTripButton";
 
 interface FeaturedService {
   id: string;
@@ -96,8 +101,24 @@ const Index = () => {
         const iconMap: { [key: string]: React.ElementType } = {
           plane: Plane, "shopping-bag": ShoppingCart, heart: Heart, waves: Waves, "chef-hat": ChefHat, camera: Camera, fish: Fish, music: Sun, "plus-circle": Award, "shopping-cart": ShoppingCart, "calendar-heart": CalendarHeart, shirt: Award, utensils: UtensilsCrossed, car: Car, compass: Compass, default: Award,
         };
+        
+        // Updated imageMap to use the images from your assets folder
         const imageMap: { [key: string]: string } = {
-          "Fine Dining Reservations": sanPedroHero, Restaurants: sanPedroHero, "Professional Photography": photographyImg, "Photography Services": photographyImg, "VIP Airport Transfers": airportTransferImg, "Airport Transfers": airportTransferImg, "Spa & Wellness": spaWellnessImg, "Private Excursions": privateExcursionsImg, Excursions: privateExcursionsImg, "Luxury Transportation": airportTransferImg, "Water Sports Equipment": waterSportsImg, "Private Chef Services": privateChefImg, "Event Planning": eventPlanningImg, "Personal Shopping": personalShoppingImg, "Fishing Charters": fishingCharterImg, "Cultural Experiences": privateExcursionsImg, "Medical & Emergency": medicalEmergencyImg, "Grocery & Essentials": groceryEssentialsImg, "Laundry & Housekeeping": laundryHousekeepingImg, "Golf Cart Rentals": "https://images.unsplash.com/photo-1589139893118-842263886561",
+          "Restaurants": sanPedroHero,
+          "Photography Services": photographyImg,
+          "Airport Transfers": airportTransferImg,
+          "Spa & Wellness": spaWellnessImg,
+          "Excursions": privateExcursionsImg,
+          "Water Sports Equipment": waterSportsImg,
+          "Private Chef Services": privateChefImg,
+          "Event Planning": eventPlanningImg,
+          "Personal Shopping": personalShoppingImg,
+          "Fishing Charters": fishingCharterImg,
+          "Cultural Experiences": privateExcursionsImg,
+          "Medical & Emergency": medicalEmergencyImg,
+          "Grocery & Essentials": groceryEssentialsImg,
+          "Laundry & Housekeeping": laundryHousekeepingImg,
+          "Golf Cart Rentals": golfCartImg,
         };
 
         const services = (servicesData || []).map(service => ({
@@ -105,7 +126,7 @@ const Index = () => {
           icon: iconMap[service.icon_name as string] || iconMap["default"],
           title: service.name,
           description: service.description,
-          image: imageMap[service.name] || sanPedroHero,
+          image: imageMap[service.name] || sanPedroHero, // Fallback to a default hero image
         }));
         setFeaturedServices(services);
 
