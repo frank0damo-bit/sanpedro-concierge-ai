@@ -7,15 +7,14 @@ const ALLOWED_ORIGINS = [
   "https://yourdomain.com"   // production
 ];
 
-const origin = req.headers.get("origin") ?? "";
-const corsHeaders = {
-  "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : "null",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Vary": "Origin",
-};
-
-
 serve(async (req) => {
+  const origin = req.headers.get("origin") ?? "";
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": ALLOWED_ORIGINS.includes(origin) ? origin : "null",
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Vary": "Origin",
+  };
+
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -88,12 +87,9 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
-      success_url: `${base}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${base}/payment-cancelled`,
-
+      success_url: success_url,
+      cancel_url: cancel_url,
     });
-     const base = origin || `${url.protocol}//${url.host}`;
-
 
     // Store payment record in database
     await supabaseService.from("payments").insert({
