@@ -5,6 +5,8 @@ import BuildMyTripButton from "@/components/BuildMyTripButton";
 import FloatingTripButton from "@/components/FloatingTripButton";
 import FooterCTA from "./FooterCTA";
 import { Wand2 } from "lucide-react";
+import { Phone } from "lucide-react";
+
 
   
 export function Layout() {
