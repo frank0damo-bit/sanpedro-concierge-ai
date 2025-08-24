@@ -80,6 +80,8 @@ const Index = () => {
   const [featuredServices, setFeaturedServices] = useState<FeaturedService[]>([]);
   const [conciergeTeam, setConciergeTeam] = useState<TeamMember[]>([]);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  
+const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
 
   useEffect(() => {
     const fetchData = async () => {
