@@ -1,4 +1,8 @@
- <section
+export function FooterCTA() {
+  return (
+    <div>
+      {/* Your CTA content */}
+<section
         id="contact"
         className="relative py-24 text-center"
       >
@@ -35,3 +39,6 @@
           </div>
         </div>
       </section>
+         </div>
+  );
+}
