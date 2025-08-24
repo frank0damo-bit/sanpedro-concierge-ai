@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -179,8 +178,6 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
       <Hero />
 
       <section className="py-16 bg-background">
@@ -223,7 +220,7 @@ const Index = () => {
               <h3 className="font-semibold text-foreground">Exclusive Access</h3>
               <p className="text-muted-foreground text-sm">Special rates and priority bookings</p>
             </div>
-          </div>
+        
         </div>
       </section>
 
@@ -418,61 +415,6 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="bg-primary text-primary-foreground py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-            <div>
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">
-                  <span className="text-sm font-bold text-primary">C</span>
-                </div>
-                <span className="text-lg font-bold">Caribe Concierge</span>
-              </div>
-              <p className="text-primary-foreground/80 text-sm">
-                Your gateway to luxury experiences in San Pedro, Belize.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-sm text-primary-foreground/80">
-                <li>Restaurant Reservations</li>
-                <li>Golf Cart Rentals</li>
-                <li>Tours & Excursions</li>
-                <li>Accommodations</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Support</h4>
-              <ul className="space-y-2 text-sm text-primary-foreground/80">
-                <li>24/7 AI Assistant</li>
-                <li>Emergency Hotline</li>
-                <li>Guest Services</li>
-                <li>Feedback</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">Location</h4>
-              <p className="text-sm text-primary-foreground/80">
-                San Pedro Town
-                <br />
-                Ambergris Caye, Belize
-                <br />
-                Central America
-              </p>
-            </div>
-          </div>
-
-          <div className="border-t border-primary-foreground/20 pt-8 text-center">
-            <p className="text-sm text-primary-foreground/60">
-              © 2024 Caribe Concierge. All rights reserved. | Powered by AI Excellence
-            </p>
-          </div>
-        </div>
-      </footer>
-    </div>
   );
 };
 
