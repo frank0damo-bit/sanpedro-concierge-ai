@@ -48,7 +48,7 @@ import fishingCharterImg from "@/assets/fishing-charter.jpg";
 import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
 import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
-import { BuildMyTripButton } from "@/components/BuildMyTripButton";
+import BuildMyTripButton from "@/components/BuildMyTripButton";
 import { FooterCTA } from "@/components/FooterCTA";
 
 
