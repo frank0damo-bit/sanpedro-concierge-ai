@@ -19,6 +19,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
 import { CartPage } from "./pages/CartPage";
 import { BuildMyTripPage } from "./pages/BuildMyTripPage";
+import { TripPackagePage } from "./pages/TripPackagePage";
+import ContactSupport from "./pages/ContactSupport";
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
         <Toaster />
         <Router>
           <Routes>
+            {/* Routes with the main layout (Header, Footer, etc.) */}
             <Route element={<Layout />}>
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
@@ -34,16 +37,21 @@ function App() {
               <Route path="/service/:serviceId" element={<ServiceDetailPage />} />
               <Route path="/moving-services" element={<MovingServices />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/support" element={<ContactSupport />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/build-my-trip" element={<BuildMyTripPage />} />
+              <Route path="/trip-package" element={<TripPackagePage />} />
+              
+              {/* Protected Routes */}
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/admin" element={<ProtectedRoute requiredRole="staff"><AdminDashboard /></ProtectedRoute>} />
               <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
-              <Route path="/success" element={<PaymentSuccess />} />
-              <Route path="/cancelled" element={<PaymentCancelled />} />
-              <Route path="/cart" element={<CartPage />} />
-              <Route path="/build-my-trip" element={<BuildMyTripPage />} />
             </Route>
             
+            {/* Standalone Routes (no main layout) */}
             <Route path="/auth" element={<Auth />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-cancelled" element={<PaymentCancelled />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
