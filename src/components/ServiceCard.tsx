@@ -39,7 +39,7 @@ export function ServiceCard({ icon: Icon, title, description, features, onBookNo
         {user ? (
           <Link to={serviceId ? `/book?service=${serviceId}` : '/book'}>
             <Button 
-              variant="ocean" 
+              variant="default" 
               className="w-full font-semibold"
             >
               Book Now
@@ -48,7 +48,7 @@ export function ServiceCard({ icon: Icon, title, description, features, onBookNo
         ) : (
           <Link to="/auth">
             <Button 
-              variant="ocean" 
+              variant="default" 
               className="w-full font-semibold"
             >
               Sign In to Book
