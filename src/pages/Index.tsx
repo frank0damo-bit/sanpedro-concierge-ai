@@ -178,6 +178,7 @@ const Index = () => {
   ];
 
   return (
+    <>
       <Hero />
 
       <section className="py-16 bg-background">
@@ -220,7 +221,7 @@ const Index = () => {
               <h3 className="font-semibold text-foreground">Exclusive Access</h3>
               <p className="text-muted-foreground text-sm">Special rates and priority bookings</p>
             </div>
-        
+          </div>
         </div>
       </section>
 
@@ -414,7 +415,7 @@ const Index = () => {
           </div>
         </div>
       </section>
-
+    </>
   );
 };
 

@@ -87,16 +87,15 @@ const BookService = () => {
   if (loadingServices) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        <Header />
         <div className="flex-grow container mx-auto px-4 py-24 flex items-center justify-center">
           <div className="text-xl">Loading services...</div>
         </div>
-        <Footer />
       </div>
     );
   }
 
   return (
+    <>
         {/* Hero Section */}
    {/* The -mt-16 is a necessary adjustment to pull the hero image up under the transparent header */}
       <section className="relative h-[50vh] min-h-[400px] -mt-16 flex items-center justify-center text-center text-white">
@@ -189,6 +188,7 @@ const BookService = () => {
             </Link>
           </div>
         </section>
+    </>
   );
 };
 
