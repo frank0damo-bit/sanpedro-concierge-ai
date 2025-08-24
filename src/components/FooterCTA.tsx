@@ -1,6 +1,8 @@
 import React from "react";
 import BuildMyTripButton from "@/components/BuildMyTripButton";
 import { Button } from "@/components/ui/button";
+import { Wand2 } from "lucide-react";
+
 
 
 const ctaImageUrl = "src/assets/SUNBREEZE-belize-friends-vacation4.jpg";
