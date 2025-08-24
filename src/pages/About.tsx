@@ -166,12 +166,11 @@ const About = () => {
               </div>
             </div>
              <div className="text-center mt-20">
-              <Link to="/build-my-trip">
-                <Button size="lg" variant="ocean" className="text-lg">
-                  <Wand2 className="mr-2 h-5 w-5" />
-                  Build Your Dream Trip
-                </Button>
-              </Link>
+              <Link to="/messages">
+                          <Button variant="ocean" className="w-full">
+                            Chat with {member.name.split(' ')[0]}
+                          </Button>
+                        </Link>
             </div>
           </div>
         </section>
