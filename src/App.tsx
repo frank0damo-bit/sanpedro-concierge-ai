@@ -19,6 +19,8 @@ import { CartProvider } from "./contexts/CartContext"; // CORRECTED
 import ProtectedRoute from "./components/ProtectedRoute"; // CORRECTED
 import { Layout } from "./components/Layout";
 import { TripPackagePage } from "./pages/TripPackagePage";
+import { CartPage } from "./pages/CartPage";
+import { BuildMyTripPage } from "./pages/BuildMyTripPage";
 
 function App() {
   return (
@@ -45,8 +47,9 @@ function App() {
             {/* Routes without Header/Footer */}
             <Route path="/auth" element={<Auth />} />
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Router>
+           <Route path="/cart" element={<CartPage />} />
+              <Route path="/build-my-trip" element={<BuildMyTripPage />} />
+            </Route>
       </CartProvider>
     </AuthProvider>
   );
