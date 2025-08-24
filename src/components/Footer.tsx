@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import footerImage from '../assets/SUNBREEZE-belize-friends-vacation4.jpg';
+
 
 export function Footer() {
   return (
