@@ -3,8 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-const buildTripImageUrl = "https://images.unsplash.com/photo-1520106212299-d99c443e4568";
+import buildTripImageUrl from "@/assets/Boca-del-Rio-ariel.jpg";
 
 export function BuildMyTripPage() {
   const navigate = useNavigate();
@@ -32,7 +31,7 @@ export function BuildMyTripPage() {
                 Provide the details below, and our concierge will craft a personalized itinerary just for you.
               </p>
             </div>
-            <TripBuilderForm />
+            <TripBuilderForm onClose={() => {}} />
           </CardContent>
         </Card>
       </div>
