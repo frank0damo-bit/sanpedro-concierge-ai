@@ -31,13 +31,10 @@ import {
   ShoppingCart,
   Fish,
   Sun,
-  ArrowRight,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Link } from "react-router-dom";
-
-// Import local assets for a richer experience
 import sanPedroHero from "@/assets/san-pedro-hero.jpg";
 import photographyImg from "@/assets/photography.jpg";
 import airportTransferImg from "@/assets/airport-transfer.jpg";
@@ -52,8 +49,6 @@ import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
 import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 
-
-// Define an interface for your service objects
 interface FeaturedService {
   id: string;
   icon: React.ElementType;
@@ -72,10 +67,9 @@ const Index = () => {
 
   const fetchFeaturedServices = async () => {
     try {
-      // Fetch all active services from the database
       const { data, error } = await supabase
         .from("service_categories")
-        .select("id, name, description, icon_name, is_active")
+        .select("id, name, description, icon_name")
         .eq('is_active', true)
         .neq('category_group', 'Relocation')
         .limit(12);
@@ -83,34 +77,34 @@ const Index = () => {
       if (error) throw error;
 
       const iconMap: { [key: string]: React.ElementType } = {
-        "plane": Plane,
+        plane: Plane,
         "shopping-bag": ShoppingCart,
-        "heart": Heart,
-        "waves": Waves,
+        heart: Heart,
+        waves: Waves,
         "chef-hat": ChefHat,
-        "camera": Camera,
-        "fish": Fish,
-        "music": Sun,
+        camera: Camera,
+        fish: Fish,
+        music: Sun,
         "plus-circle": Award,
         "shopping-cart": ShoppingCart,
         "calendar-heart": CalendarHeart,
-        "shirt": Award,
-        "utensils": UtensilsCrossed,
-        "car": Car,
-        "compass": Compass,
-        "default": Award,
+        shirt: Award,
+        utensils: UtensilsCrossed,
+        car: Car,
+        compass: Compass,
+        default: Award,
       };
 
       const imageMap: { [key: string]: string } = {
         "Fine Dining Reservations": sanPedroHero,
-        "Restaurants": sanPedroHero,
+        Restaurants: sanPedroHero,
         "Professional Photography": photographyImg,
         "Photography Services": photographyImg,
         "VIP Airport Transfers": airportTransferImg,
         "Airport Transfers": airportTransferImg,
         "Spa & Wellness": spaWellnessImg,
         "Private Excursions": privateExcursionsImg,
-        "Excursions": privateExcursionsImg,
+        Excursions: privateExcursionsImg,
         "Luxury Transportation": airportTransferImg,
         "Water Sports Equipment": waterSportsImg,
         "Private Chef Services": privateChefImg,
@@ -138,8 +132,8 @@ const Index = () => {
       toast({
         title: "Error fetching services",
         description: "Could not load the featured experiences.",
-        variant: "destructive"
-      })
+        variant: "destructive",
+      });
     }
   };
 
@@ -189,7 +183,6 @@ const Index = () => {
       <Header />
       <Hero />
 
-      {/* Trust Section */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-foreground mb-12">
@@ -234,7 +227,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Featured Services */}
       <section id="services" className="py-20 bg-accent-light/5">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -310,7 +302,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Meet Your Concierge Team */}
       <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent bg-[length:200%_200%] animate-background-pan overflow-hidden">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -363,7 +354,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Ready to Start Section */}
       <section id="contact" className="py-20 bg-accent-light/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
@@ -374,7 +364,6 @@ const Index = () => {
               See how travelers turned great stays into extraordinary memories
             </p>
 
-            {/* Testimonials moved here */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
               {testimonials.map((testimonial, index) => (
                 <Card
@@ -429,7 +418,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-primary text-primary-foreground py-12">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
