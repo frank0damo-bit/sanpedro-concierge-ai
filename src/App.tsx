@@ -17,9 +17,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "./contexts/AuthContext"; // CORRECTED
 import { CartProvider } from "./contexts/CartContext"; // CORRECTED
 import ProtectedRoute from "./components/ProtectedRoute"; // CORRECTED
-import { Layout } from "./components/Layout"; // Import the new Layout
 import { Layout } from "./components/Layout";
-import { TripPackagePage } from "./pages/TripPackagePage"; // Add this import
+import { TripPackagePage } from "./pages/TripPackagePage";
 
 function App() {
   return (
@@ -40,7 +39,8 @@ function App() {
               <Route path="/admin" element={<ProtectedRoute requiredRole="staff"><AdminDashboard /></ProtectedRoute>} />
               <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
               <Route path="/success" element={<PaymentSuccess />} />
-              <Route path="/cancelled" element={<PaymentCancelled />} />
+            <Route path="/cancelled" element={<PaymentCancelled />} />
+            <Route path="/trip-package" element={<TripPackagePage />} />
             </Route>
             {/* Routes without Header/Footer */}
             <Route path="/auth" element={<Auth />} />
