@@ -7,17 +7,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "noUnusedLocals": true,
-"noUnusedParameters": true,
-"strictNullChecks": true
-
+      "@/*": ["./src/*"]
     },
     "noImplicitAny": false,
-    "noUnusedParameters": false,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "strictNullChecks": true,
     "skipLibCheck": true,
-    "allowJs": true,
-    "noUnusedLocals": false,
-    "strictNullChecks": false
+    "allowJs": true
   }
 }
