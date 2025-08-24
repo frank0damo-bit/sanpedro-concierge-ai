@@ -28,8 +28,10 @@ const ServiceDetailPage = () => {
     const fetchServiceData = async () => {
       if (!serviceId) return;
       setLoading(true);
+      
+      console.log(`Fetching data for serviceId: ${serviceId}`);
+
       try {
-        // Fetch service details (this part is fine)
         const { data: serviceData, error: serviceError } = await supabase
           .from('service_categories')
           .select('*')
@@ -38,31 +40,47 @@ const ServiceDetailPage = () => {
 
         if (serviceError) throw serviceError;
         setService(serviceData);
+        console.log("Fetched Service Category:", serviceData);
 
-        // --- THIS IS THE CORRECTED QUERY ---
-        // We explicitly join from vendors through service_vendors
-        const { data: vendorData, error: vendorError } = await supabase
-          .from('vendors')
+        // --- NEW, MORE RELIABLE QUERY ---
+        // This query starts from the join table, which is often more stable.
+        const { data: vendorLinkData, error: vendorError } = await supabase
+          .from('service_vendors')
           .select(`
-            *,
-            service_vendors!inner (
-              price
-            )
+            price,
+            vendors (*)
           `)
-          .eq('service_vendors.service_category_id', serviceId);
+          .eq('service_category_id', serviceId);
+        
+        // --- DEBUGGING ---
+        // Log errors and raw data to the console to see what's happening.
+        if (vendorError) {
+          console.error("Supabase query error:", vendorError);
+          throw vendorError;
+        }
+        console.log("Raw data from service_vendors join:", vendorLinkData);
 
-        if (vendorError) throw vendorError;
+        // Map the data to the format our component expects.
+        // We now check if `item.vendors` is not null before processing.
+        const fetchedVendors = (vendorLinkData || [])
+          .map((item: any) => {
+            if (!item.vendors) {
+              console.warn("Found a service_vendor link with no associated vendor:", item);
+              return null;
+            }
+            return {
+              ...item.vendors,
+              price: item.price,
+            };
+          })
+          .filter(Boolean) as Vendor[]; // Filter out any nulls
 
-        // Map the data to a more usable format, extracting the nested price
-        const fetchedVendors = vendorData.map((vendor: any) => ({
-          ...vendor,
-          price: vendor.service_vendors[0]?.price || 0,
-        }));
+        console.log("Processed Vendors:", fetchedVendors);
         setVendors(fetchedVendors);
 
       } catch (error) {
         console.error('Error fetching service details:', error);
-        toast({ title: "Error", description: "Could not load service details.", variant: "destructive" });
+        toast({ title: "Error", description: "Could not load service details. Check the console for more information.", variant: "destructive" });
       } finally {
         setLoading(false);
       }
