@@ -28,9 +28,6 @@ const ServiceDetailPage = () => {
     const fetchServiceData = async () => {
       if (!serviceId) return;
       setLoading(true);
-      
-      console.log(`Fetching data for serviceId: ${serviceId}`);
-
       try {
         const { data: serviceData, error: serviceError } = await supabase
           .from('service_categories')
@@ -40,47 +37,29 @@ const ServiceDetailPage = () => {
 
         if (serviceError) throw serviceError;
         setService(serviceData);
-        console.log("Fetched Service Category:", serviceData);
 
-        // --- NEW, MORE RELIABLE QUERY ---
-        // This query starts from the join table, which is often more stable.
-        const { data: vendorLinkData, error: vendorError } = await supabase
+        const { data: vendorData, error: vendorError } = await supabase
           .from('service_vendors')
           .select(`
             price,
             vendors (*)
           `)
           .eq('service_category_id', serviceId);
-        
-        // --- DEBUGGING ---
-        // Log errors and raw data to the console to see what's happening.
-        if (vendorError) {
-          console.error("Supabase query error:", vendorError);
-          throw vendorError;
-        }
-        console.log("Raw data from service_vendors join:", vendorLinkData);
 
-        // Map the data to the format our component expects.
-        // We now check if `item.vendors` is not null before processing.
-        const fetchedVendors = (vendorLinkData || [])
+        if (vendorError) throw vendorError;
+
+        const fetchedVendors = (vendorData || [])
           .map((item: any) => {
-            if (!item.vendors) {
-              console.warn("Found a service_vendor link with no associated vendor:", item);
-              return null;
-            }
-            return {
-              ...item.vendors,
-              price: item.price,
-            };
+            if (!item.vendors) return null;
+            return { ...item.vendors, price: item.price };
           })
-          .filter(Boolean) as Vendor[]; // Filter out any nulls
-
-        console.log("Processed Vendors:", fetchedVendors);
+          .filter(Boolean) as Vendor[];
+          
         setVendors(fetchedVendors);
 
       } catch (error) {
         console.error('Error fetching service details:', error);
-        toast({ title: "Error", description: "Could not load service details. Check the console for more information.", variant: "destructive" });
+        toast({ title: "Error", description: "Could not load service details.", variant: "destructive" });
       } finally {
         setLoading(false);
       }
@@ -91,7 +70,6 @@ const ServiceDetailPage = () => {
 
   const handleAddToCart = (vendor: Vendor) => {
     if (!service) return;
-
     addToCart({
       id: `${service.id}-${vendor.id}`,
       name: `${service.name} by ${vendor.name}`,
@@ -102,7 +80,6 @@ const ServiceDetailPage = () => {
       vendorId: vendor.id,
       vendorName: vendor.name,
     });
-
     toast({
       title: "Added to Cart!",
       description: `${service.name} from ${vendor.name} has been added.`,
