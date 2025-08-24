@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Wand2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export function FloatingTripButton() {
+export default function FloatingTripButton() {
   return (
     <div className="fixed bottom-6 right-6 z-50 animate-fade-in-up">
       <div className="relative">
