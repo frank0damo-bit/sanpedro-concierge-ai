@@ -7,7 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
+const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
 
 interface ServiceCategory {
   id: string;
