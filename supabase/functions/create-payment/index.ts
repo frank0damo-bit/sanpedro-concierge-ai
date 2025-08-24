@@ -67,6 +67,11 @@ serve(async (req) => {
     if (customers.data.length > 0) {
       customerId = customers.data[0].id;
     }
+ 
+    const url = new URL(req.url);
+    const base = origin || `${url.protocol}//${url.host}`;
+    const success_url = `${base}/payment-success?session_id={CHECKOUT_SESSION_ID}`;
+    const cancel_url = `${base}/payment-cancelled`;
 
     // Create a one-time payment session
     const session = await stripe.checkout.sessions.create({
@@ -83,13 +88,13 @@ serve(async (req) => {
         },
       ],
       mode: "payment",
-     const url = new URL(req.url);
-const base = origin || `${url.protocol}//${url.host}`;
-
-success_url: `${base}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
-cancel_url: `${base}/payment-cancelled`,
+      success_url: `${base}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${base}/payment-cancelled`,
 
     });
+     const url = new URL(req.url);
+     const base = origin || `${url.protocol}//${url.host}`;
+
 
     // Store payment record in database
     await supabaseService.from("payments").insert({
