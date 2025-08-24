@@ -15,7 +15,7 @@ export function Footer() {
   ];
 
   const servicesLinks = [
-    { to: "/services", label: "Travel" },
+    { to: "/services", label: "Travel Services" },
     { to: "/moving-services", label: "Relocation Services" }, 
     { to: "/services", label: "All Services" },
   ];
