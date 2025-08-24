@@ -74,6 +74,8 @@ export default {
 				'gradient-ocean': 'var(--gradient-ocean)',
 				'gradient-sunset': 'var(--gradient-sunset)',
 				'gradient-glass': 'var(--gradient-glass)'
+				'gradient-mango': 'var(--gradient-mango)', // ADD THIS
+      		  'gradient-sky': 'var(--gradient-sky)',     // ADD THIS
 			},
 			boxShadow: {
 				'ocean': 'var(--shadow-ocean)',
