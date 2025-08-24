@@ -6,7 +6,7 @@ interface BuildMyTripButtonProps {
   children: React.ReactNode;
 }
 
-export function BuildMyTripButton({ children }: { children: React.ReactNode }) {
+export default function BuildMyTripButton({ children }: { children: React.ReactNode }) {
   
   const [isOpen, setIsOpen] = useState(false);
 
