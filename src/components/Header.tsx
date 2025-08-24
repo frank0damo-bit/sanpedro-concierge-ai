@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User, ShoppingCart } from "lucide-react";
+import { Menu, User, ShoppingCart, Wand2 } from "lucide-react"; // Import Wand2 icon
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 
@@ -43,7 +43,7 @@ export function Header() {
             ))}
           </nav>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
              <div className="relative">
               <Link to="/cart">
                 <Button variant="ghost" size="icon">
@@ -56,6 +56,15 @@ export function Header() {
                 </span>
               )}
             </div>
+            
+            {/* New Build My Trip Button */}
+            <Link to="/build-my-trip" className="hidden md:block">
+              <Button variant="ocean">
+                <Wand2 className="h-4 w-4 mr-2" />
+                Build My Trip
+              </Button>
+            </Link>
+
             {user ? (
               <div className="flex items-center gap-2">
                 <Link to="/dashboard">
@@ -94,6 +103,13 @@ export function Header() {
                       {link.label}
                     </NavLink>
                   ))}
+                   {/* Add Build My Trip to mobile menu */}
+                  <Link to="/build-my-trip">
+                    <Button variant="ocean" className="w-full">
+                      <Wand2 className="h-4 w-4 mr-2" />
+                      Build My Trip
+                    </Button>
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>
