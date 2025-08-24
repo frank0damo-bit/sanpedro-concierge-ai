@@ -1,6 +1,6 @@
 import React from "react";
 
-export function FooterCTA() {
+export default function FooterCTA() {
   return (
     <div>
       {/* Your CTA content */}
