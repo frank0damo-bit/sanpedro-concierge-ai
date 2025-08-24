@@ -4,9 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Wand2 } from "lucide-react";
 import { Phone } from "lucide-react";
 
-
-
-
+const showFooterCTAOn = ["/", "/about", "/services"];
+const shouldShowFooterCTA = showFooterCTAOn.includes(location.pathname);
 const ctaImageUrl = "src/assets/SUNBREEZE-belize-friends-vacation4.jpg";
 
 
