@@ -1,5 +1,8 @@
 import React from "react";
 
+const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
+
+
 export default function FooterCTA() {
   return (
     <div>
