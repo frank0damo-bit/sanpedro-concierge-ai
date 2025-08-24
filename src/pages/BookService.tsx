@@ -175,7 +175,7 @@ const BookService = () => {
           <Link to="/messages">
             <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-semibold">
               <MessageCircle className="h-5 w-5 mr-2" />
-              Start Planning
+              Build My Trip
             </Button>
           </Link>
         </div>
