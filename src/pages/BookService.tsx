@@ -34,8 +34,8 @@ const BookService = () => {
         const { data, error } = await supabase
           .from('service_categories')
           .select('*')
-          .eq('is_active', true)
-          .neq('category_group', 'Relocation') // Exclude relocation services
+          .eq('is_active', true) // Corrected from 'active'
+          .neq('category_group', 'Relocation')
           .order('category_group, name');
 
         if (error) throw error;
@@ -88,11 +88,12 @@ const BookService = () => {
 
   if (loadingServices) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background flex flex-col">
         <Header />
-        <div className="container mx-auto px-4 py-24 flex items-center justify-center">
+        <div className="flex-grow container mx-auto px-4 py-24 flex items-center justify-center">
           <div className="text-xl">Loading services...</div>
         </div>
+        <Footer />
       </div>
     );
   }
