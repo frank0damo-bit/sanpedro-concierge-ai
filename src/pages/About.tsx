@@ -86,49 +86,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* What Makes Us Different Section */}
-        <section className="py-24 bg-accent-light/5">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">What Makes Us Different?</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Feature 1: Local Heart */}
-              <div className="flex flex-col items-center text-center">
-                <img src={localHeartImage} alt="Vibrant street in San Pedro at dusk" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
-                <Heart className="h-10 w-10 text-primary mb-4" />
-                <h3 className="text-2xl font-bold">The Soul of San Pedro</h3>
-                <p className="text-muted-foreground mt-2">Tired of tourist traps? We live here, love it here, and know the people and places that make San Pedro special.</p>
-              </div>
-
-              {/* Feature 2: Seamlessly Smart */}
-              <div className="flex flex-col items-center text-center">
-                <img src={seamlesslySmartImage} alt="Effortless planning on a beach" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
-                <Sun className="h-10 w-10 text-primary mb-4" />
-                <h3 className="text-2xl font-bold">Seamlessly Smart</h3>
-                <p className="text-muted-foreground mt-2">Our platform makes planning effortless. Get instant recommendations and book your trip with our 24/7 digital concierge.</p>
-              </div>
-
-              {/* Feature 3: Truly Vetted */}
-              <div className="flex flex-col items-center text-center">
-                <img src={trulyVettedImage} alt="Snorkeling in the clear waters of Belize" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
-                <Map className="h-10 w-10 text-primary mb-4" />
-                <h3 className="text-2xl font-bold">Truly Vetted</h3>
-                <p className="text-muted-foreground mt-2">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked for quality and fun.</p>
-              </div>
-            </div>
-             <div className="text-center mt-20">
-              <Link to="/build-my-trip">
-                <Button variant="ocean">
-                  <Wand2 className="mr-2 h-5 w-5" />
-                  Build Your Dream Trip
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* Meet the Experts */}
+                {/* Meet the Experts */}
         <section className="py-24 bg-gradient-ocean">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
@@ -178,6 +136,50 @@ const About = () => {
             </div>
           </div>
         </section>
+
+        {/* What Makes Us Different Section */}
+        <section className="py-24 bg-accent-light/5">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">What Makes Us Different?</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Feature 1: Local Heart */}
+              <div className="flex flex-col items-center text-center">
+                <img src={localHeartImage} alt="Vibrant street in San Pedro at dusk" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                <Heart className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-2xl font-bold">The Soul of San Pedro</h3>
+                <p className="text-muted-foreground mt-2">Tired of tourist traps? We live here, love it here, and know the people and places that make San Pedro special.</p>
+              </div>
+
+              {/* Feature 2: Seamlessly Smart */}
+              <div className="flex flex-col items-center text-center">
+                <img src={seamlesslySmartImage} alt="Effortless planning on a beach" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                <Sun className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-2xl font-bold">Seamlessly Smart</h3>
+                <p className="text-muted-foreground mt-2">Our platform makes planning effortless. Get instant recommendations and book your trip with our 24/7 digital concierge.</p>
+              </div>
+
+              {/* Feature 3: Truly Vetted */}
+              <div className="flex flex-col items-center text-center">
+                <img src={trulyVettedImage} alt="Snorkeling in the clear waters of Belize" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                <Map className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-2xl font-bold">Truly Vetted</h3>
+                <p className="text-muted-foreground mt-2">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked for quality and fun.</p>
+              </div>
+            </div>
+             <div className="text-center mt-20">
+              <Link to="/build-my-trip">
+                <Button variant="ocean">
+                  <Wand2 className="mr-2 h-5 w-5" />
+                  Build Your Dream Trip
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+
       </main>
     </div>
   );
