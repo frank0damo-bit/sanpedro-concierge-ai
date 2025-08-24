@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Index from "./pages/Index"; // CORRECTED
+import Index from "./pages/Index";
 import About from "./pages/About";
 import ServicesLanding from "./pages/ServicesLanding";
 import BookService from "./pages/BookService";
@@ -14,11 +14,10 @@ import { PaymentSuccess } from "./pages/PaymentSuccess";
 import { PaymentCancelled } from "./pages/PaymentCancelled";
 import NotFound from "./pages/NotFound";
 import { Toaster } from "@/components/ui/toaster";
-import { AuthProvider } from "./contexts/AuthContext"; // CORRECTED
-import { CartProvider } from "./contexts/CartContext"; // CORRECTED
-import ProtectedRoute from "./components/ProtectedRoute"; // CORRECTED
+import { AuthProvider } from "./contexts/AuthContext";
+import { CartProvider } from "./contexts/CartContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { Layout } from "./components/Layout";
-import { TripPackagePage } from "./pages/TripPackagePage";
 import { CartPage } from "./pages/CartPage";
 import { BuildMyTripPage } from "./pages/BuildMyTripPage";
 
@@ -41,15 +40,15 @@ function App() {
               <Route path="/admin" element={<ProtectedRoute requiredRole="staff"><AdminDashboard /></ProtectedRoute>} />
               <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
               <Route path="/success" element={<PaymentSuccess />} />
-            <Route path="/cancelled" element={<PaymentCancelled />} />
-            <Route path="/trip-package" element={<TripPackagePage />} />
-            </Route>
-            {/* Routes without Header/Footer */}
-            <Route path="/auth" element={<Auth />} />
-            <Route path="*" element={<NotFound />} />
-           <Route path="/cart" element={<CartPage />} />
+              <Route path="/cancelled" element={<PaymentCancelled />} />
+              <Route path="/cart" element={<CartPage />} />
               <Route path="/build-my-trip" element={<BuildMyTripPage />} />
             </Route>
+            
+            <Route path="/auth" element={<Auth />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Router>
       </CartProvider>
     </AuthProvider>
   );
