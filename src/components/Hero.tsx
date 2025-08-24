@@ -26,9 +26,9 @@ export function Hero() {
             className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight"
             style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.3)' }}
           >
-            The Heart of 
+            The Heart of Belize, 
             <span className="block text-accent-light">
-              Belize, Unlocked.
+              Unlocked.
             </span>
           </h1>
           
@@ -36,7 +36,7 @@ export function Hero() {
             className="text-lg md:text-xl max-w-2xl text-white/90 mb-10"
             style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.3)' }}
           >
-            Your personal AI-powered concierge for exclusive experiences, seamless bookings, and expert local advice in San Pedro.
+            Your personal concierge for exclusive experiences, seamless bookings, and expert local advice in San Pedro.
           </p>
 
           {/* Icon-based value propositions */}
@@ -56,7 +56,7 @@ export function Hero() {
               </div>
               <div>
                 <p className="font-semibold">AI-Powered Ease</p>
-                <p className="text-sm text-white/80">24/7 AI assistant plans every detail.</p>
+                <p className="text-sm text-white/80">24/7 Our trusted concierge plans every detail.</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
