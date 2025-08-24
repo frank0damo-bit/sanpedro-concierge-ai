@@ -49,7 +49,7 @@ import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
 import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import BuildMyTripButton from "@/components/BuildMyTripButton";
-import { FooterCTA } from "@/components/FooterCTA";
+import FooterCTA from "@/components/FooterCTA";
 
 
 interface FeaturedService {
