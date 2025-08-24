@@ -165,7 +165,7 @@ const About = () => {
                 <p className="text-muted-foreground mt-2">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked for quality and fun.</p>
               </div>
             </div>
-             <div className="text-center mt-20">
+                      <div className="mt-auto w-full">
               <Link to="/contact">
                           <Button variant="ocean" className="w-full">
                             Contact Us Today
