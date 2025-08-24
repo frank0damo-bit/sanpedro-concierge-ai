@@ -9,15 +9,15 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-// Image imports for the new section
+// Image imports for the section
 import localHeartImage from "@/assets/Middle-street-at-night.jpg";
 import seamlesslySmartImage from "@/assets/personal-shopping.jpg";
 import trulyVettedImage from "@/assets/sunbreeze-suites-belize-where-to-stay-ambergris-caye3.png";
 
 
 // Page-specific images
-import aboutHeroUrl from "@/assets/images.jpeg";
-import philosophyImageUrl from "@/assets/images (1).jpeg";
+import aboutHeroUrl from "@/assets/san-pedro-hero.jpg";
+import philosophyImageUrl from "@/assets/images.jpeg";
 
 interface TeamMember {
   name: string;
