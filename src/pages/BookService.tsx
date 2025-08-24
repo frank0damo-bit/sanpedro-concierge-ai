@@ -6,6 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useCart } from '@/contexts/CartContext';
 import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer'; // Import the new Footer component
 import { PaymentButton } from '@/components/PaymentButton';
 import { Link } from 'react-router-dom';
 
@@ -97,9 +98,9 @@ const BookService = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
-      <main>
+      <main className="flex-grow pt-16">
         {/* Hero Section */}
         <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center text-center text-white">
           <div
@@ -192,6 +193,7 @@ const BookService = () => {
           </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };
