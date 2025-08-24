@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-// Image imports for the section
+// Image imports for the new section
 import localHeartImage from "@/assets/Middle-street-at-night.jpg";
 import seamlesslySmartImage from "@/assets/personal-shopping.jpg";
 import trulyVettedImage from "@/assets/sunbreeze-suites-belize-where-to-stay-ambergris-caye3.png";
@@ -86,14 +86,64 @@ const About = () => {
           </div>
         </section>
 
-        {/* What Makes Us Different Section - NEW LAYOUT */}
+             {/* Meet the Experts */}
+        <section className="py-24">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Meet the Experts</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                The friendly faces behind your perfect vacation.
+              </p>
+            </div>
+            <div className="flex justify-center">
+              <div className="flex overflow-x-auto space-x-8 pb-8 scrollbar-hide">
+                {team.map((member, index) => (
+                  <Card
+                    key={index}
+                    className="flex-shrink-0 w-[360px] bg-white shadow-xl hover:shadow-ocean transition-all duration-300 transform hover:-translate-y-2"
+                  >
+                    <CardContent className="p-6 pt-8 text-center flex flex-col items-center">
+                      <Avatar className="w-24 h-24 mb-4 border-4 border-primary/10">
+                        <AvatarImage src={member.avatar} alt={member.name} />
+                        <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
+                          {member.name.split(" ").map((n) => n[0]).join("")}
+                        </AvatarFallback>
+                      </Avatar>
+                      <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
+                      <p className="text-primary/80 mb-4">{member.role}</p>
+                      <div className="flex flex-wrap gap-2 justify-center mb-6">
+                        {member.specialties.map((specialty, idx) => (
+                          <Badge
+                            key={idx}
+                            variant="secondary"
+                          >
+                            {specialty}
+                          </Badge>
+                        ))}
+                      </div>
+                      <div className="mt-auto w-full">
+                        <Link to="/messages">
+                          <Button variant="ocean" className="w-full">
+                            <MessageCircle className="h-4 w-4 mr-2" />
+                            Chat with {member.name.split(' ')[0]}
+                          </Button>
+                        </Link>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* What Makes Us Different Section */}
         <section className="py-24 bg-accent-light/5">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">What Makes Us Different?</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {/* Feature 1: Local Heart */}
               <div className="flex flex-col items-center text-center">
                 <img src={localHeartImage} alt="Vibrant street in San Pedro at dusk" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
                 <Heart className="h-10 w-10 text-primary mb-4" />
@@ -101,7 +151,6 @@ const About = () => {
                 <p className="text-muted-foreground mt-2">Tired of tourist traps? We live here, love it here, and know the people and places that make San Pedro special.</p>
               </div>
 
-              {/* Feature 2: Seamlessly Smart */}
               <div className="flex flex-col items-center text-center">
                 <img src={seamlesslySmartImage} alt="Effortless planning on a beach" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
                 <Sun className="h-10 w-10 text-primary mb-4" />
@@ -109,7 +158,6 @@ const About = () => {
                 <p className="text-muted-foreground mt-2">Our AI-powered platform makes planning effortless. Get instant recommendations and book your trip with a simple chat.</p>
               </div>
 
-              {/* Feature 3: Truly Vetted */}
               <div className="flex flex-col items-center text-center">
                 <img src={trulyVettedImage} alt="Snorkeling in the clear waters of Belize" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
                 <Map className="h-10 w-10 text-primary mb-4" />
@@ -128,57 +176,6 @@ const About = () => {
           </div>
         </section>
 
-        {/* Meet the Experts */}
-        <section className="py-24">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">Meet the Experts</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                The friendly faces behind your perfect vacation.
-              </p>
-            </div>
-            <div className="flex justify-center">
-              <div className="flex overflow-x-auto space-x-8 pb-8 scrollbar-hide">
-                {team.map((member, index) => (
-                  <Card
-                    key={index}
-                    className="flex-shrink-0 w-[340px] bg-white shadow-lg border-0 rounded-2xl overflow-hidden group"
-                  >
-                    <CardContent className="p-6 text-center flex flex-col items-center">
-                      <Avatar className="w-28 h-28 mb-4 border-4 border-accent-light/50 transition-all duration-300 group-hover:border-accent">
-                        <AvatarImage src={member.avatar} alt={member.name} />
-                        <AvatarFallback className="text-lg font-bold bg-primary text-primary-foreground">
-                          {member.name.split(" ").map((n) => n[0]).join("")}
-                        </AvatarFallback>
-                      </Avatar>
-                      <h3 className="text-2xl font-bold text-foreground">{member.name}</h3>
-                      <p className="text-primary/80 mb-4">{member.role}</p>
-                      <div className="flex flex-wrap gap-2 justify-center mb-6">
-                        {member.specialties.map((specialty, idx) => (
-                          <Badge
-                            key={idx}
-                            variant="secondary"
-                            className="bg-accent/10 text-accent-foreground"
-                          >
-                            {specialty}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="mt-auto w-full">
-                          <Button
-                              variant="outline"
-                              className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
-                            >
-                              Say Hello
-                            </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
     </div>
   );
