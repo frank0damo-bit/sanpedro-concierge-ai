@@ -182,7 +182,7 @@ const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
         </div>
       </section>
 
-      <section className="py-20 bg-gradient-to-r from-primary via-primary-glow to-accent bg-[length:200%_200%] animate-background-pan overflow-hidden">
+      <section className="py-20 bg-gradient-ocean">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground mb-6">
@@ -296,10 +296,19 @@ const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
             <CarouselNext className="hidden md:flex" />
           </Carousel>
 
-        
+          <div className="text-center mt-12">
+            <Link to="/services">
+              <Button 
+                size="lg"
+                variant="ocean" 
+                className="text-lg px-8 py-6 font-semibold"
+              >
+                View All Services
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
-
     </>
   );
 };
