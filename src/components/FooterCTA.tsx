@@ -1,4 +1,6 @@
 import React from "react";
+import BuildMyTripButton from "@/components/BuildMyTripButton";
+
 
 const ctaImageUrl = "src/assets/SUNBREEZE-belize-friends-vacation4.jpg";
 
