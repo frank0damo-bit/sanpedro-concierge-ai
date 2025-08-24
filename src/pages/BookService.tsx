@@ -7,6 +7,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useCart } from '@/contexts/CartContext';
 import { PaymentButton } from '@/components/PaymentButton';
 import { Link } from 'react-router-dom';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const servicesHeroUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
 const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
@@ -25,16 +26,24 @@ const BookService = () => {
   const { toast } = useToast();
   const [serviceCategories, setServiceCategories] = useState<ServiceCategory[]>([]);
   const [loadingServices, setLoadingServices] = useState(true);
+  const [activeFilter, setActiveFilter] = useState<'all' | 'travel' | 'relocation'>('all');
 
   useEffect(() => {
     const fetchServices = async () => {
+      setLoadingServices(true);
       try {
-        const { data, error } = await supabase
+        let query = supabase
           .from('service_categories')
           .select('*')
-          .eq('is_active', true) // CORRECTED
-          .neq('category_group', 'Relocation')
-          .order('category_group, name');
+          .eq('is_active', true);
+
+        if (activeFilter === 'travel') {
+          query = query.eq('category_group', 'Travel');
+        } else if (activeFilter === 'relocation') {
+          query = query.eq('category_group', 'Relocation');
+        }
+        
+        const { data, error } = await query.order('category_group, name');
 
         if (error) throw error;
         
@@ -57,7 +66,7 @@ const BookService = () => {
     };
 
     fetchServices();
-  }, [toast]);
+  }, [toast, activeFilter]);
 
   const handleAddToCart = (service: ServiceCategory) => {
     addToCart({
@@ -83,7 +92,8 @@ const BookService = () => {
     return acc;
   }, {} as Record<string, ServiceCategory[]>);
 
-if (loadingServices) {
+
+  if (loadingServices) {
     return (
       <div className="container mx-auto px-4 py-24 flex items-center justify-center">
         <div className="text-xl">Loading services...</div>
@@ -92,29 +102,34 @@ if (loadingServices) {
   }
 
   return (
-        {/* Services List with Filters */}
-        <section>
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                Our Services
-              </h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Choose from our comprehensive range of travel and relocation services
-              </p>
-            </div>
+    <>
+      <section className="relative h-[50vh] min-h-[400px] -mt-16 flex items-center justify-center text-center text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${servicesHeroUrl})` }}
+        >
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative z-10 p-4 animate-fade-in-up">
+          <h1 className="text-5xl md:text-7xl font-bold" style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.3)' }}>Curated Services</h1>
+          <p className="text-xl md:text-2xl mt-4 max-w-2xl mx-auto" style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.3)' }}>Every experience, hand-picked for your perfect getaway.</p>
+        </div>
+      </section>
 
-            <Tabs value={activeFilter} onValueChange={(value) => setActiveFilter(value as 'all' | 'travel' | 'relocation')} className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-12 max-w-md mx-auto">
-                <TabsTrigger value="all">All Services</TabsTrigger>
-                <TabsTrigger value="travel">Travel Services</TabsTrigger>
-                <TabsTrigger value="relocation">Relocation Services</TabsTrigger>
-              </TabsList>
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <Tabs value={activeFilter} onValueChange={(value) => setActiveFilter(value as 'all' | 'travel' | 'relocation')} className="w-full">
+            <TabsList className="grid w-full grid-cols-3 mb-12 max-w-md mx-auto">
+              <TabsTrigger value="all">All Services</TabsTrigger>
+              <TabsTrigger value="travel">Travel</TabsTrigger>
+              <TabsTrigger value="relocation">Relocation</TabsTrigger>
+            </TabsList>
 
-              <TabsContent value={activeFilter} className="mt-0">
-                {Object.entries(groupedServices).map(([group, services]) => (
+            <TabsContent value={activeFilter} className="mt-0">
+              {Object.entries(groupedServices).length > 0 ? (
+                Object.entries(groupedServices).map(([group, services]) => (
                   <div key={group} className="mb-16">
-                    <h2 className="text-3xl font-bold text-primary mb-8 text-left">{group}</h2>
+                    <h2 className="text-4xl font-bold text-primary mb-8 text-left">{group}</h2>
                     <div className="grid md:grid-cols-2 gap-8">
                       {services.map((service) => (
                         <Card key={service.id} className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0">
@@ -163,31 +178,35 @@ if (loadingServices) {
                       ))}
                     </div>
                   </div>
-                ))}
-              </TabsContent>
-            </Tabs>
-          </div>
-        </section>
+                ))
+              ) : (
+                <div className="text-center py-16">
+                  <p className="text-xl text-muted-foreground">No services found for this category.</p>
+                </div>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </section>
 
-        {/* CTA Section */}
-        <section className="relative py-24 text-white text-center">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${ctaImageUrl})` }}
-          >
-            <div className="absolute inset-0 bg-primary/80" />
-          </div>
-          <div className="relative z-10 container mx-auto px-4">
-            <h2 className="text-4xl font-bold mb-4">Can't Decide?</h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">Let our AI assistant craft the perfect itinerary just for you.</p>
-            <Link to="/messages">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-semibold">
-                <MessageCircle className="h-5 w-5 mr-2" />
-                Start Planning with AI
-              </Button>
-            </Link>
-          </div>
-        </section>
+      <section className="relative py-24 text-white text-center">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${ctaImageUrl})` }}
+        >
+          <div className="absolute inset-0 bg-primary/80" />
+        </div>
+        <div className="relative z-10 container mx-auto px-4">
+          <h2 className="text-4xl font-bold mb-4">Can't Decide?</h2>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">Let our AI assistant craft the perfect itinerary just for you.</p>
+          <Link to="/messages">
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-semibold">
+              <MessageCircle className="h-5 w-5 mr-2" />
+              Start Planning with AI
+            </Button>
+          </Link>
+        </div>
+      </section>
     </>
   );
 };
