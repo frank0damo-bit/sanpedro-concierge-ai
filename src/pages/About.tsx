@@ -106,7 +106,7 @@ const About = () => {
                 <img src={seamlesslySmartImage} alt="Effortless planning on a beach" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
                 <Sun className="h-10 w-10 text-primary mb-4" />
                 <h3 className="text-2xl font-bold">Seamlessly Smart</h3>
-                <p className="text-muted-foreground mt-2">Our AI-powered platform makes planning effortless. Get instant recommendations and book your trip with a simple chat.</p>
+                <p className="text-muted-foreground mt-2">Our platform makes planning effortless. Get instant recommendations and book your trip with our 24/7 digital concierge.</p>
               </div>
 
               {/* Feature 3: Truly Vetted */}
