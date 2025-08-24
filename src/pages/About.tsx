@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
 import { Header } from "@/components/Header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, Sun, Map, Heart } from "lucide-react";
+import { MessageCircle, Sun, Map, Heart, Wand2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-
 
 // New images for a more vibrant and relaxing feel
 const aboutHeroUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
@@ -88,28 +87,48 @@ const About = () => {
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">What Makes Us Different?</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-              <div className="text-center p-6 space-y-4">
-                <div className="p-4 bg-white rounded-full mb-4 shadow-md inline-block">
-                  <Heart className="h-10 w-10 text-accent" />
-                </div>
-                <h3 className="text-2xl font-bold">Local Heart</h3>
-                <p className="text-muted-foreground">We live here, we love it here, and we know the people and places that make San Pedro special. You get access to experiences curated by true locals.</p>
-              </div>
-              <div className="text-center p-6 space-y-4">
-                <div className="p-4 bg-white rounded-full mb-4 shadow-md inline-block">
-                  <Sun className="h-10 w-10 text-accent" />
-                </div>
-                <h3 className="text-2xl font-bold">Seamlessly Smart</h3>
-                <p className="text-muted-foreground">Our AI-powered platform makes planning effortless. Get instant recommendations and book your entire trip with a simple chat, anytime, anywhere.</p>
-              </div>
-              <div className="text-center p-6 space-y-4">
-                <div className="p-4 bg-white rounded-full mb-4 shadow-md inline-block">
-                  <Map className="h-10 w-10 text-accent" />
-                </div>
-                <h3 className="text-2xl font-bold">Truly Vetted</h3>
-                <p className="text-muted-foreground">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked and vetted for quality, safety, and fun.</p>
-              </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                  <div className="p-4 bg-primary/10 rounded-full mb-4 shadow-md inline-block">
+                    <Heart className="h-10 w-10 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">The Soul of San Pedro, Curated for You</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Tired of tourist traps? We live here, we love it here, and we know the people and places that make San Pedro special. You get access to experiences curated by true locals.</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                  <div className="p-4 bg-primary/10 rounded-full mb-4 shadow-md inline-block">
+                    <Sun className="h-10 w-10 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">Seamlessly Smart</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">Our AI-powered platform makes planning effortless. Get instant recommendations and book your entire trip with a simple chat, anytime, anywhere.</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center p-6 shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <CardHeader>
+                  <div className="p-4 bg-primary/10 rounded-full mb-4 shadow-md inline-block">
+                    <Map className="h-10 w-10 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">Truly Vetted</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked and vetted for quality, safety, and fun.</p>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="text-center mt-16">
+              <Link to="/build-my-trip">
+                <Button size="lg" variant="ocean">
+                  <Wand2 className="mr-2 h-5 w-5" />
+                  Build Your Dream Trip
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
