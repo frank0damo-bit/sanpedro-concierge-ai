@@ -49,8 +49,9 @@ import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
 import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import { BuildMyTripButton } from "@/components/BuildMyTripButton";
+import { BuildMyTripButton } from "@/components/BuildMyTripButton";
 
-const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
+const ctaImageUrl = "https://images.unsplash.com/photo-1520106212299-d99c443e4568";
 
 interface FeaturedService {
   id: string;
@@ -144,25 +145,23 @@ const Index = () => {
     {
       name: "Sofia Martinez",
       role: "Senior Concierge Specialist",
-      experience: "8 years in luxury hospitality",
-      avatar: "/api/placeholder/150/150",
+      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330",
       specialties: ["Fine Dining", "Cultural Tours", "VIP Services"],
     },
     {
       name: "Carlos Rivera",
       role: "Adventure & Excursions Expert",
-      experience: "12 years guiding in Belize",
-      avatar: "/api/placeholder/150/150",
+      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d",
       specialties: ["Diving", "Fishing", "Mayan Sites"],
     },
     {
       name: "Isabella Chen",
       role: "Wellness & Lifestyle Curator",
-      experience: "6 years in resort management",
-      avatar: "/api/placeholder/150/150",
+      avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956",
       specialties: ["Spa Services", "Photography", "Events"],
     },
   ];
+
 
   const testimonials = [
     {
@@ -182,9 +181,7 @@ const Index = () => {
   ];
 
   return (
-    <>
-      <Hero />
-
+         <Hero />
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-foreground mb-12">
@@ -192,8 +189,8 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
-                <Users className="h-8 w-8 text-primary-foreground" />
+              <div className="p-4 bg-gradient-sky text-primary-foreground rounded-xl mb-4 shadow-soft">
+                <Users className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Curated Experiences</h3>
               <p className="text-muted-foreground text-sm">
@@ -209,9 +206,10 @@ const Index = () => {
                 Every vendor personally verified by our team
               </p>
             </div>
+      </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
-                <MessageCircle className="h-8 w-8 text-primary-foreground" />
+              <div className="p-4 bg-gradient-mango text-primary-foreground rounded-xl mb-4 shadow-soft">
+                <ShieldCheck className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Personal Concierge</h3>
               <p className="text-muted-foreground text-sm">
