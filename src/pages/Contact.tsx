@@ -6,9 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
-// A more relaxing and on-brand image for the contact page hero
-const contactImageUrl = "https://images.unsplash.com/photo-1590701833281-e8334a45956c"; 
+import contactImageUrl from "@/assets/belize-in-july-ambergris-caye-best-time-to-visit.png"; 
 
 const Contact = () => {
   const { toast } = useToast();
