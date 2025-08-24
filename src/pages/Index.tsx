@@ -49,7 +49,6 @@ import laundryHousekeepingImg from "@/assets/laundry-housekeeping.jpg";
 import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import { BuildMyTripButton } from "@/components/BuildMyTripButton";
-import { BuildMyTripButton } from "@/components/BuildMyTripButton";
 
 const ctaImageUrl = "https://images.unsplash.com/photo-1520106212299-d99c443e4568";
 
@@ -162,7 +161,6 @@ const Index = () => {
     },
   ];
 
-
   const testimonials = [
     {
       name: "Sarah & Mike Johnson",
@@ -181,7 +179,9 @@ const Index = () => {
   ];
 
   return (
-         <Hero />
+    <>
+      <Hero />
+
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-foreground mb-12">
@@ -189,7 +189,7 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-sky text-primary-foreground rounded-xl mb-4 shadow-soft">
+              <div className="p-4 bg-gradient-sky text-primary-foreground rounded-xl mb-4 shadow-lg">
                 <Users className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Curated Experiences</h3>
@@ -198,18 +198,17 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
-                <ShieldCheck className="h-8 w-8 text-primary-foreground" />
+              <div className="p-4 bg-gradient-mango text-primary-foreground rounded-xl mb-4 shadow-lg">
+                <ShieldCheck className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Vetted Partners</h3>
               <p className="text-muted-foreground text-sm">
                 Every vendor personally verified by our team
               </p>
             </div>
-      </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-mango text-primary-foreground rounded-xl mb-4 shadow-soft">
-                <ShieldCheck className="h-8 w-8" />
+              <div className="p-4 bg-gradient-sky text-primary-foreground rounded-xl mb-4 shadow-lg">
+                <MessageCircle className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Personal Concierge</h3>
               <p className="text-muted-foreground text-sm">
@@ -217,8 +216,8 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-primary rounded-xl mb-4 shadow-soft">
-                <Award className="h-8 w-8 text-primary-foreground" />
+              <div className="p-4 bg-gradient-mango text-primary-foreground rounded-xl mb-4 shadow-lg">
+                <Award className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Exclusive Access</h3>
               <p className="text-muted-foreground text-sm">Special rates and priority bookings</p>
@@ -371,7 +370,7 @@ const Index = () => {
               Ready to Craft Your Belize Adventure?
             </h2>
             <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
-              Tell us your dream, and our AI will bring it to life.
+              Tell us your dream, and our concierge team will bring it to life.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <BuildMyTripButton>
