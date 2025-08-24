@@ -19,7 +19,7 @@ export function Layout() {
       </main>
 
       {/* Conditionally render FooterCTA */}
-      {shouldShowFooterCTA && <FooterCTA imageUrl="Boca-del-Rio-ariel.jpg" />}
+      {shouldShowFooterCTA && <FooterCTA />}
 
       <Footer />
       <FloatingTripButton />
