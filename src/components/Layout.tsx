@@ -1,10 +1,8 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-
+import { useLocation } from "react-router-dom";
 import FloatingTripButton from "@/components/FloatingTripButton";
-
-
 import { useState, useEffect } from "react";
 import { Hero } from "@/components/Hero";
 import { Button } from "@/components/ui/button";
@@ -58,7 +56,7 @@ import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import BuildMyTripButton from "@/components/BuildMyTripButton";
 import FooterCTA from "@/components/FooterCTA";
 
-
+const location = useLocation();
 
   
 export function Layout() {
