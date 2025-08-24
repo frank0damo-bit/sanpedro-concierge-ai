@@ -50,6 +50,8 @@ import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import { BuildMyTripButton } from "@/components/BuildMyTripButton";
 
+const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
+
 interface FeaturedService {
   id: string;
   icon: React.ElementType;
@@ -355,67 +357,43 @@ const Index = () => {
         </div>
       </section>
 
-      <section id="contact" className="py-20 bg-accent-light/10">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold text-foreground mb-6">
-Ready for Your Escape?
-            </h2>
-            <p className="text-xl text-muted-foreground mb-12">
-              See how travelers turned great stays into extraordinary memories
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-              {testimonials.map((testimonial, index) => (
-                <Card
-                  key={index}
-                  className="p-6 hover:shadow-ocean transition-shadow duration-300 text-left"
+      <section
+        id="contact"
+        className="relative py-24 text-white text-center"
+      >
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${ctaImageUrl})` }}
+        >
+          <div className="absolute inset-0 bg-primary/80" />
+        </div>
+        <div className="relative z-10 container mx-auto px-4">
+          <Card className="inline-block bg-white/10 backdrop-blur-md border-white/20 text-white p-8 md:p-12 rounded-2xl shadow-lg max-w-4xl">
+            <CardContent className="p-0">
+              <h2 className="text-4xl font-bold mb-4">
+                Ready to Craft Your Belize Adventure?
+              </h2>
+              <p className="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Tell us your dream, and our AI will bring it to life.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <BuildMyTripButton>
+                  <Button variant="default" size="lg" className="text-lg px-8 py-6 font-semibold bg-white text-primary hover:bg-white/90">
+                    <Wand2 className="h-5 w-5 mr-2" />
+                    Build My Trip
+                  </Button>
+                </BuildMyTripButton>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="text-lg px-8 py-6 font-semibold text-white border-white/50 hover:bg-white/10 hover:text-white"
                 >
-                  <CardContent className="p-0">
-                    <div className="flex items-center mb-4">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="h-5 w-5 fill-yellow-400 text-yellow-400"
-                        />
-                      ))}
-                    </div>
-                    <p className="text-muted-foreground mb-4 italic">
-                      "{testimonial.text}"
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="font-semibold text-foreground">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-sm text-muted-foreground">
-                          {testimonial.location}
-                        </p>
-                      </div>
-                      <Badge variant="outline">{testimonial.service}</Badge>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <BuildMyTripButton>
-                <Button variant="ocean" size="lg" className="text-lg px-8 py-6 font-semibold">
-                  <Wand2 className="h-5 w-5 mr-2" />
-                  Build My Trip
+                  <Phone className="h-5 w-5 mr-2" />
+                  Call Our Team
                 </Button>
-              </BuildMyTripButton>
-              <Button
-                variant="outline"
-                size="lg"
-                className="text-lg px-8 py-6 font-semibold"
-              >
-                <Phone className="h-5 w-5 mr-2" />
-                Call Our Team
-              </Button>
-            </div>
-          </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </section>
     </>
