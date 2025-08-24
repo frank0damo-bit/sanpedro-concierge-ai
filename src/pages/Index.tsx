@@ -141,7 +141,7 @@ const Index = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-sky text-primary-foreground rounded-xl mb-4 shadow-lg">
+              <div className="p-4 bg-gradient-mango text-primary-foreground rounded-xl mb-4 shadow-lg">
                 <Users className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Curated Experiences</h3>
@@ -159,7 +159,7 @@ const Index = () => {
               </p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="p-4 bg-gradient-sky text-primary-foreground rounded-xl mb-4 shadow-lg">
+              <div className="p-4 bg-gradient-mango text-primary-foreground rounded-xl mb-4 shadow-lg">
                 <MessageCircle className="h-8 w-8" />
               </div>
               <h3 className="font-semibold text-foreground">Personal Concierge</h3>
