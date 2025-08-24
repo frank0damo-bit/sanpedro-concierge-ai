@@ -13,7 +13,7 @@ interface ServiceCardProps {
   onBookNow: () => void;
 }
 
-export function ServiceCard({ icon: Icon, title, description, features, onBookNow, serviceId }: ServiceCardProps) {
+export default function ServiceCard({ icon: Icon, title, description, features, onBookNow, serviceId }: ServiceCardProps) {
   const { user } = useAuth();
   return (
     <Card className="group hover:shadow-ocean transition-all duration-500 transform hover:scale-105 bg-card/80 backdrop-blur-sm border-border/50">
