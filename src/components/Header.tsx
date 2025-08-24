@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, MessageCircle, User, ShoppingCart } from "lucide-react";
+import { Menu, User, ShoppingCart } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 
@@ -10,6 +10,7 @@ export function Header() {
   const { cartCount } = useCart();
 
   const navLinks = [
+    { to: "/", label: "Home" },
     { to: "/services", label: "Services" },
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
