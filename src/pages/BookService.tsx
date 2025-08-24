@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Star, Plus, MessageCircle } from 'lucide-react';
+import { Star, MessageCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { useCart } from '@/contexts/CartContext';
-import { PaymentButton } from '@/components/PaymentButton';
+import { Header } from '@/components/Header';
+import { Footer } from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -22,7 +22,6 @@ interface ServiceCategory {
 }
 
 const BookService = () => {
-  const { addToCart } = useCart();
   const { toast } = useToast();
   const [serviceCategories, setServiceCategories] = useState<ServiceCategory[]>([]);
   const [loadingServices, setLoadingServices] = useState(true);
@@ -67,21 +66,6 @@ const BookService = () => {
 
     fetchServices();
   }, [toast, activeFilter]);
-
-  const handleAddToCart = (service: ServiceCategory) => {
-    addToCart({
-      id: service.id,
-      name: service.name,
-      description: service.description,
-      price: service.price || 100,
-      image_url: service.image_url,
-    });
-    
-    toast({
-      title: "Added to Cart!",
-      description: `${service.name} has been added to your cart.`,
-    });
-  };
   
   const groupedServices = serviceCategories.reduce((acc, service) => {
     const group = service.category_group || 'Other Experiences';
@@ -95,6 +79,7 @@ const BookService = () => {
 
   if (loadingServices) {
     return (
+      // The loading state should also be within the layout to have a footer
       <div className="container mx-auto px-4 py-24 flex items-center justify-center">
         <div className="text-xl">Loading services...</div>
       </div>
@@ -140,7 +125,7 @@ const BookService = () => {
                               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                             />
                           </div>
-                          <CardContent className="p-6">
+                          <CardContent className="p-6 flex flex-col flex-grow">
                             <div className="flex justify-between items-start mb-2">
                               <h3 className="text-xl font-bold">{service.name}</h3>
                               <div className="text-lg font-semibold text-primary">
@@ -148,30 +133,16 @@ const BookService = () => {
                               </div>
                             </div>
                             
-                            <p className="text-muted-foreground mb-4 line-clamp-2">
+                            <p className="text-muted-foreground mb-4 flex-grow line-clamp-2">
                               {service.description}
                             </p>
 
-                            <div className="flex items-center mb-4">
-                              {[...Array(5)].map((_, i) => (
-                                <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                              ))}
-                              <span className="ml-2 text-sm text-muted-foreground">(5.0)</span>
-                            </div>
-
-                            <div className="flex items-center gap-2">
-                              <Button 
-                                className="w-full"
-                                onClick={() => handleAddToCart(service)}
-                              >
-                                <Plus className="w-4 h-4 mr-2" />
-                                Add to Cart
-                              </Button>
-                              <PaymentButton 
-                                amount={service.price || 100}
-                                description={`${service.name} - Concierge Service`}
-                                className="w-full"
-                              />
+                            <div className="mt-auto">
+                              <Link to={`/service/${service.id}`}>
+                                <Button className="w-full" variant="outline">
+                                  Learn More
+                                </Button>
+                              </Link>
                             </div>
                           </CardContent>
                         </Card>
