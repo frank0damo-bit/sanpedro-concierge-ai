@@ -1,5 +1,7 @@
+// src/pages/BookService.tsx
+
 import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
@@ -9,21 +11,8 @@ import {
   Search,
   Wand2,
   Tag,
-  UtensilsCrossed,
-  Car,
-  Compass,
-  Award,
-  Plane,
-  ShoppingCart,
-  Heart,
-  Waves,
-  ChefHat,
-  Camera,
-  Fish,
-  Sun,
-  CalendarHeart,
 } from "lucide-react";
-import ServiceCard from "@/components/ServiceCard";
+import ServiceCard from "@/components/ServiceCard"; // This will be our simplified category card
 import ServicesToggleHeader from "@/components/ServicesToggleHeader";
 import cantDecideImg from "@/assets/Boca-del-Rio-ariel.jpg";
 
@@ -34,29 +23,7 @@ interface ServiceCategory {
   image_url: string;
   category_group: string;
   tags: string[];
-  icon_name: string;
-  features?: string[];
-  icon?: React.ElementType; 
 }
-
-const iconMap: { [key: string]: React.ElementType } = {
-  plane: Plane,
-  "shopping-bag": ShoppingCart,
-  heart: Heart,
-  waves: Waves,
-  "chef-hat": ChefHat,
-  camera: Camera,
-  fish: Fish,
-  music: Sun,
-  "plus-circle": Award,
-  "shopping-cart": ShoppingCart,
-  "calendar-heart": CalendarHeart,
-  shirt: Award,
-  utensils: UtensilsCrossed,
-  car: Car,
-  compass: Compass,
-  default: Award,
-};
 
 const BookService = () => {
   const { toast } = useToast();
@@ -77,15 +44,10 @@ const BookService = () => {
 
         if (error) throw error;
         
-        const serviceData = (data || []).map(service => ({
-          ...service,
-          icon: iconMap[service.icon_name as string] || iconMap["default"],
-        }));
-        
-        setServices(serviceData);
+        setServices(data || []);
 
         const uniqueTags = new Set<string>();
-        serviceData.forEach(service => {
+        (data || []).forEach(service => {
           if (service.tags) {
             service.tags.forEach(tag => uniqueTags.add(tag));
           }
@@ -110,12 +72,12 @@ const BookService = () => {
       const groupFilter = activeGroup === "Vacation"
         ? service.category_group !== "Relocation"
         : service.category_group === activeGroup;
-
+      
       return (
         groupFilter &&
         service.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (selectedTags.length === 0 ||
-          (service.tags && selectedTags.every(tag => service.tags.includes(tag))))
+        (selectedTags.length === 0 || 
+         (service.tags && selectedTags.every(tag => service.tags.includes(tag))))
       );
     });
     setFilteredServices(filtered);
@@ -129,7 +91,8 @@ const BookService = () => {
 
   return (
     <>
-<section className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-center text-white">        <div
+      <section className="relative h-[40vh] min-h-[300px] -mt-16 flex items-center justify-center text-center text-white">
+        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${cantDecideImg})` }}
         >
@@ -149,45 +112,17 @@ const BookService = () => {
             activeGroup={activeGroup}
             setActiveGroup={setActiveGroup}
           />
-
-          <div className="mb-8">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search services (e.g., 'fishing', 'spa')..."
-                className="w-full pl-10 py-6 text-lg"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
+          <div className="mb-8 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search services (e.g., 'fishing', 'spa')..."
+              className="w-full pl-10 py-6 text-lg"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
           </div>
           
-          <div className="mb-12 flex flex-wrap gap-2 items-center">
-             <Tag className="h-5 w-5 text-muted-foreground mr-2"/>
-             <span className="font-semibold mr-2">Filter by:</span>
-            {allTags.map(tag => (
-              <Button 
-                key={tag} 
-                variant={selectedTags.includes(tag) ? "ocean" : "outline"}
-                size="sm"
-                onClick={() => handleTagClick(tag)}
-                className="capitalize"
-              >
-                {tag}
-              </Button>
-            ))}
-            {selectedTags.length > 0 && (
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                onClick={() => setSelectedTags([])}
-              >
-                Clear Filters
-              </Button>
-            )}
-          </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredServices.map((service) => (
               <ServiceCard key={service.id} service={service} />
@@ -198,30 +133,10 @@ const BookService = () => {
             <div className="text-center py-16 border rounded-lg">
               <h2 className="text-2xl font-bold mb-4">No Services Found</h2>
               <p className="text-muted-foreground">
-                We couldn't find any services matching your search or filters in the "{activeGroup}" category.
+                We couldn't find any services matching your search in the "{activeGroup}" category.
               </p>
             </div>
           )}
-
-          <Card className="mt-16 overflow-hidden">
-            <div className="grid md:grid-cols-2 items-center">
-              <div className="p-8 md:p-12">
-                <h2 className="text-3xl font-bold mb-4">Can't Decide?</h2>
-                <p className="text-muted-foreground mb-6">
-                  Let our expert concierge team craft a personalized itinerary just for you. Tell us your interests, and we'll handle the rest!
-                </p>
-                <Link to="/build-my-trip">
-                  <Button variant="ocean" size="lg">
-                    <Wand2 className="mr-2 h-5 w-5" />
-                    Build My Perfect Trip
-                  </Button>
-                </Link>
-              </div>
-              <div className="h-64 md:h-full">
-                <img src={cantDecideImg} alt="Beautiful aerial view of San Pedro, Belize" className="w-full h-full object-cover"/>
-              </div>
-            </div>
-          </Card>
         </div>
       </section>
     </>
