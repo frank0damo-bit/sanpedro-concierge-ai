@@ -1,29 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Star, ArrowLeft, Plus, ShoppingCart } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { useCart } from '@/contexts/CartContext';
-import { Header } from '@/components/Header';
-import { PaymentButton } from '@/components/PaymentButton';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MessageCircle, CheckCircle, ArrowLeft } from 'lucide-react';
+import { Tables } from '@/integrations/supabase/types';
 
-interface ServiceCategory {
-  id: string;
-  name: string;
-  description: string;
-  icon_name: string;
-  price?: number;
-  image_url?: string;
-  features?: string[];
-}
+type ServiceCategory = Tables<'service_categories'>;
 
 const ServiceDetailPage = () => {
-  const { serviceId } = useParams<{ serviceId: string }>();
-  const { addToCart } = useCart();
-  const { toast } = useToast();
+  const { serviceId } = useParams();
   const [service, setService] = useState<ServiceCategory | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -39,154 +25,91 @@ const ServiceDetailPage = () => {
           .single();
 
         if (error) throw error;
-
-        // In a real app, you would fetch enriched data, here we'll simulate it
-        const enrichedService = {
-          ...data,
-          price: Math.floor(Math.random() * 500) + 50,
-          image_url: `https://placehold.co/600x400?text=${data.name.replace(/\s/g, "+")}`,
-          features: ['Professional Service', 'Same Day Booking', '24/7 Support', 'Local Expert Guidance']
-        };
-
-        setService(enrichedService);
-      } catch (error: any) {
-        toast({
-          title: "Error",
-          description: "Failed to load service details.",
-          variant: "destructive",
-        });
+        setService(data);
+      } catch (error) {
+        console.error('Error fetching service:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchService();
-  }, [serviceId, toast]);
-
-  const handleAddToCart = (service: ServiceCategory) => {
-    addToCart({
-      id: service.id,
-      name: service.name,
-      description: service.description,
-      price: service.price || 100,
-      image_url: service.image_url,
-    });
-    
-    toast({
-      title: "Added to Cart!",
-      description: `${service.name} has been added to your cart.`,
-    });
-  };
+  }, [serviceId]);
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="container mx-auto px-4 py-24 flex items-center justify-center">
-          <div className="text-xl">Loading service details...</div>
-        </div>
+      <div className="container mx-auto px-4 py-24 flex items-center justify-center">
+        <div className="text-xl">Loading service details...</div>
       </div>
     );
   }
 
   if (!service) {
     return (
-      <div className="min-h-screen bg-background">
-        <Header />
-        <div className="container mx-auto px-4 py-24 text-center">
-          <h1 className="text-2xl font-bold">Service not found</h1>
-          <Link to="/services">
-            <Button variant="link">Back to services</Button>
-          </Link>
-        </div>
+      <div className="container mx-auto px-4 py-24 text-center">
+        <h2 className="text-2xl font-bold mb-4">Service Not Found</h2>
+        <p className="text-muted-foreground mb-8">We couldn't find the service you're looking for.</p>
+        <Link to="/services">
+          <Button variant="outline">
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to All Services
+          </Button>
+        </Link>
       </div>
     );
   }
+  
+  const features = service.features || ['Personalized Itineraries', '24/7 Support', 'Vetted Local Partners', 'Exclusive Access'];
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      <div className="container mx-auto px-4 py-24">
-        <div className="max-w-4xl mx-auto">
-          <Link to="/">
-            <Button variant="ghost" className="mb-6">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
-            </Button>
-          </Link>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <div className="aspect-video bg-muted rounded-lg mb-6 overflow-hidden">
-                <img 
-                  src={service.image_url} 
-                  alt={service.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h1 className="text-3xl font-bold mb-4">{service.name}</h1>
-              <p className="text-muted-foreground mb-6">{service.description}</p>
-              
-              <div className="flex items-center gap-4 mb-6">
-                <div className="text-3xl font-bold text-primary">
-                  ${service.price}
-                </div>
-                <div className="flex items-center">
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                  <span className="ml-2 text-sm text-muted-foreground">(5.0)</span>
-                </div>
-              </div>
-
-              <div className="space-y-2 mb-6">
-                <h3 className="font-semibold">Features:</h3>
-                {service.features?.map((feature, index) => (
-                  <Badge key={index} variant="secondary">
-                    {feature}
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-2">
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => handleAddToCart(service)}
-                  >
-                    <Plus className="w-4 h-4 mr-2" />
-                    Add to Cart
+    <>
+      <section className="relative h-[60vh] min-h-[500px] -mt-16 flex items-end pb-16 text-white">
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${service.image_url || 'https://images.unsplash.com/photo-1541599308631-7357604d1a49'})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        </div>
+        <div className="relative z-10 container mx-auto px-4">
+          <Badge variant="secondary" className="mb-4">{service.category_group || 'Experience'}</Badge>
+          <h1 className="text-5xl md:text-7xl font-bold" style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.5)' }}>
+            {service.name}
+          </h1>
+        </div>
+      </section>
+      
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-3 gap-12">
+            <div className="lg:col-span-2">
+              <h2 className="text-3xl font-bold mb-4">About This Service</h2>
+              <p className="text-lg text-muted-foreground whitespace-pre-wrap">
+                {service.description}
+              </p>
+            </div>
+            <div className="lg:col-span-1">
+              <div className="sticky top-24 p-6 border rounded-2xl shadow-lg bg-card">
+                <h3 className="text-2xl font-bold mb-6">Service Features</h3>
+                <ul className="space-y-4 mb-8">
+                  {features.map((feature, index) => (
+                    <li key={index} className="flex items-center">
+                      <CheckCircle className="h-5 w-5 text-primary mr-3" />
+                      <span className="text-muted-foreground">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/messages" className="w-full">
+                  <Button size="lg" className="w-full" variant="ocean">
+                    <MessageCircle className="mr-2 h-5 w-5" />
+                    Chat with a Concierge
                   </Button>
-                  <PaymentButton 
-                    amount={service.price || 100}
-                    description={`${service.name} - Concierge Service`}
-                    className="w-full"
-                  />
-                </div>
+                </Link>
               </div>
             </div>
-            
-            <Card>
-              <CardHeader>
-                <CardTitle>Book This Service</CardTitle>
-                <CardDescription>
-                  Our team will get in touch to finalize the details.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  To book this service, please add it to your cart and proceed to checkout, or contact our team for a custom request.
-                </p>
-              </CardContent>
-            </Card>
-
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 };
 
