@@ -209,8 +209,8 @@ const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
                     <h3 className="text-xl font-bold text-foreground">{member.name}</h3>
                     <p className="text-primary/80 mb-4">{member.role}</p>
                     <div className="flex flex-wrap gap-2 justify-center mb-6">
-                      {member.specialties.map((specialty, idx) => (
-                        <Badge
+{(member.specialties || []).map((specialty, idx) => (
+  <Badge
                           key={idx}
                           variant="secondary"
                         >
