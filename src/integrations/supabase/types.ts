@@ -265,9 +265,9 @@ export type Database = {
         }
         Relationships: []
       }
-      service_categories: {
+   service_categories: {
         Row: {
-          is_active: boolean | null
+          is_active: boolean | null // CORRECTED
           category_group: string | null
           created_at: string | null
           description: string | null
@@ -281,7 +281,7 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
-          is_active?: boolean | null
+          is_active?: boolean | null // CORRECTED
           category_group?: string | null
           created_at?: string | null
           description?: string | null
@@ -294,8 +294,8 @@ export type Database = {
           sort_order?: number | null
           updated_at?: string | null
         }
-        Update: {
-          is_active?: boolean | null
+         Update: {
+          is_active?: boolean | null // CORRECTED
           category_group?: string | null
           created_at?: string | null
           description?: string | null
