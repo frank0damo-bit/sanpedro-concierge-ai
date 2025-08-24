@@ -117,7 +117,7 @@ const BookService = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                       {services.map((service) => (
                         <Card key={service.id} className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border-0">
                           <div className="aspect-video bg-muted overflow-hidden relative">
@@ -171,11 +171,11 @@ const BookService = () => {
         </div>
         <div className="relative z-10 container mx-auto px-4">
           <h2 className="text-4xl font-bold mb-4">Can't Decide?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">Let our assistants craft the perfect itinerary just for you.</p>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">Let our AI assistant craft the perfect itinerary just for you.</p>
           <Link to="/messages">
             <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-semibold">
               <MessageCircle className="h-5 w-5 mr-2" />
-              Build Your Trip
+              Start Planning with AI
             </Button>
           </Link>
         </div>
