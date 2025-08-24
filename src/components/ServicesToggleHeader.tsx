@@ -17,7 +17,7 @@ export default function ServicesToggleHeader({ activeGroup, setActiveGroup }: Se
         className="inline-flex"
       >
         <ToggleGroupItem value="Vacation" aria-label="Toggle vacation services">
-          I'm on Vacation
+          I'm Travelling
         </ToggleGroupItem>
         <ToggleGroupItem value="Relocation" aria-label="Toggle relocation services">
           I'm Moving
