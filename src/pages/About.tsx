@@ -166,24 +166,7 @@ const About = () => {
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="relative py-24 text-white text-center">
-          <div
-            className="absolute inset-0 bg-cover bg-center"
-            style={{ backgroundImage: `url(${ctaImageUrl})` }}
-          >
-            <div className="absolute inset-0 bg-primary/80" />
-          </div>
-          <div className="relative z-10 container mx-auto px-4">
-            <h2 className="text-4xl font-bold mb-4">Ready for an Unforgettable Trip?</h2>
-            <p className="text-xl mb-8 max-w-2xl mx-auto">Let's start planning your dream Belizean escape today.</p>
-            <Link to="/messages">
-              <Button size="lg" className="bg-white text-primary hover:bg-white/90 text-lg px-8 py-6 font-semibold">
-                Start Planning with AI
-              </Button>
-            </Link>
-          </div>
-        </section>
+   
 
       </main>
     </div>
