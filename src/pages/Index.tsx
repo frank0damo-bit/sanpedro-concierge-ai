@@ -50,6 +50,8 @@ import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import BuildMyTripButton from "@/components/BuildMyTripButton";
 import FooterCTA from "@/components/FooterCTA";
+import { Wand2 } from "lucide-react";
+
 
 
 interface FeaturedService {
