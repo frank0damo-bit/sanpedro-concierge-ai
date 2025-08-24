@@ -9,7 +9,7 @@ import { useCart } from '@/contexts/CartContext';
 import { PaymentButton } from '@/components/PaymentButton';
 import { Link } from 'react-router-dom';
 
-const servicesHeroUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
+
 const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
 
 interface ServiceCategory {
@@ -105,22 +105,6 @@ const BookService = () => {
   }
 
   return (
-    <>
-        {/* Hero Section */}
-   {/* The -mt-16 is a necessary adjustment to pull the hero image up under the transparent header */}
-      <section className="relative h-[50vh] min-h-[400px] -mt-16 flex items-center justify-center text-center text-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${servicesHeroUrl})` }}
-        >
-          <div className="absolute inset-0 bg-black/40" />
-        </div>
-        <div className="relative z-10 p-4 animate-fade-in-up">
-          <h1 className="text-5xl md:text-7xl font-bold" style={{ textShadow: '0px 2px 4px rgba(0,0,0,0.3)' }}>Curated Services</h1>
-          <p className="text-xl md:text-2xl mt-4 max-w-2xl mx-auto" style={{ textShadow: '0px 1px 3px rgba(0,0,0,0.3)' }}>Every experience, hand-picked for your perfect getaway.</p>
-        </div>
-      </section>
-
         {/* Services List with Filters */}
         <section className="py-24">
           <div className="container mx-auto px-4">
