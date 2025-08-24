@@ -3,8 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useCart } from "@/contexts/CartContext";
 import { Trash2, ArrowLeft } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-
-const cartImageUrl = "https://images.unsplash.com/photo-1516832677958-6a9a0b182a12";
+import cartImageUrl from "@/assets/SUNBREEZE-belize-friends-vacation4.jpg";
 
 export function CartPage() {
   const { cart, removeFromCart, cartCount } = useCart();
