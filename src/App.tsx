@@ -1,5 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import Index from "./pages/Index";
+import Index from "./pages/Index"; // CORRECTED
 import About from "./pages/About";
 import ServicesLanding from "./pages/ServicesLanding";
 import BookService from "./pages/BookService";
@@ -14,9 +14,9 @@ import { PaymentSuccess } from "./pages/PaymentSuccess";
 import { PaymentCancelled } from "./pages/PaymentCancelled";
 import NotFound from "./pages/NotFound";
 import { Toaster } from "@/components/ui/toaster";
-import { AuthProvider } from "./contexts/AuthContext";
-import { CartProvider } from "./contexts/CartContext";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider } from "./contexts/AuthContext"; // CORRECTED
+import { CartProvider } from "./contexts/CartContext"; // CORRECTED
+import ProtectedRoute from "./components/ProtectedRoute"; // CORRECTED
 import { Layout } from "./components/Layout"; // Import the new Layout
 
 function App() {
