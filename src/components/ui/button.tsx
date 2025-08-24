@@ -20,7 +20,7 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-soft",
         ghost: "hover:bg-accent-light hover:text-accent",
         link: "text-primary underline-offset-4 hover:underline",
-        ocean: "bg-primary text-primary-foreground shadow-ocean hover:shadow-glow transform hover:scale-105",
+        ocean: "bg-gradient-ocean text-primary-foreground shadow-ocean hover:shadow-glow transform hover:scale-105",
         glass: "bg-background/80 backdrop-blur-sm border border-border/50 hover:bg-accent-light/20",
       },
       size: {
