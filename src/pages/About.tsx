@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 // New images for a more vibrant and relaxing feel
 const aboutHeroUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
 const philosophyImageUrl = "https://images.unsplash.com/photo-1516832677958-6a9a0b182a12";
-const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-46a013bb70d5";
+const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
 
 interface TeamMember {
   name: string;
