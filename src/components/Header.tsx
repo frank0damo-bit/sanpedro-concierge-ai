@@ -1,7 +1,7 @@
 import { Link, NavLink } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, User, ShoppingCart, Wand2 } from "lucide-react"; // Import Wand2 icon
+import { Menu, User, ShoppingCart, Wand2 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useCart } from "@/contexts/CartContext";
 
@@ -57,9 +57,8 @@ export function Header() {
               )}
             </div>
             
-            {/* New Build My Trip Button */}
             <Link to="/build-my-trip" className="hidden md:block">
-              <Button variant="ocean">
+              <Button variant="ocean-gradient">
                 <Wand2 className="h-4 w-4 mr-2" />
                 Build My Trip
               </Button>
@@ -103,9 +102,8 @@ export function Header() {
                       {link.label}
                     </NavLink>
                   ))}
-                   {/* Add Build My Trip to mobile menu */}
                   <Link to="/build-my-trip">
-                    <Button variant="ocean" className="w-full">
+                    <Button variant="ocean-gradient" className="w-full">
                       <Wand2 className="h-4 w-4 mr-2" />
                       Build My Trip
                     </Button>
