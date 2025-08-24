@@ -1,4 +1,6 @@
 import { Link } from "react-router-dom";
+import { Wand2 } from "lucide-react";
+
 
 export function Footer() {
   return (
