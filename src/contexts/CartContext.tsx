@@ -1,3 +1,5 @@
+// src/contexts/CartContext.tsx
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface CartItemOption {
@@ -9,22 +11,24 @@ export interface CartItem {
   id: string;
   name: string;
   description: string;
-  price: number; // This will now be the final, calculated price
+  price: number;
   image_url?: string;
   quantity: number;
-  options?: CartItemOption[]; // To store the selected customizations
-  basePrice: number; // To store the original service price
+  options?: CartItemOption[];
+  basePrice: number;
+  // Add bookingDetails to the cart item interface
+  bookingDetails?: Record<string, any>; 
 }
 
 interface CartContextType {
   cart: CartItem[];
-  items: CartItem[]; // Alias for cart
+  items: CartItem[];
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
   removeFromCart: (itemId: string) => void;
   updateQuantity: (itemId: string, quantity: number) => void;
   clearCart: () => void;
   cartCount: number;
-  getItemCount: () => number; // Alias for cartCount
+  getItemCount: () => number;
   getTotalPrice: () => number;
 }
 
@@ -51,10 +55,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addToCart = (itemToAdd: Omit<CartItem, 'quantity'>) => {
     setCart(prevCart => {
+      // For simplicity, this will overwrite an existing item with the same ID.
+      // A more complex implementation could handle merging details.
       const existingItemIndex = prevCart.findIndex(item => item.id === itemToAdd.id);
       if (existingItemIndex > -1) {
-        // For simplicity, we replace the item if it's added again with new options.
-        // A more complex cart might increment quantity or handle options differently.
         const newCart = [...prevCart];
         newCart[existingItemIndex] = { ...itemToAdd, quantity: 1 };
         return newCart;
@@ -91,7 +95,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   return (
     <CartContext.Provider value={{ 
       cart, 
-      items: cart, // Alias for cart
+      items: cart,
       addToCart, 
       removeFromCart, 
       updateQuantity,
