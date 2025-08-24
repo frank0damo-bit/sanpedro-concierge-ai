@@ -1,11 +1,11 @@
-import { Auth as SupabaseAuth } from '@supabase/auth-ui-react'
-import { ThemeSupa } from '@supabase/auth-ui-shared'
-import { supabase } from '@/integrations/supabase/client'
-import { Navigate, Link } from 'react-router-dom'
-import { useAuth } from '@/contexts/AuthContext'
-import { CheckCircle } from 'lucide-react'
-import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button"; // Add this line
+import { Auth as SupabaseAuth } from '@supabase/auth-ui-react';
+import { ThemeSupa } from '@supabase/auth-ui-shared';
+import { supabase } from '@/integrations/supabase/client';
+import { Navigate, Link } from 'react-router-dom';
+import { useAuth } from '@/contexts/AuthContext';
+import { CheckCircle } from 'lucide-react';
+import { ArrowLeft } from "lucide-react";
 
 const authImageUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
 
