@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { MessageCircle, Calendar, HelpCircle, Users, Send } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/components/ui/use-toast';
 
 interface Message {
   id: string;
@@ -278,7 +278,7 @@ const AdminDashboard = () => {
                 ) : (
                   conversations.map((conv) => (
                     <div
-                      key={`${conv.type}-${conv.id}`}
+                      key={conv.id}
                       className={`p-4 border-b cursor-pointer hover:bg-muted transition-colors ${
                         selectedConversation?.id === conv.id ? 'bg-muted' : ''
                       }`}
