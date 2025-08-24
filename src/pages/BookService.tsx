@@ -36,11 +36,9 @@ interface ServiceCategory {
   tags: string[];
   icon_name: string;
   features?: string[];
-  // This will hold the actual icon component
   icon?: React.ElementType; 
 }
 
-// Icon map to convert string names from Supabase to Lucide icon components
 const iconMap: { [key: string]: React.ElementType } = {
   plane: Plane,
   "shopping-bag": ShoppingCart,
@@ -79,7 +77,6 @@ const BookService = () => {
 
         if (error) throw error;
         
-        // Transform the data here, converting icon_name to an icon component
         const serviceData = (data || []).map(service => ({
           ...service,
           icon: iconMap[service.icon_name as string] || iconMap["default"],
@@ -109,12 +106,18 @@ const BookService = () => {
   }, [toast]);
 
   useEffect(() => {
-    const filtered = services.filter(
-      (service) =>
-        service.category_group === activeGroup &&
+    const filtered = services.filter((service) => {
+      const groupFilter = activeGroup === "Vacation"
+        ? service.category_group !== "Relocation"
+        : service.category_group === activeGroup;
+
+      return (
+        groupFilter &&
         service.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (selectedTags.length === 0 || (service.tags && selectedTags.every(tag => service.tags.includes(tag))))
-    );
+        (selectedTags.length === 0 ||
+          (service.tags && selectedTags.every(tag => service.tags.includes(tag))))
+      );
+    });
     setFilteredServices(filtered);
   }, [searchTerm, services, activeGroup, selectedTags]);
 
