@@ -33,7 +33,7 @@ const BookService = () => {
           .select('*')
           .eq('is_active', true); // CORRECTED QUERY
 
-        if (activeFilter === 'travel') {
+        if (activeFilter === 'all') {
           query = query.eq('category_group', 'Travel');
         } else if (activeFilter === 'relocation') {
           query = query.eq('category_group', 'Relocation');
