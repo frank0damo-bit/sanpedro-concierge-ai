@@ -4,7 +4,7 @@ import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { supabase } from '@/integrations/supabase/client';
 import { Navigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { CheckCircle, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 const authImageUrl = "https://images.unsplash.com/photo-1541599308631-7357604d1a49";
 
@@ -15,27 +15,27 @@ const Auth = () => {
     return <Navigate to="/dashboard" replace />;
   }
 
-  const benefits = [
-    "Plan trips with our 24/7 AI Concierge",
-    "Save and manage your itineraries",
-    "Access exclusive local deals",
-    "Enjoy seamless booking and support"
-  ];
-
   return (
-    <div className="min-h-screen w-full lg:grid lg:grid-cols-2 relative">
-      <Link to="/" className="absolute top-4 left-4 z-20">
-        <Button variant="ghost">
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to Home
-        </Button>
-      </Link>
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-8">
-          <div className="grid gap-2 text-center">
+    <div className="min-h-screen w-full lg:grid lg:grid-cols-2">
+      <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+        <Link to="/" className="absolute top-4 left-4 z-20">
+          <Button variant="ghost">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Home
+          </Button>
+        </Link>
+        
+        <div className="mx-auto w-full max-w-md space-y-8">
+          <div className="flex flex-col items-center text-center">
+            <Link to="/" className="flex items-center gap-2 mb-4">
+               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+                  <span className="text-lg font-bold text-primary-foreground">C</span>
+                </div>
+              <span className="text-2xl font-bold">Caribe Concierge</span>
+            </Link>
             <h1 className="text-3xl font-bold">Unlock Your Perfect Trip</h1>
-            <p className="text-balance text-muted-foreground">
-              Create an account to start planning your Belizean adventure.
+            <p className="text-balance text-muted-foreground mt-2">
+              Sign in or create an account to start planning.
             </p>
           </div>
           
@@ -75,27 +75,12 @@ const Auth = () => {
           </p>
         </div>
       </div>
-      <div className="hidden bg-muted lg:flex items-center justify-center relative">
+      <div className="hidden bg-muted lg:block relative">
         <img
           src={authImageUrl}
           alt="A relaxing beach scene in San Pedro, Belize"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-primary/70" />
-        <div className="relative z-10 p-12 text-white max-w-md">
-          <h2 className="text-4xl font-bold mb-4">Your adventure starts here.</h2>
-          <p className="text-primary-foreground/90 text-lg mb-8">
-            Creating an account is the first step towards a perfectly curated, stress-free vacation.
-          </p>
-          <ul className="space-y-4">
-            {benefits.map((benefit, index) => (
-              <li key={index} className="flex items-start">
-                <CheckCircle className="h-6 w-6 mr-3 mt-1 text-accent-light" />
-                <span className="text-lg">{benefit}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </div>
   );
