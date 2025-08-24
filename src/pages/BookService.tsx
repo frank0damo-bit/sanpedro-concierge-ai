@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import {
   Search,
   Wand2,
+  Tag,
 } from "lucide-react";
 import ServiceCard from "@/components/ServiceCard";
 import ServicesToggleHeader from "@/components/ServicesToggleHeader";
@@ -19,6 +20,7 @@ interface ServiceCategory {
   description: string;
   image_url: string;
   category_group: string;
+  tags: string[];
 }
 
 const BookService = () => {
@@ -27,6 +29,8 @@ const BookService = () => {
   const [filteredServices, setFilteredServices] = useState<ServiceCategory[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [activeGroup, setActiveGroup] = useState("Vacation");
+  const [allTags, setAllTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -37,7 +41,19 @@ const BookService = () => {
           .eq("is_active", true);
 
         if (error) throw error;
-        setServices(data || []);
+        
+        const serviceData = data || [];
+        setServices(serviceData);
+
+        // Extract unique tags
+        const uniqueTags = new Set<string>();
+        serviceData.forEach(service => {
+          if (service.tags) {
+            service.tags.forEach(tag => uniqueTags.add(tag));
+          }
+        });
+        setAllTags(Array.from(uniqueTags));
+
       } catch (error) {
         console.error("Error fetching services:", error);
         toast({
@@ -55,10 +71,17 @@ const BookService = () => {
     const filtered = services.filter(
       (service) =>
         service.category_group === activeGroup &&
-        service.name.toLowerCase().includes(searchTerm.toLowerCase())
+        service.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (selectedTags.length === 0 || (service.tags && selectedTags.every(tag => service.tags.includes(tag))))
     );
     setFilteredServices(filtered);
-  }, [searchTerm, services, activeGroup]);
+  }, [searchTerm, services, activeGroup, selectedTags]);
+
+  const handleTagClick = (tag: string) => {
+    setSelectedTags(prev => 
+      prev.includes(tag) ? prev.filter(t => t !== tag) : [...prev, tag]
+    );
+  };
 
   return (
     <>
@@ -84,7 +107,7 @@ const BookService = () => {
             setActiveGroup={setActiveGroup}
           />
 
-          <div className="mb-12">
+          <div className="mb-8">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
@@ -95,6 +118,32 @@ const BookService = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
+          </div>
+          
+          {/* Filter Tags */}
+          <div className="mb-12 flex flex-wrap gap-2 items-center">
+             <Tag className="h-5 w-5 text-muted-foreground mr-2"/>
+             <span className="font-semibold mr-2">Filter by:</span>
+            {allTags.map(tag => (
+              <Button 
+                key={tag} 
+                variant={selectedTags.includes(tag) ? "ocean" : "outline"}
+                size="sm"
+                onClick={() => handleTagClick(tag)}
+                className="capitalize"
+              >
+                {tag}
+              </Button>
+            ))}
+            {selectedTags.length > 0 && (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setSelectedTags([])}
+              >
+                Clear Filters
+              </Button>
+            )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -107,7 +156,7 @@ const BookService = () => {
             <div className="text-center py-16 border rounded-lg">
               <h2 className="text-2xl font-bold mb-4">No Services Found</h2>
               <p className="text-muted-foreground">
-                We couldn't find any services matching your search in the "{activeGroup}" category.
+                We couldn't find any services matching your search or filters in the "{activeGroup}" category.
               </p>
             </div>
           )}
