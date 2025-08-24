@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Star, MessageCircle } from 'lucide-react';
+import { Star, MessageCircle, ArrowRight } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Header } from '@/components/Header';
-import { Footer } from '@/components/Footer';
 import { Link } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -79,7 +77,6 @@ const BookService = () => {
 
   if (loadingServices) {
     return (
-      // The loading state should also be within the layout to have a footer
       <div className="container mx-auto px-4 py-24 flex items-center justify-center">
         <div className="text-xl">Loading services...</div>
       </div>
