@@ -1,6 +1,6 @@
 import React from "react";
 
-const ctaImageUrl = "Boca-del-Rio-ariel.jpg";
+const ctaImageUrl = "src/assets/SUNBREEZE-belize-friends-vacation4.jpg";
 
 
 export default function FooterCTA() {
