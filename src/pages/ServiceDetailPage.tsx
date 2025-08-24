@@ -29,6 +29,7 @@ const ServiceDetailPage = () => {
       if (!serviceId) return;
       setLoading(true);
       try {
+        // Fetch service details (this part is fine)
         const { data: serviceData, error: serviceError } = await supabase
           .from('service_categories')
           .select('*')
@@ -38,16 +39,24 @@ const ServiceDetailPage = () => {
         if (serviceError) throw serviceError;
         setService(serviceData);
 
+        // --- THIS IS THE CORRECTED QUERY ---
+        // We explicitly join from vendors through service_vendors
         const { data: vendorData, error: vendorError } = await supabase
-          .from('service_vendors')
-          .select('price, vendors (*)')
-          .eq('service_category_id', serviceId);
-        
+          .from('vendors')
+          .select(`
+            *,
+            service_vendors!inner (
+              price
+            )
+          `)
+          .eq('service_vendors.service_category_id', serviceId);
+
         if (vendorError) throw vendorError;
 
-        const fetchedVendors = vendorData.map((item: any) => ({
-          ...item.vendors,
-          price: item.price,
+        // Map the data to a more usable format, extracting the nested price
+        const fetchedVendors = vendorData.map((vendor: any) => ({
+          ...vendor,
+          price: vendor.service_vendors[0]?.price || 0,
         }));
         setVendors(fetchedVendors);
 
