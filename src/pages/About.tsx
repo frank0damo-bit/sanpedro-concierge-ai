@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
-// Image imports for the new section
+// Image imports for the section
 import localHeartImage from "@/assets/Middle-street-at-night.jpg";
 import seamlesslySmartImage from "@/assets/personal-shopping.jpg";
 import trulyVettedImage from "@/assets/sunbreeze-suites-belize-where-to-stay-ambergris-caye3.png";
@@ -89,44 +89,32 @@ const About = () => {
         {/* What Makes Us Different Section - NEW LAYOUT */}
         <section className="py-24 bg-accent-light/5">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-20">
+            <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">What Makes Us Different?</h2>
             </div>
-            <div className="space-y-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Feature 1: Local Heart */}
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div>
-                  <img src={localHeartImage} alt="Vibrant street in San Pedro at dusk" className="rounded-2xl shadow-xl w-full h-auto object-cover" />
-                </div>
-                <div className="space-y-4">
-                  <Heart className="h-10 w-10 text-primary mb-2" />
-                  <h3 className="text-3xl font-bold">The Soul of San Pedro, Curated for You</h3>
-                  <p className="text-muted-foreground text-lg">Tired of tourist traps? We live here, we love it here, and we know the people and places that make San Pedro special. You get access to experiences curated by true locals.</p>
-                </div>
+              <div className="flex flex-col items-center text-center">
+                <img src={localHeartImage} alt="Vibrant street in San Pedro at dusk" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                <Heart className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-2xl font-bold">The Soul of San Pedro</h3>
+                <p className="text-muted-foreground mt-2">Tired of tourist traps? We live here, love it here, and know the people and places that make San Pedro special.</p>
               </div>
 
               {/* Feature 2: Seamlessly Smart */}
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="space-y-4 md:order-last">
-                  <Sun className="h-10 w-10 text-primary mb-2" />
-                  <h3 className="text-3xl font-bold">Seamlessly Smart</h3>
-                  <p className="text-muted-foreground text-lg">Our AI-powered platform makes planning effortless. Get instant recommendations and book your entire trip with a simple chat, anytime, anywhere.</p>
-                </div>
-                <div>
-                   <img src={seamlesslySmartImage} alt="Effortless planning on a beach" className="rounded-2xl shadow-xl w-full h-auto object-cover" />
-                </div>
+              <div className="flex flex-col items-center text-center">
+                <img src={seamlesslySmartImage} alt="Effortless planning on a beach" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                <Sun className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-2xl font-bold">Seamlessly Smart</h3>
+                <p className="text-muted-foreground mt-2">Our AI-powered platform makes planning effortless. Get instant recommendations and book your trip with a simple chat.</p>
               </div>
 
               {/* Feature 3: Truly Vetted */}
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                 <div>
-                  <img src={trulyVettedImage} alt="Snorkeling in the clear waters of Belize" className="rounded-2xl shadow-xl w-full h-auto object-cover" />
-                </div>
-                <div className="space-y-4">
-                  <Map className="h-10 w-10 text-primary mb-2" />
-                  <h3 className="text-3xl font-bold">Truly Vetted</h3>
-                  <p className="text-muted-foreground text-lg">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked and vetted for quality, safety, and fun.</p>
-                </div>
+              <div className="flex flex-col items-center text-center">
+                <img src={trulyVettedImage} alt="Snorkeling in the clear waters of Belize" className="rounded-2xl shadow-lg w-full h-64 object-cover mb-6" />
+                <Map className="h-10 w-10 text-primary mb-4" />
+                <h3 className="text-2xl font-bold">Truly Vetted</h3>
+                <p className="text-muted-foreground mt-2">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked for quality and fun.</p>
               </div>
             </div>
              <div className="text-center mt-20">
@@ -191,9 +179,6 @@ const About = () => {
             </div>
           </div>
         </section>
-
-   
-
       </main>
     </div>
   );
