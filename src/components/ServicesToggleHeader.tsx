@@ -1,39 +1,28 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Link, useLocation } from "react-router-dom";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-const ServicesToggleHeader = () => {
-  const location = useLocation();
-  const [userType, setUserType] = useState<"travelling" | "moving">(
-    location.pathname.includes('moving') ? 'moving' : 'travelling'
-  );
+interface ServicesToggleHeaderProps {
+  activeGroup: string;
+  setActiveGroup: (group: string) => void;
+}
 
+export default function ServicesToggleHeader({ activeGroup, setActiveGroup }: ServicesToggleHeaderProps) {
   return (
-    <header className="py-4 bg-background border-b">
-      <div className="container mx-auto flex justify-center">
-        <div className="p-1 bg-muted rounded-lg">
-          <Link to="/book-service">
-            <Button
-              variant={userType === "travelling" ? "default" : "ghost"}
-              onClick={() => setUserType("travelling")}
-              className="rounded-md"
-            >
-              I'm Travelling
-            </Button>
-          </Link>
-          <Link to="/moving-services">
-            <Button
-              variant={userType === "moving" ? "default" : "ghost"}
-              onClick={() => setUserType("moving")}
-              className="rounded-md"
-            >
-              I'm Moving
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </header>
+    <div className="text-center mb-12">
+      <ToggleGroup
+        type="single"
+        value={activeGroup}
+        onValueChange={(value) => {
+          if (value) setActiveGroup(value);
+        }}
+        className="inline-flex"
+      >
+        <ToggleGroupItem value="Vacation" aria-label="Toggle vacation services">
+          I'm on Vacation
+        </ToggleGroupItem>
+        <ToggleGroupItem value="Relocation" aria-label="Toggle relocation services">
+          I'm Moving
+        </ToggleGroupItem>
+      </ToggleGroup>
+    </div>
   );
-};
-
-export default ServicesToggleHeader;
+}
