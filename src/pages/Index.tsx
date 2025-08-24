@@ -50,7 +50,7 @@ import groceryEssentialsImg from "@/assets/grocery-essentials.jpg";
 import medicalEmergencyImg from "@/assets/medical-emergency.jpg";
 import { BuildMyTripButton } from "@/components/BuildMyTripButton";
 
-const ctaImageUrl = "https://unsplash.com/photos/man-underwater-making-hand-signs-44r12Ck_CoI";
+const ctaImageUrl = "https://images.unsplash.com/photo-1544551763-8dd44758c2dd?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 
 
 
