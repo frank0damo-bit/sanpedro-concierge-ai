@@ -129,8 +129,7 @@ const BookService = () => {
 
   return (
     <>
-      <section className="relative h-[50vh] min-h-[400px] -mt-16 flex items-center justify-center text-center text-white">
-        <div
+<section className="relative h-[40vh] min-h-[300px] flex items-center justify-center text-center text-white">        <div
           className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${cantDecideImg})` }}
         >
