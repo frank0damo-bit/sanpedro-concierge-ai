@@ -23,7 +23,7 @@ const BookService = () => {
   const { toast } = useToast();
   const [serviceCategories, setServiceCategories] = useState<ServiceCategory[]>([]);
   const [loadingServices, setLoadingServices] = useState(true);
-  const [activeFilter, setActiveFilter] = useState<'all' | 'travel' | 'relocation'>('all');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'travel' | 'relocation' | 'essentials'>('all');
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -38,6 +38,8 @@ const BookService = () => {
           query = query.eq('category_group', 'Travel');
         } else if (activeFilter === 'relocation') {
           query = query.eq('category_group', 'Relocation');
+        } else if (activeFilter === 'essentials') {
+          query = query.eq('category_group', 'Essentials');
         }
         
         const { data, error } = await query.order('category_group, name');
@@ -100,11 +102,12 @@ const BookService = () => {
 
       <section className="py-24">
         <div className="container mx-auto px-4">
-          <Tabs value={activeFilter} onValueChange={(value) => setActiveFilter(value as 'all' | 'travel' | 'relocation')} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-12 max-w-md mx-auto">
+          <Tabs value={activeFilter} onValueChange={(value) => setActiveFilter(value as 'all' | 'travel' | 'relocation' | 'essentials')} className="w-full">
+            <TabsList className="grid w-full grid-cols-4 mb-12 max-w-2xl mx-auto">
               <TabsTrigger value="all">All Services</TabsTrigger>
               <TabsTrigger value="travel">Travel</TabsTrigger>
               <TabsTrigger value="relocation">Relocation</TabsTrigger>
+              <TabsTrigger value="essentials">Essentials</TabsTrigger>
             </TabsList>
 
             <TabsContent value={activeFilter} className="mt-0">
