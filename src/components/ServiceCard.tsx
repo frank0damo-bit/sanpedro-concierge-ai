@@ -2,17 +2,17 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { LucideIcon } from "lucide-react"; // Keep this if you're mapping string names to icons
+import { LucideIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
 
-// Define an interface for the service object
+// Define an interface for the service object that the card will receive
 interface Service {
   id: string;
   name: string;
   description: string;
-  features: string[];
-  icon: LucideIcon; // Or string, depending on your implementation
+  image_url?: string;
+  features?: string[];
+  icon?: LucideIcon; // The icon should be a component
 }
 
 // Update the props to accept a single 'service' object
@@ -21,21 +21,33 @@ interface ServiceCardProps {
 }
 
 export default function ServiceCard({ service }: ServiceCardProps) {
-  const { user } = useAuth();
   // Destructure the properties from the service object
   const { id, icon: Icon, name, description, features } = service;
 
   return (
-    <Card className="group hover:shadow-ocean transition-all duration-500 transform hover:scale-105 bg-card/80 backdrop-blur-sm border-border/50">
-      <CardContent className="p-6">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="p-3 bg-gradient-ocean rounded-xl shadow-soft group-hover:shadow-glow transition-all duration-300">
-            <Icon className="h-6 w-6 text-primary-foreground" />
+    <Card className="group overflow-hidden rounded-2xl shadow-lg hover:shadow-ocean transition-all duration-500 hover:scale-[1.02] flex flex-col h-full">
+      <div className="relative aspect-video bg-muted overflow-hidden">
+        {service.image_url && (
+          <img
+            src={service.image_url}
+            alt={name}
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute bottom-4 left-4 text-white">
+          <div className="flex items-center gap-3">
+            {Icon && (
+              <div className="p-2 bg-white/20 rounded-lg backdrop-blur-sm">
+                <Icon className="h-5 w-5" />
+              </div>
+            )}
+            <h3 className="text-xl font-bold">{name}</h3>
           </div>
-          <h3 className="text-xl font-bold text-card-foreground">{name}</h3>
         </div>
-        
-        <p className="text-muted-foreground mb-4 leading-relaxed">{description}</p>
+      </div>
+      <CardContent className="p-6 flex flex-col flex-grow">
+        <p className="text-muted-foreground mb-4 flex-grow">{description}</p>
         
         <ul className="space-y-2 mb-6">
           {(features || []).map((feature, index) => (
@@ -46,25 +58,16 @@ export default function ServiceCard({ service }: ServiceCardProps) {
           ))}
         </ul>
         
-        {user ? (
-          <Link to={`/book?service=${id}`}>
-            <Button 
-              variant="default" 
-              className="w-full font-semibold"
+        <div className="mt-auto">
+          <Link to={`/service/${id}`}>
+            <Button
+              variant="outline"
+              className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
             >
-              Book Now
+              Learn More
             </Button>
           </Link>
-        ) : (
-          <Link to="/auth">
-            <Button 
-              variant="default" 
-              className="w-full font-semibold"
-            >
-              Sign In to Book
-            </Button>
-          </Link>
-        )}
+        </div>
       </CardContent>
     </Card>
   );
