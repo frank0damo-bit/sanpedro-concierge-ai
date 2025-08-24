@@ -18,6 +18,8 @@ import { AuthProvider } from "./contexts/AuthContext"; // CORRECTED
 import { CartProvider } from "./contexts/CartContext"; // CORRECTED
 import ProtectedRoute from "./components/ProtectedRoute"; // CORRECTED
 import { Layout } from "./components/Layout"; // Import the new Layout
+import { Layout } from "./components/Layout";
+import { TripPackagePage } from "./pages/TripPackagePage"; // Add this import
 
 function App() {
   return (
