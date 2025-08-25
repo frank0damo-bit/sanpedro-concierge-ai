@@ -29,6 +29,7 @@ const ServiceDetailPage = () => {
       if (!serviceId) return;
       setLoading(true);
       try {
+        // Fetch the service category details
         const { data: serviceData, error: serviceError } = await supabase
           .from('service_categories')
           .select('*')
@@ -38,6 +39,7 @@ const ServiceDetailPage = () => {
         if (serviceError) throw serviceError;
         setService(serviceData);
 
+        // Fetch the vendors linked to this service
         const { data: vendorData, error: vendorError } = await supabase
           .from('service_vendors')
           .select(`
