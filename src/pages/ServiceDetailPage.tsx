@@ -12,7 +12,14 @@ import { useToast } from "@/hooks/use-toast";
 import { Tables } from '@/integrations/supabase/types';
 
 type ServiceCategory = Tables<'service_categories'>;
-type Vendor = Tables<'vendors'> & { price: number };
+
+interface Vendor {
+  id: string;
+  name: string;
+  description?: string;
+  image_url?: string;
+  price: number;
+}
 
 const ServiceDetailPage = () => {
   const { serviceId } = useParams();
@@ -79,8 +86,6 @@ const ServiceDetailPage = () => {
       price: vendor.price,
       basePrice: vendor.price,
       image_url: vendor.image_url || service.image_url || '',
-      vendorId: vendor.id,
-      vendorName: vendor.name,
     });
     toast({
       title: "Added to Cart!",

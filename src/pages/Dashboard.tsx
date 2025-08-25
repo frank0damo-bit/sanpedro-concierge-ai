@@ -11,7 +11,24 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useUserRole } from '@/hooks/useUserRole';
 import { Header } from '@/components/Header';
 
-// ... (interface definitions remain the same)
+interface Booking {
+  id: string;
+  title: string;
+  status: string;
+  preferred_date: string;
+  created_at: string;
+  service_category?: {
+    name: string;
+  };
+}
+
+interface CustomerRequest {
+  id: string;
+  subject: string;
+  status: string;
+  priority: string;
+  created_at: string;
+}
 
 const Dashboard = () => {
   const { user, loading } = useAuth();
@@ -39,19 +56,83 @@ const Dashboard = () => {
   }
 
   const fetchUserData = async () => {
-    // ... (fetchUserData function remains the same)
+    try {
+      setLoadingData(true);
+      
+      // Fetch bookings
+      const { data: bookingsData } = await supabase
+        .from('bookings')
+        .select(`
+          id,
+          title,
+          status,
+          preferred_date,
+          created_at,
+          service_categories(name)
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (bookingsData) {
+        setBookings(bookingsData);
+      }
+
+      // Fetch customer requests
+      const { data: requestsData } = await supabase
+        .from('customer_requests')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (requestsData) {
+        setRequests(requestsData);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load dashboard data",
+        variant: "destructive"
+      });
+    } finally {
+      setLoadingData(false);
+    }
   };
 
   const handleSignOut = async () => {
-    // ... (handleSignOut function remains the same)
+    try {
+      await supabase.auth.signOut();
+      toast({
+        title: "Signed out successfully",
+        description: "You have been signed out of your account"
+      });
+    } catch (error) {
+      console.error('Error signing out:', error);
+      toast({
+        title: "Error",
+        description: "Failed to sign out",
+        variant: "destructive"
+      });
+    }
   };
 
   const getStatusColor = (status: string) => {
-    // ... (getStatusColor function remains the same)
+    switch (status?.toLowerCase()) {
+      case 'confirmed': return 'bg-green-100 text-green-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'cancelled': return 'bg-red-100 text-red-800';
+      case 'completed': return 'bg-blue-100 text-blue-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   };
 
   const getPriorityColor = (priority: string) => {
-    // ... (getPriorityColor function remains the same)
+    switch (priority?.toLowerCase()) {
+      case 'high': return 'bg-red-100 text-red-800';
+      case 'medium': return 'bg-yellow-100 text-yellow-800';
+      case 'low': return 'bg-green-100 text-green-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   };
 
   if (loadingData) {
@@ -146,11 +227,74 @@ const Dashboard = () => {
           </TabsList>
           
           <TabsContent value="bookings" className="space-y-4 mt-6">
-            {/* ... (bookings content remains the same) */}
+            {bookings.length === 0 ? (
+              <Card>
+                <CardContent className="text-center py-8">
+                  <Calendar className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="font-semibold mb-2">No bookings yet</h3>
+                  <p className="text-muted-foreground mb-4">Start by booking your first service</p>
+                  <Link to="/book">
+                    <Button>Book Now</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            ) : (
+              bookings.map((booking) => (
+                <Card key={booking.id}>
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg">{booking.title}</CardTitle>
+                        <CardDescription>
+                          {booking.preferred_date && new Date(booking.preferred_date).toLocaleDateString()}
+                        </CardDescription>
+                      </div>
+                      <Badge className={getStatusColor(booking.status)}>
+                        {booking.status}
+                      </Badge>
+                    </div>
+                  </CardHeader>
+                </Card>
+              ))
+            )}
           </TabsContent>
           
           <TabsContent value="requests" className="space-y-4 mt-6">
-            {/* ... (requests content remains the same) */}
+            {requests.length === 0 ? (
+              <Card>
+                <CardContent className="text-center py-8">
+                  <MessageSquare className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
+                  <h3 className="font-semibold mb-2">No requests yet</h3>
+                  <p className="text-muted-foreground mb-4">Contact support when you need help</p>
+                  <Link to="/support">
+                    <Button>Contact Support</Button>
+                  </Link>
+                </CardContent>
+              </Card>
+            ) : (
+              requests.map((request) => (
+                <Card key={request.id}>
+                  <CardHeader>
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <CardTitle className="text-lg">{request.subject}</CardTitle>
+                        <CardDescription>
+                          {new Date(request.created_at).toLocaleDateString()}
+                        </CardDescription>
+                      </div>
+                      <div className="flex gap-2">
+                        <Badge className={getPriorityColor(request.priority)}>
+                          {request.priority}
+                        </Badge>
+                        <Badge className={getStatusColor(request.status)}>
+                          {request.status}
+                        </Badge>
+                      </div>
+                    </div>
+                  </CardHeader>
+                </Card>
+              ))
+            )}
           </TabsContent>
         </Tabs>
       </div>

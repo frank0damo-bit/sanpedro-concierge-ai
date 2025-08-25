@@ -12,10 +12,77 @@ import { useToast } from '@/hooks/use-toast';
 import { Send, MessageCircle, Calendar, HelpCircle, Bot, User } from 'lucide-react';
 import { Header } from '@/components/Header';
 
-// ... (interface definitions remain the same)
+interface Conversation {
+  id: string;
+  title: string;
+  type: 'booking' | 'request';
+  status: string;
+  unread_count: number;
+}
+
+interface Message {
+  id: string;
+  content: string;
+  sender_type: 'user' | 'staff';
+  created_at: string;
+}
 
 const Messages = () => {
-  // ... (state and functions remain the same)
+  const { user, loading } = useAuth();
+  const { toast } = useToast();
+  const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState('');
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  if (loading) {
+    return <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="text-xl">Loading...</div>
+    </div>;
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  const getStatusColor = (status: string) => {
+    switch (status?.toLowerCase()) {
+      case 'active': return 'bg-green-100 text-green-800';
+      case 'pending': return 'bg-yellow-100 text-yellow-800';
+      case 'closed': return 'bg-gray-100 text-gray-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
+  };
+
+  const sendMessage = async () => {
+    if (!newMessage.trim() || !selectedConversation) return;
+    
+    // Handle concierge chat
+    if (selectedConversation.id === 'concierge-chat') {
+      // Add user message
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        content: newMessage,
+        sender_type: 'user',
+        created_at: new Date().toISOString()
+      };
+      
+      setMessages(prev => [...prev, userMessage]);
+      setNewMessage('');
+      
+      // Simulate AI response (you would call your AI service here)
+      setTimeout(() => {
+        const aiResponse: Message = {
+          id: (Date.now() + 1).toString(),
+          content: "Thank you for your message! I'm here to help you with any questions about San Pedro, Belize. How can I assist you today?",
+          sender_type: 'staff',
+          created_at: new Date().toISOString()
+        };
+        setMessages(prev => [...prev, aiResponse]);
+      }, 1000);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -102,24 +169,63 @@ const Messages = () => {
                   <CardContent className="p-0">
                     <ScrollArea className="h-[380px] p-4">
                       <div className="space-y-4">
-                        {messages.length === 0 && selectedConversation.id === 'concierge-chat' && (
-                          <div className="text-center py-8">
-                            <Bot className="h-12 w-12 mx-auto mb-4 text-primary opacity-50" />
-                            <h3 className="font-semibold mb-2">Welcome to your personal Concierge!</h3>
-                            <p className="text-muted-foreground mb-4">
-                              I'm here to help you with recommendations, bookings, and local information about San Pedro, Belize.
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                              Ask me about restaurants, activities, transportation, or anything else!
-                            </p>
-                          </div>
-                        )}
-                        {/* ... (rest of the messages display remains the same) */}
+                         {messages.length === 0 && selectedConversation.id === 'concierge-chat' && (
+                           <div className="text-center py-8">
+                             <Bot className="h-12 w-12 mx-auto mb-4 text-primary opacity-50" />
+                             <h3 className="font-semibold mb-2">Welcome to your personal Concierge!</h3>
+                             <p className="text-muted-foreground mb-4">
+                               I'm here to help you with recommendations, bookings, and local information about San Pedro, Belize.
+                             </p>
+                             <p className="text-sm text-muted-foreground">
+                               Ask me about restaurants, activities, transportation, or anything else!
+                             </p>
+                           </div>
+                         )}
+                         {messages.map((message) => (
+                           <div
+                             key={message.id}
+                             className={`flex ${message.sender_type === 'user' ? 'justify-end' : 'justify-start'}`}
+                           >
+                             <div
+                               className={`max-w-[70%] rounded-lg p-3 ${
+                                 message.sender_type === 'user'
+                                   ? 'bg-primary text-primary-foreground'
+                                   : 'bg-muted'
+                               }`}
+                             >
+                               <div className="flex items-start gap-2">
+                                 {message.sender_type === 'staff' && (
+                                   <Bot className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                                 )}
+                                 {message.sender_type === 'user' && (
+                                   <User className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                                 )}
+                                 <div className="flex-1">
+                                   <p className="text-sm">{message.content}</p>
+                                   <p className="text-xs opacity-70 mt-1">
+                                     {new Date(message.created_at).toLocaleTimeString()}
+                                   </p>
+                                 </div>
+                               </div>
+                             </div>
+                           </div>
+                         ))}
+                         <div ref={messagesEndRef} />
                       </div>
                     </ScrollArea>
                     <Separator />
                     <div className="p-4">
-                      {/* ... (message input remains the same) */}
+                      <div className="flex gap-2">
+                        <Input
+                          value={newMessage}
+                          onChange={(e) => setNewMessage(e.target.value)}
+                          placeholder="Type your message..."
+                          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                        />
+                        <Button onClick={sendMessage} disabled={!newMessage.trim()}>
+                          <Send className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </>
