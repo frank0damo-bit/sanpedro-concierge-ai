@@ -38,7 +38,7 @@ export function Footer() {
               <span className="text-xl font-bold">Caribe Concierge</span>
             </Link>
             <p className="text-primary-foreground/80">
-              Your guide to the best of San Pedro, Belize.
+              Your guide to the best of Belize.
             </p>
             <div className="flex space-x-4">
               {socialLinks.map((link) => (
