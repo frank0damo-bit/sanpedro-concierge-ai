@@ -167,15 +167,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold">Truly Vetted</h3>
                 <p className="text-muted-foreground mt-2">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked for quality and fun.</p>
               </div>
-            </div>
-             <div className="text-center mt-20">
-              <Link to="/build-my-trip">
-                <Button variant="ocean">
-                  <Wand2 className="mr-2 h-5 w-5" />
-                  Build Your Dream Trip
-                </Button>
-              </Link>
-            </div>
+            </div
           </div>
         </section>
 
