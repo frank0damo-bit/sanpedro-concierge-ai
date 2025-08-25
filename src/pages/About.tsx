@@ -3,7 +3,7 @@ import { Header } from "@/components/Header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MessageCircle, Sun, Map, Heart, Wand2 } from "lucide-react";
+import { MessageCircle, Sun, Map, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -167,7 +167,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold">Truly Vetted</h3>
                 <p className="text-muted-foreground mt-2">We only recommend what we love and trust. Every tour, restaurant, and rental is hand-picked for quality and fun.</p>
               </div>
-            </div
+            </div>
           </div>
         </section>
 
