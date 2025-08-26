@@ -7,10 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ArrowLeft, Plus, Star } from 'lucide-react';
-import { useCart } from '@/contexts/CartContext';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ArrowLeft, Calendar, Star } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Tables } from '@/integrations/supabase/types';
+import { BookingForm } from '@/components/BookingForm';
 
 type ServiceCategory = Tables<'service_categories'>;
 
@@ -24,13 +25,13 @@ interface Vendor {
 
 const ServiceDetailPage = () => {
   const { serviceId } = useParams();
-  const { addToCart } = useCart();
   const { toast } = useToast();
   const navigate = useNavigate();
 
   const [service, setService] = useState<ServiceCategory | null>(null);
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [loading, setLoading] = useState(true);
+  const [openBookingVendor, setOpenBookingVendor] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchServiceData = async () => {
@@ -57,20 +58,20 @@ const ServiceDetailPage = () => {
     fetchServiceData();
   }, [serviceId, toast]);
 
-  const handleAddToCart = (vendor: Vendor) => {
-    if (!service) return;
-    addToCart({
-      id: `${service.id}-${vendor.id}`,
-      name: `${service.name} by ${vendor.name}`,
-      description: vendor.description || service.description || '',
-      price: vendor.price,
-      basePrice: vendor.price,
-      image_url: vendor.image_url || service.image_url || '',
-    });
+  const handleBooking = (bookingData: any) => {
+    // Here you would typically send the booking data to your backend
+    console.log('Booking submitted:', bookingData);
+    
     toast({
-      title: "Added to Cart!",
-      description: `${service.name} from ${vendor.name} has been added.`,
+      title: "Booking Request Submitted!",
+      description: `Your booking request for ${bookingData.service.name} with ${bookingData.vendor.name} has been submitted. We'll contact you shortly to confirm.`,
     });
+    
+    setOpenBookingVendor(null);
+  };
+
+  const handleCancelBooking = () => {
+    setOpenBookingVendor(null);
   };
 
   if (loading) {
@@ -169,10 +170,22 @@ const ServiceDetailPage = () => {
                       <p className="text-muted-foreground mb-4">{vendor.description}</p>
                       <div className="flex justify-between items-center mt-4">
                         <p className="text-2xl font-bold text-primary">${vendor.price.toFixed(2)}</p>
-                        <Button onClick={() => handleAddToCart(vendor)}>
-                          <Plus className="mr-2 h-4 w-4" />
-                          Add to Cart
-                        </Button>
+                        <Popover open={openBookingVendor === vendor.id} onOpenChange={(open) => setOpenBookingVendor(open ? vendor.id : null)}>
+                          <PopoverTrigger asChild>
+                            <Button>
+                              <Calendar className="mr-2 h-4 w-4" />
+                              Book Now
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-auto p-0" align="end">
+                            <BookingForm
+                              vendor={vendor}
+                              service={service}
+                              onSubmit={handleBooking}
+                              onCancel={handleCancelBooking}
+                            />
+                          </PopoverContent>
+                        </Popover>
                       </div>
                     </div>
                   </div>
