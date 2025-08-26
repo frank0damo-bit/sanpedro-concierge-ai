@@ -34,7 +34,7 @@ serve(async (req) => {
 
     const { data: vendorLinkData, error: vendorError } = await supabaseAdmin
       .from('service_vendors')
-      .select('price, vendors (*)')
+      .select('price, vendors!fk_vendor_id (*)')
       .eq('service_category_id', serviceId);
 
     if (vendorError) throw vendorError;
