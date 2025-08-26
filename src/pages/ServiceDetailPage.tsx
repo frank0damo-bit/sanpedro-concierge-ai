@@ -6,6 +6,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ArrowLeft, Plus, Star } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useToast } from "@/hooks/use-toast";
@@ -36,35 +37,14 @@ const ServiceDetailPage = () => {
       if (!serviceId) return;
       setLoading(true);
       try {
-        // Fetch the service category details
-        const { data: serviceData, error: serviceError } = await supabase
-          .from('service_categories')
-          .select('*')
-          .eq('id', serviceId)
-          .single();
+        const { data, error } = await supabase.functions.invoke('get-service-vendors', {
+          body: { serviceId }
+        });
 
-        if (serviceError) throw serviceError;
-        setService(serviceData);
+        if (error) throw error;
 
-        // Fetch the vendors linked to this service
-        const { data: vendorData, error: vendorError } = await supabase
-          .from('service_vendors')
-          .select(`
-            price,
-            vendors (*)
-          `)
-          .eq('service_category_id', serviceId);
-
-        if (vendorError) throw vendorError;
-
-        const fetchedVendors = (vendorData || [])
-          .map((item: any) => {
-            if (!item.vendors) return null;
-            return { ...item.vendors, price: item.price };
-          })
-          .filter(Boolean) as Vendor[];
-          
-        setVendors(fetchedVendors);
+        setService(data.service);
+        setVendors(data.vendors || []);
 
       } catch (error) {
         console.error('Error fetching service details:', error);
@@ -94,7 +74,51 @@ const ServiceDetailPage = () => {
   };
 
   if (loading) {
-    return <div className="container mx-auto px-4 py-24 text-center">Loading...</div>;
+    return (
+      <>
+        {/* Hero Skeleton */}
+        <section className="relative h-[50vh] min-h-[400px] -mt-16 flex items-end pb-16">
+          <Skeleton className="absolute inset-0" />
+          <div className="relative z-10 container mx-auto px-4">
+            <Skeleton className="h-6 w-32 mb-4" />
+            <Skeleton className="h-16 w-96" />
+          </div>
+        </section>
+        
+        {/* Content Skeleton */}
+        <section className="py-24">
+          <div className="container mx-auto px-4">
+            <Skeleton className="h-10 w-48 mb-8" />
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <Skeleton className="h-8 w-80 mx-auto mb-4" />
+                <Skeleton className="h-6 w-96 mx-auto" />
+              </div>
+              
+              <div className="space-y-6">
+                {[1, 2, 3].map(i => (
+                  <Card key={i} className="overflow-hidden">
+                    <div className="grid md:grid-cols-3">
+                      <Skeleton className="h-48 md:h-full" />
+                      <div className="md:col-span-2 p-6">
+                        <Skeleton className="h-8 w-48 mb-2" />
+                        <Skeleton className="h-4 w-32 mb-4" />
+                        <Skeleton className="h-4 w-full mb-2" />
+                        <Skeleton className="h-4 w-3/4 mb-4" />
+                        <div className="flex justify-between items-center">
+                          <Skeleton className="h-8 w-20" />
+                          <Skeleton className="h-10 w-32" />
+                        </div>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+      </>
+    );
   }
   if (!service) {
     return <div className="container mx-auto px-4 py-24 text-center">Service category not found.</div>;
