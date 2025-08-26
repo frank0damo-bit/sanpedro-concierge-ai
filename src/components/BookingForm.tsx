@@ -62,7 +62,7 @@ export const BookingForm = ({ vendor, service, onSubmit, onCancel }: BookingForm
   };
 
   return (
-    <div className="w-80 p-6 space-y-4">
+    <div className="p-6 space-y-4">
       <div className="text-center border-b pb-4">
         <h3 className="text-lg font-semibold">Book with {vendor.name}</h3>
         <p className="text-sm text-muted-foreground">{service.name}</p>
@@ -70,8 +70,8 @@ export const BookingForm = ({ vendor, service, onSubmit, onCancel }: BookingForm
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
+        <div className="flex flex-wrap gap-4">
+          <div className="flex-1 min-w-[200px] space-y-2">
             <Label htmlFor="customerName">Name *</Label>
             <Input
               id="customerName"
@@ -80,7 +80,7 @@ export const BookingForm = ({ vendor, service, onSubmit, onCancel }: BookingForm
               required
             />
           </div>
-          <div className="space-y-2">
+          <div className="flex-1 min-w-[150px] space-y-2">
             <Label htmlFor="guests">Guests</Label>
             <Select value={formData.guests} onValueChange={(value) => handleInputChange('guests', value)}>
               <SelectTrigger>
@@ -95,29 +95,31 @@ export const BookingForm = ({ vendor, service, onSubmit, onCancel }: BookingForm
           </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="email">Email *</Label>
-          <Input
-            id="email"
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
-            required
-          />
+        <div className="flex flex-wrap gap-4">
+          <div className="flex-1 min-w-[200px] space-y-2">
+            <Label htmlFor="email">Email *</Label>
+            <Input
+              id="email"
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="flex-1 min-w-[150px] space-y-2">
+            <Label htmlFor="phone">Phone</Label>
+            <Input
+              id="phone"
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+            />
+          </div>
         </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="phone">Phone</Label>
-          <Input
-            id="phone"
-            type="tel"
-            value={formData.phone}
-            onChange={(e) => handleInputChange('phone', e.target.value)}
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
+        <div className="flex flex-wrap gap-4">
+          <div className="flex-1 min-w-[150px] space-y-2">
             <Label>Preferred Date *</Label>
             <Popover>
               <PopoverTrigger asChild>
@@ -143,7 +145,7 @@ export const BookingForm = ({ vendor, service, onSubmit, onCancel }: BookingForm
               </PopoverContent>
             </Popover>
           </div>
-          <div className="space-y-2">
+          <div className="flex-1 min-w-[120px] space-y-2">
             <Label htmlFor="time">Time</Label>
             <Select value={formData.time} onValueChange={(value) => handleInputChange('time', value)}>
               <SelectTrigger>
