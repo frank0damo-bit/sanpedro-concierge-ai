@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { ArrowLeft, Calendar, Star } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { Tables } from '@/integrations/supabase/types';
@@ -152,44 +151,49 @@ const ServiceDetailPage = () => {
             
             <div className="space-y-6">
               {vendors.length > 0 ? vendors.map(vendor => (
-                <Card key={vendor.id} className="overflow-hidden shadow-md transition-shadow hover:shadow-lg">
-                  <div className="grid md:grid-cols-3">
-                    <div className="md:col-span-1">
-                      <img src={vendor.image_url || service.image_url} alt={vendor.name} className="w-full h-48 md:h-full object-cover" />
-                    </div>
-                    <div className="md:col-span-2 p-6">
-                      <h3 className="text-2xl font-bold">{vendor.name}</h3>
-                      <div className="flex items-center my-2">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <Star className="w-4 h-4 text-yellow-400" />
-                        <span className="ml-2 text-sm text-muted-foreground">(4.8 stars)</span>
+                <div key={vendor.id} className="space-y-0">
+                  <Card className="overflow-hidden shadow-md transition-shadow hover:shadow-lg">
+                    <div className="grid md:grid-cols-3">
+                      <div className="md:col-span-1">
+                        <img src={vendor.image_url || service.image_url} alt={vendor.name} className="w-full h-48 md:h-full object-cover" />
                       </div>
-                      <p className="text-muted-foreground mb-4">{vendor.description}</p>
-                      <div className="flex justify-between items-center mt-4">
-                        <p className="text-2xl font-bold text-primary">${vendor.price.toFixed(2)}</p>
-                        <Popover open={openBookingVendor === vendor.id} onOpenChange={(open) => setOpenBookingVendor(open ? vendor.id : null)}>
-                          <PopoverTrigger asChild>
-                            <Button>
-                              <Calendar className="mr-2 h-4 w-4" />
-                              Book Now
-                            </Button>
-                          </PopoverTrigger>
-                          <PopoverContent className="w-auto p-0" align="end">
-                            <BookingForm
-                              vendor={vendor}
-                              service={service}
-                              onSubmit={handleBooking}
-                              onCancel={handleCancelBooking}
-                            />
-                          </PopoverContent>
-                        </Popover>
+                      <div className="md:col-span-2 p-6">
+                        <h3 className="text-2xl font-bold">{vendor.name}</h3>
+                        <div className="flex items-center my-2">
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                          <Star className="w-4 h-4 text-yellow-400" />
+                          <span className="ml-2 text-sm text-muted-foreground">(4.8 stars)</span>
+                        </div>
+                        <p className="text-muted-foreground mb-4">{vendor.description}</p>
+                        <div className="flex justify-between items-center mt-4">
+                          <p className="text-2xl font-bold text-primary">${vendor.price.toFixed(2)}</p>
+                          <Button 
+                            onClick={() => setOpenBookingVendor(openBookingVendor === vendor.id ? null : vendor.id)}
+                            variant={openBookingVendor === vendor.id ? "secondary" : "default"}
+                          >
+                            <Calendar className="mr-2 h-4 w-4" />
+                            {openBookingVendor === vendor.id ? "Close Booking" : "Book Now"}
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Card>
+                  </Card>
+                  
+                  {/* Booking Form Dropdown */}
+                  {openBookingVendor === vendor.id && (
+                    <Card className="border-t-0 rounded-t-none shadow-lg">
+                      <BookingForm
+                        vendor={vendor}
+                        service={service}
+                        onSubmit={handleBooking}
+                        onCancel={handleCancelBooking}
+                      />
+                    </Card>
+                  )}
+                </div>
               )) : (
                 <div className="text-center py-12 border rounded-lg">
                   <h3 className="text-xl font-semibold">Coming Soon!</h3>
