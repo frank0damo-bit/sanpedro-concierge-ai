@@ -44,14 +44,63 @@ export const BookingForm = ({ vendor, service, onSubmit, onCancel }: BookingForm
   });
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    // Input validation and sanitization
+    let sanitizedValue = value;
+    
+    if (field === 'customerName' && value.length > 100) {
+      sanitizedValue = value.slice(0, 100);
+    }
+    
+    if (field === 'specialRequests' && value.length > 1000) {
+      sanitizedValue = value.slice(0, 1000);
+    }
+    
+    if (field === 'phone') {
+      // Allow only numbers, spaces, dashes, parentheses, and plus sign
+      sanitizedValue = value.replace(/[^0-9\s\-\(\)\+]/g, '');
+      if (sanitizedValue.length > 20) {
+        sanitizedValue = sanitizedValue.slice(0, 20);
+      }
+    }
+    
+    if (field === 'email' && value.length > 254) {
+      sanitizedValue = value.slice(0, 254);
+    }
+    
+    setFormData(prev => ({ ...prev, [field]: sanitizedValue }));
+  };
+
+  const validateForm = () => {
+    if (!formData.customerName.trim()) return false;
+    if (!formData.email.trim()) return false;
+    if (!date) return false;
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) return false;
+    
+    // Phone validation (if provided)
+    if (formData.phone && formData.phone.trim()) {
+      const phoneRegex = /^[\+]?[0-9\s\-\(\)]{10,20}$/;
+      if (!phoneRegex.test(formData.phone.trim())) return false;
+    }
+    
+    return true;
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    if (!validateForm()) {
+      return;
+    }
+    
     const bookingData = {
       ...formData,
+      customerName: formData.customerName.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      specialRequests: formData.specialRequests.trim(),
       date,
       vendor,
       service,
@@ -190,7 +239,7 @@ export const BookingForm = ({ vendor, service, onSubmit, onCancel }: BookingForm
             <Button type="button" variant="outline" onClick={onCancel}>
               Cancel
             </Button>
-            <Button type="submit" disabled={!date || !formData.customerName || !formData.email}>
+            <Button type="submit" disabled={!validateForm()}>
               Book Now
             </Button>
           </div>

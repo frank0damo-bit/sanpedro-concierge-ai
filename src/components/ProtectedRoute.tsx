@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useUserRole } from '@/hooks/useUserRole';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -8,9 +9,10 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { role, loading: roleLoading, isAdmin, isStaff } = useUserRole();
 
-  if (loading) {
+  if (authLoading || roleLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-xl">Loading...</div>
@@ -24,8 +26,22 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
 
   // If a specific role is required, check for it
   if (requiredRole) {
-    // You can add role checking logic here based on your user structure
-    // For now, we'll just allow access if user is authenticated
+    const hasRequiredRole = (() => {
+      switch (requiredRole) {
+        case 'admin':
+          return isAdmin;
+        case 'staff':
+          return isStaff;
+        case 'owner':
+          return role === 'owner';
+        default:
+          return role === requiredRole;
+      }
+    })();
+
+    if (!hasRequiredRole) {
+      return <Navigate to="/dashboard" replace />;
+    }
   }
 
   return <>{children}</>;
